@@ -11,9 +11,9 @@ color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(0, 512, 1152, 512, 1152, 640, 0, 640)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_top = 512.0
+offset_top = 768.0
 offset_right = 1152.0
-offset_bottom = 640.0
+offset_bottom = 896.0
 vertical_scroll_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]

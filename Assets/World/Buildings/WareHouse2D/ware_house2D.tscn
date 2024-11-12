@@ -8,3 +8,5 @@ script = ExtResource("1_a1pwy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_byx3p")
+
+[node name="LoadUnloadTimer" type="Timer" parent="."]

@@ -1,14 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://21pewmmm5ykv"]
 
-[ext_resource type="PackedScene" uid="uid://c14jc7hm1oowb" path="res://Assets/World/Buildings/building2D.tscn" id="1_8713n"]
+[ext_resource type="PackedScene" uid="uid://c14jc7hm1oowb" path="res://Assets/World/Buildings/ProductionBuilding2D.tscn" id="1_8713n"]
 [ext_resource type="Texture2D" uid="uid://maxdcj78ycix" path="res://Assets/World/icon.svg" id="2_lkd4l"]
 
 [node name="Farm2D" instance=ExtResource("1_8713n")]
+production_time = 3
 output_product = "Wheat"
-
-[node name="Person" parent="." index="1"]
-max_carry_limit = null
-speed_tile_per_sec = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="2"]
 scale = Vector2(0.5, 0.5)

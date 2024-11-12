@@ -5,6 +5,7 @@
 
 [node name="Person" type="AnimatableBody2D"]
 script = ExtResource("1_qvk0o")
+speed_tile_per_sec = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 10
@@ -12,5 +13,3 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_jdkpu")
 
 [node name="MoveTimer" type="Timer" parent="."]
-
-[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
