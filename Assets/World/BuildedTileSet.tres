@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=33 format=3 uid="uid://g0x5fr7nbdbv"]
 
 [ext_resource type="PackedScene" uid="uid://21pewmmm5ykv" path="res://Assets/World/Buildings/Agricultural/Farm2D/Farm2D.tscn" id="1_s7y1i"]
-[ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/WareHouse2D/ware_house2D.tscn" id="2_582ty"]
+[ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.tscn" id="2_582ty"]
 [ext_resource type="PackedScene" uid="uid://dreaq3spettlk" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.tscn" id="3_vbb0e"]
 [ext_resource type="Texture2D" uid="uid://bpj7a252mpg8h" path="res://Assets/World/Trees/Sprites/Maple1_idle_full.png" id="4_spnop"]
 [ext_resource type="Texture2D" uid="uid://dvi3gxgx1gre1" path="res://Assets/World/Buildings/Agricultural/PotatoField/Sprites/PotatoField_work_anim.png" id="5_tu0oc"]

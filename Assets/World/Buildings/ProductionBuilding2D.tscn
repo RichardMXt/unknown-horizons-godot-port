@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c14jc7hm1oowb"]
 
 [ext_resource type="Script" path="res://Assets/World/Buildings/ProductionBuilding2D.gd" id="1_hq3n1"]
-[ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/person2D.tscn" id="2_hmyl0"]
+[ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/Buildings/Person2D.tscn" id="2_hmyl0"]
 [ext_resource type="PackedScene" uid="uid://t2t3gj1hocje" path="res://Assets/World/ItemProducedInfo.tscn" id="3_y4v30"]
 
 [node name="Building" type="Node2D"]
