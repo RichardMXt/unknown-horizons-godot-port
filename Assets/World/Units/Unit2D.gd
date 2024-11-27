@@ -7,6 +7,11 @@ class_name Unit2D
 
 @onready var person_sprite: AnimatedSprite2D = self.get_child(0)
 
+enum is_full {
+  full     = 0,
+  not_full = 1,
+}
+
 var path: Array = []
 var cur_path: Array = []
 
@@ -14,8 +19,8 @@ var is_moving: bool = false
 
 
 
-func get_animation_name(angle_of_walk: float, full: bool = true):
-  if full:
+func get_animation_name(angle_of_walk: float, is_full: int = self.is_full.full):
+  if is_full == self.is_full.full:
     return "FullDeg%s" % [angle_of_walk]
   else:
     return "Deg%s" % [angle_of_walk]
@@ -33,7 +38,10 @@ func get_sprite_angle(next_point: Vector2, is_full: bool):
 
 
 
-func move(is_full: bool = true):
+func move(is_full: int = self.is_full.full):
+
+  if len(cur_path) <= 0:
+    return
 
   var last_direction = 0
   for point in cur_path:

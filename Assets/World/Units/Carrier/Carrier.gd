@@ -69,7 +69,7 @@ func move_to_warehouse():
     is_moving = true
     self.visible = true
 
-    await self.move(true)
+    await self.move(self.is_full.full)
 
 
 
@@ -92,7 +92,7 @@ func move_back():
   cur_path = path.duplicate()
   cur_path.pop_back()
   cur_path.reverse()
-  await self.move(false)
+  await self.move(self.is_full.not_full)
   count_of_objects = await self.get_parent().unload_worker(object_carring, count_of_objects)
   count_of_objects = 0
   is_moving = false

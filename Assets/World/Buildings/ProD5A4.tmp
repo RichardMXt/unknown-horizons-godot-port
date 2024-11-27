@@ -7,6 +7,12 @@
 [node name="Building" type="Node2D"]
 z_index = 2
 script = ExtResource("1_hq3n1")
+game_name = null
+production_time = null
+max_storage_capacity = null
+output_product = null
+input_product = null
+load_or_unload_time = null
 
 [node name="ProdTimer" type="Timer" parent="."]
 
@@ -18,4 +24,5 @@ visible = false
 
 [node name="ItemProducedToolTip" parent="." instance=ExtResource("3_y4v30")]
 
-[connection signal="resource_produced" from="." to="ItemProducedToolTip" method="start_hovering"]
+[connection signal="resource_produced" from="." to="ItemProducedToolTip" method="start_showing"]
+[connection signal="timeout" from="ProdTimer" to="." method="_on_ProdTimer_timeout"]

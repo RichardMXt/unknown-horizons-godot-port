@@ -18,4 +18,5 @@ visible = false
 
 [node name="ItemProducedToolTip" parent="." instance=ExtResource("3_y4v30")]
 
-[connection signal="resource_produced" from="." to="ItemProducedToolTip" method="start_hovering"]
+[connection signal="resource_produced" from="." to="ItemProducedToolTip" method="start_showing"]
+[connection signal="timeout" from="ProdTimer" to="." method="_on_ProdTimer_timeout"]
