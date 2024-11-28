@@ -8,7 +8,7 @@ class_name ItemProducedToolTip
 
 
 
-func start_hovering(item_name: String, amount: int):
+func start_hovering(_unused, item_name: String, amount: int):
   self.visible = true
   self.text = "%s %s" % [item_name, amount]
 

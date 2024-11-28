@@ -153,6 +153,7 @@ func build_road(start_point, finish_point):
   if path != null:
     self.set_cells_terrain_connect(path, 0, 0, false)
 
+# delete all the trees below the road that might be blocking the view
     for cell in path:
       var lower_tile_pos = cell + Vector2i(1, 1) # right one and down one
       var lower_tile_data = self.get_cell_tile_data(lower_tile_pos)

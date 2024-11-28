@@ -21,11 +21,10 @@ var number_of_output_products = 0
 var number_of_intake_products = 0
 
 signal resource_produced
-signal carry_resources
 
 
 
-func set_up():
+func building_setup():
   self.get_parent().register_building(self)
   var closest_warehouse_path_or_null = find_closest_warehouse()
   if closest_warehouse_path_or_null != null:
@@ -70,6 +69,14 @@ func road_builded():
   if closest_warehouse_path_or_null != null:
     closest_warehouse_path = closest_warehouse_path_or_null
     carrier.path = closest_warehouse_path
+
+
+
+func get_resourses_needed() -> int:
+  if needs_intake_product:
+    return max_storage_capacity - number_of_intake_products
+  else:
+    return 0
 
 
 
