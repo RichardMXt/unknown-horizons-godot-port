@@ -72,15 +72,15 @@ func road_builded():
 
 
 
-func get_resourses_needed() -> int:
+func get_resourses_needed() -> Array:
   if needs_intake_product:
-    return max_storage_capacity - number_of_intake_products
+    return [input_product, max_storage_capacity - number_of_intake_products]
   else:
-    return 0
+    return ["", 0]
 
 
 
-func unload_worker(object_carring: String, amount: int) -> int:
+func unload_carrier(object_carring: String, amount: int) -> int:
   if object_carring == "":
     LoadUnloadTimer.start(load_or_unload_time / 2)
     await LoadUnloadTimer.timeout
@@ -91,10 +91,10 @@ func unload_worker(object_carring: String, amount: int) -> int:
 
 
 
-func load_worker(object_carring: String, amount: int) -> int:
+func load_carrier() -> Array:
   LoadUnloadTimer.start(load_or_unload_time / 2)
   await LoadUnloadTimer.timeout
 
-  var amount_to_load = min(amount , number_of_output_products)
+  var amount_to_load = min(number_of_output_products, carrier.max_carry_limit)
   number_of_output_products -= amount_to_load
-  return amount_to_load 
+  return [amount_to_load, self.output_product]
