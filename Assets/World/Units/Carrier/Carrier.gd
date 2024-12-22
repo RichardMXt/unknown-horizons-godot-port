@@ -34,11 +34,12 @@ func do_movment_loop():
 func wait_for_resources():
   self.is_moving = false
 
-  await self.get_parent().resource_produced
+  await self.get_tree().create_timer(1).timeout
 
-# if we dont have a path, continue waiting
-  if len(path) <= 0:
-    await wait_for_resources()
+  if self.get_parent().number_of_output_products > 0:
+    if len(path) > 0:
+      return
+  await wait_for_resources()
 
 func load_resources_from_building():
   var object_data = await self.get_parent().load_carrier()
@@ -51,8 +52,12 @@ func move_to_warehouse():
     return
   if len(path) > 0 and not is_moving and max_carry_limit >= count_of_objects:
     #person_sprite.play()
-    cur_path = path.duplicate()
-    cur_path.pop_front()
+# set path to and back to current known path
+    path_there = path.duplicate()
+    path_there.pop_front()
+    path_back = path.duplicate()
+    path_back.reverse()
+
     is_moving = true
     self.visible = true
     await self.move(CarrierState.WithFreight)
@@ -85,11 +90,8 @@ func load_and_unload_at_warehouse():
 func move_back():
   #person_sprite.play()
   self.visible = true
-  cur_path = path.duplicate()
-  cur_path.pop_back()
-  cur_path.reverse()
   
-  await self.move(CarrierState.Empty)
+  await self.move(CarrierState.Empty, self.path_back)
   count_of_objects = await self.get_parent().unload_carrier(object_carring, count_of_objects)
   #count_of_objects = 0
   is_moving = false

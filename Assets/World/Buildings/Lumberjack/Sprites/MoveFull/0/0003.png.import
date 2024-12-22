@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0sq87kjqyvfa"
-path="res://.godot/imported/0002.png-bd28a329aeabcb9db361cbbdb67e9081.ctex"
+uid="uid://bixnkb4cocx53"
+path="res://.godot/imported/0003.png-3137b70da5f90bd9ec8a7741ece82104.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/World/Buildings/Lumberjack/Sprites/WorkerMove/0002.png"
-dest_files=["res://.godot/imported/0002.png-bd28a329aeabcb9db361cbbdb67e9081.ctex"]
+source_file="res://Assets/World/Buildings/Lumberjack/Sprites/MoveFull/0/0003.png"
+dest_files=["res://.godot/imported/0003.png-3137b70da5f90bd9ec8a7741ece82104.ctex"]
 
 [params]
 

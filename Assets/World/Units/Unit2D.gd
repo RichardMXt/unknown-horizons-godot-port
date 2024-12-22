@@ -8,12 +8,13 @@ class_name Unit2D
 @onready var person_sprite: AnimatedSprite2D = self.get_child(0)
 
 enum CarrierState {
-  Empty     = 0,
+  Empty       = 0,
   WithFreight = 1,
 }
 
 var path: Array = []
-var cur_path: Array = []
+var path_there: Array = []
+var path_back: Array = []
 
 var is_moving: bool = false
 
@@ -21,9 +22,9 @@ var is_moving: bool = false
 
 func get_animation_name(angle_of_walk: float, carrier_state := CarrierState.Empty):
   if carrier_state == CarrierState.WithFreight:
-    return "FullDeg%s" % [angle_of_walk]
+    return "MoveFull%s" % [angle_of_walk]
   else:
-    return "Deg%s" % [angle_of_walk]
+    return "Move%s" % [angle_of_walk]
 
 
 
@@ -33,17 +34,17 @@ func get_sprite_angle(next_point: Vector2):
   # calc the sprite angle:
   var move_angle_0_to_2PI = fposmod(move_angle, 2 * PI)
   var move_angle_0_to_8 = move_angle_0_to_2PI * 8 / (2 * PI)
-  var sprite_angle = round(move_angle_0_to_8) * 45
+  var sprite_angle = int(round(move_angle_0_to_8) * 45) % 360
   return sprite_angle
 
 
 
-func move(carrier_state: CarrierState):
-  if len(cur_path) <= 0:
+func move(carrier_state: CarrierState, path: Array = path_there):
+  if len(path) <= 0:
     return
 
   var last_direction = 0
-  for point in cur_path:
+  for point in path:
     var sprite_angle = get_sprite_angle(point)
     if last_direction != sprite_angle:
       last_direction = sprite_angle
@@ -56,6 +57,6 @@ func move(carrier_state: CarrierState):
     #pass
     #move_tween.kill()
   
-  self.global_position = cur_path[len(cur_path) - 1]
+  self.global_position = path[len(path) - 1]
   await self.get_tree().create_timer(0.05).timeout # let the _process run once.
   person_sprite.stop()

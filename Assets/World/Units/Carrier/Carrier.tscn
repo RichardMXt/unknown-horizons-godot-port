@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ciacneie4013w"]
+[gd_scene load_steps=68 format=3 uid="uid://ciacneie4013w"]
 
 [ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/Units/Unit2D.tscn" id="1_r8tsm"]
 [ext_resource type="Script" path="res://Assets/World/Units/Carrier/Carrier.gd" id="2_1mxto"]
@@ -42,7 +42,6 @@
 [ext_resource type="Texture2D" uid="uid://cv57f4x3s60oa" path="res://Assets/World/Units/Carrier/move_full/225/0003.png" id="17_wf0gl"]
 [ext_resource type="Texture2D" uid="uid://ckw2gmwkisron" path="res://Assets/World/Units/Carrier/move/225/0004.png" id="18_6rkad"]
 [ext_resource type="Texture2D" uid="uid://c01q11nnd26m5" path="res://Assets/World/Units/Carrier/move_full/225/0004.png" id="18_b6l4u"]
-[ext_resource type="Texture2D" uid="uid://brdilbsdwhsnl" path="res://Assets/World/Units/Carrier/move_full/270/0001.png" id="19_1ddln"]
 [ext_resource type="Texture2D" uid="uid://xjpufphmu5dx" path="res://Assets/World/Units/Carrier/move/270/0001.png" id="19_fb0vy"]
 [ext_resource type="Texture2D" uid="uid://bbpsr0s0544tj" path="res://Assets/World/Units/Carrier/move/270/0002.png" id="20_rer6r"]
 [ext_resource type="Texture2D" uid="uid://byxfci3swkipg" path="res://Assets/World/Units/Carrier/move/270/0003.png" id="21_sy57n"]
@@ -63,6 +62,10 @@
 [ext_resource type="Texture2D" uid="uid://cmx0vlcrx7071" path="res://Assets/World/Units/Carrier/move_full/90/0002.png" id="29_yh74h"]
 [ext_resource type="Texture2D" uid="uid://fr2iyt2csxpy" path="res://Assets/World/Units/Carrier/move_full/90/0003.png" id="30_dkotl"]
 [ext_resource type="Texture2D" uid="uid://dgoh65vyap1na" path="res://Assets/World/Units/Carrier/move_full/90/0004.png" id="31_qlfhu"]
+[ext_resource type="Texture2D" uid="uid://co6ydnmdwatng" path="res://Assets/World/Buildings/Lumberjack/Sprites/Move/270/0001.png" id="51_x34mm"]
+[ext_resource type="Texture2D" uid="uid://cr766mypbvgm8" path="res://Assets/World/Buildings/Lumberjack/Sprites/Move/270/0002.png" id="52_x74cq"]
+[ext_resource type="Texture2D" uid="uid://bsusfrx5h1gjb" path="res://Assets/World/Buildings/Lumberjack/Sprites/Move/270/0003.png" id="53_dc4jr"]
+[ext_resource type="Texture2D" uid="uid://b67qnm62boy8g" path="res://Assets/World/Buildings/Lumberjack/Sprites/Move/270/0004.png" id="54_8hwgc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wtlg1"]
 animations = [{
@@ -80,7 +83,7 @@ animations = [{
 "texture": ExtResource("6_g355a")
 }],
 "loop": true,
-"name": &"Deg0",
+"name": &"Move0",
 "speed": 5.0
 }, {
 "frames": [{
@@ -97,7 +100,7 @@ animations = [{
 "texture": ExtResource("10_cdis0")
 }],
 "loop": true,
-"name": &"Deg135",
+"name": &"Move135",
 "speed": 5.0
 }, {
 "frames": [{
@@ -114,7 +117,7 @@ animations = [{
 "texture": ExtResource("14_ldbow")
 }],
 "loop": true,
-"name": &"Deg180",
+"name": &"Move180",
 "speed": 5.0
 }, {
 "frames": [{
@@ -131,7 +134,7 @@ animations = [{
 "texture": ExtResource("18_6rkad")
 }],
 "loop": true,
-"name": &"Deg225",
+"name": &"Move225",
 "speed": 5.0
 }, {
 "frames": [{
@@ -148,7 +151,7 @@ animations = [{
 "texture": ExtResource("22_npt4g")
 }],
 "loop": true,
-"name": &"Deg270",
+"name": &"Move270",
 "speed": 5.0
 }, {
 "frames": [{
@@ -165,7 +168,7 @@ animations = [{
 "texture": ExtResource("26_ubc0m")
 }],
 "loop": true,
-"name": &"Deg315",
+"name": &"Move315",
 "speed": 5.0
 }, {
 "frames": [{
@@ -182,7 +185,7 @@ animations = [{
 "texture": ExtResource("10_1rn05")
 }],
 "loop": true,
-"name": &"Deg45",
+"name": &"Move45",
 "speed": 5.0
 }, {
 "frames": [{
@@ -199,7 +202,7 @@ animations = [{
 "texture": ExtResource("14_dxtf8")
 }],
 "loop": true,
-"name": &"Deg90",
+"name": &"Move90",
 "speed": 5.0
 }, {
 "frames": [{
@@ -216,7 +219,7 @@ animations = [{
 "texture": ExtResource("6_dhd64")
 }],
 "loop": true,
-"name": &"FullDeg0",
+"name": &"MoveFull0",
 "speed": 5.0
 }, {
 "frames": [{
@@ -233,7 +236,7 @@ animations = [{
 "texture": ExtResource("10_irvig")
 }],
 "loop": true,
-"name": &"FullDeg135",
+"name": &"MoveFull135",
 "speed": 5.0
 }, {
 "frames": [{
@@ -250,7 +253,7 @@ animations = [{
 "texture": ExtResource("14_1q6m6")
 }],
 "loop": true,
-"name": &"FullDeg180",
+"name": &"MoveFull180",
 "speed": 5.0
 }, {
 "frames": [{
@@ -267,15 +270,24 @@ animations = [{
 "texture": ExtResource("18_b6l4u")
 }],
 "loop": true,
-"name": &"FullDeg225",
+"name": &"MoveFull225",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("19_1ddln")
+"texture": ExtResource("51_x34mm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_x74cq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_dc4jr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_8hwgc")
 }],
 "loop": true,
-"name": &"FullDeg270",
+"name": &"MoveFull270",
 "speed": 5.0
 }, {
 "frames": [{
@@ -292,7 +304,7 @@ animations = [{
 "texture": ExtResource("26_pf254")
 }],
 "loop": true,
-"name": &"FullDeg315",
+"name": &"MoveFull315",
 "speed": 5.0
 }, {
 "frames": [{
@@ -309,7 +321,7 @@ animations = [{
 "texture": ExtResource("26_l52e5")
 }],
 "loop": true,
-"name": &"FullDeg45",
+"name": &"MoveFull45",
 "speed": 5.0
 }, {
 "frames": [{
@@ -326,7 +338,7 @@ animations = [{
 "texture": ExtResource("31_qlfhu")
 }],
 "loop": true,
-"name": &"FullDeg90",
+"name": &"MoveFull90",
 "speed": 5.0
 }]
 
@@ -335,8 +347,9 @@ script = ExtResource("2_1mxto")
 speed_tile_per_sec = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
-position = Vector2(0, -16)
+position = Vector2(0, -9.53674e-07)
 scale = Vector2(2, 1.52381)
 sprite_frames = SubResource("SpriteFrames_wtlg1")
-animation = &"Deg0"
+animation = &"Move0"
 speed_scale = 1.2
+offset = Vector2(0, -8)
