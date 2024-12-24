@@ -46,6 +46,8 @@ func _unhandled_input(event):
 
 
 func highlight_road(start, end):
+  if self.building_pos_to_building.has(self.map_to_local(start)):
+    return
   var path = road_building_pathfindng.get_path_to_dest(start, end, true, true)
   if path != null:
     highlighter_highlight_road.emit(path, true)
@@ -175,9 +177,9 @@ func set_road_building_terrain_points(points: Dictionary, used_cells: Array):
 
 
 
-func build_road(start_point, finish_point):
+func build_road(start_point: Vector2, finish_point: Vector2i):
   highlighter_highlight_road.emit([], false)
-  if self.building_pos_to_building.has(start_point):
+  if self.building_pos_to_building.has(self.map_to_local(start_point)):
     return
   var path = road_building_pathfindng.get_path_to_dest(start_point, finish_point, true, true)
   if path != null:

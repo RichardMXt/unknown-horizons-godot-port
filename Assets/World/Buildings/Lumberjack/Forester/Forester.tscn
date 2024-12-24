@@ -11,7 +11,7 @@ speed_px_per_sec = 128.0
 speed_tile_per_sec = 0.5
 
 [node name="ForesterSprite" type="AnimatedSprite2D" parent="." index="0"]
-position = Vector2(0, -32)
-scale = Vector2(2, 2.28571)
+scale = Vector2(2, 2)
 sprite_frames = ExtResource("2_f7dfd")
-animation = &"MoveFull180"
+animation = &"Move0"
+offset = Vector2(0, -8)

@@ -7,10 +7,12 @@ class_name Unit2D
 
 @onready var person_sprite: AnimatedSprite2D = self.get_child(0)
 
-enum CarrierState {
-  Empty       = 0,
-  WithFreight = 1,
-}
+#enum CarrierState {
+  #Empty       = 0,
+  #WithCargo = 1,
+#}
+#
+#var carrier_state: CarrierState = CarrierState.Empty
 
 var path: Array = []
 var path_there: Array = []
@@ -18,10 +20,13 @@ var path_back: Array = []
 
 var is_moving: bool = false
 
+var object_carring: String
+var count_of_objects: int
 
 
-func get_animation_name(angle_of_walk: float, carrier_state := CarrierState.Empty):
-  if carrier_state == CarrierState.WithFreight:
+
+func get_animation_name(angle_of_walk: float):
+  if count_of_objects >= 1:
     return "MoveFull%s" % [angle_of_walk]
   else:
     return "Move%s" % [angle_of_walk]
@@ -39,7 +44,8 @@ func get_sprite_angle(next_point: Vector2):
 
 
 
-func move(carrier_state: CarrierState, path: Array = path_there):
+func move(path: Array = path_there):
+  self.visible = true
   if len(path) <= 0:
     return
 
@@ -48,7 +54,7 @@ func move(carrier_state: CarrierState, path: Array = path_there):
     var sprite_angle = get_sprite_angle(point)
     if last_direction != sprite_angle:
       last_direction = sprite_angle
-      person_sprite.play(get_animation_name(sprite_angle, carrier_state))
+      person_sprite.play(get_animation_name(sprite_angle))
 
     #print(sprite_angle)
     var move_tween = self.create_tween().bind_node(self)
@@ -60,3 +66,4 @@ func move(carrier_state: CarrierState, path: Array = path_there):
   self.global_position = path[len(path) - 1]
   await self.get_tree().create_timer(0.05).timeout # let the _process run once.
   person_sprite.stop()
+  self.visible = false
