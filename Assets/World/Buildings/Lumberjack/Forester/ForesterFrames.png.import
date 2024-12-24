@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d27bgm1fyexyv"
-path="res://.godot/imported/merged_sprite_frames.png-fcc9d8de8222e2e91349c5fde077a9a1.ctex"
+uid="uid://cmfqgymft4c1l"
+path="res://.godot/imported/ForesterFrames.png-409a955f58695130a9217ab281a6807a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/World/Units/Carrier/merged_sprite_frames.png"
-dest_files=["res://.godot/imported/merged_sprite_frames.png-fcc9d8de8222e2e91349c5fde077a9a1.ctex"]
+source_file="res://Assets/World/Buildings/Lumberjack/Forester/ForesterFrames.png"
+dest_files=["res://.godot/imported/ForesterFrames.png-409a955f58695130a9217ab281a6807a.ctex"]
 
 [params]
 

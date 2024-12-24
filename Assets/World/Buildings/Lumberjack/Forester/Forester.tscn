@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/Units/Unit2D.tscn" id="1_degec"]
 [ext_resource type="Script" path="res://Assets/World/Buildings/Lumberjack/Forester/Forester.gd" id="2_a48mn"]
-[ext_resource type="SpriteFrames" uid="uid://b7inbywvvhts2" path="res://Assets/World/Buildings/Lumberjack/Forester/ForesterMovmentFrames.tres" id="2_f7dfd"]
+[ext_resource type="SpriteFrames" uid="uid://b7inbywvvhts2" path="res://Assets/World/Buildings/Lumberjack/Forester/ForesterMovementFrames.tres" id="2_f7dfd"]
 
 [node name="Forester" instance=ExtResource("1_degec")]
 script = ExtResource("2_a48mn")
