@@ -23,8 +23,8 @@ func has_resources_for_building(building_name: String = building_to_build) -> bo
   for resource in building_cost.keys():
     var amount_needed: int = building_cost[resource]
     var amount_available = GameStats.game_stats_resource.resources.get(resource)
-    var can_be_builded: bool = amount_available != null and amount_needed <= amount_available
-    if not can_be_builded:
+    var can_be_built: bool = amount_available != null and amount_needed <= amount_available
+    if not can_be_built:
       # in the future, tell the player the needed resources
       return false
 
