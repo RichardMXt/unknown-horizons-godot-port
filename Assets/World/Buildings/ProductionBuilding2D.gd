@@ -35,7 +35,7 @@ func setup_building():
 
 
 
-func show_tooltip(amount: int):
+func show_tooltip_animation(amount: int):
   tooltip.visible = true
   product_amount_placeholder.text = str(amount)
   var initial_pos = tooltip.position
@@ -58,7 +58,7 @@ func produce_product():
   if self.number_of_output_products < 10:
     self.number_of_output_products += 1
 
-  show_tooltip(1)
+  show_tooltip_animation(1) # fire and forget
 
 
 
