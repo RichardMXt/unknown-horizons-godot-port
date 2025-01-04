@@ -7,10 +7,10 @@
 [ext_resource type="Script" path="res://Assets/World/MainCamera.gd" id="4_ryeen"]
 [ext_resource type="Material" uid="uid://cltmqu62mbu3g" path="res://Assets/World/new_shader_material.tres" id="5_5dqjl"]
 [ext_resource type="Script" path="res://Assets/World/RoadHighlighter.gd" id="5_n0shf"]
-[ext_resource type="PackedScene" uid="uid://djjjex62e2o56" path="res://Assets/World/UI2D.tscn" id="5_uonbl"]
 [ext_resource type="Shader" path="res://Assets/World/Highlighter.gdshader" id="5_xwy3w"]
 [ext_resource type="Texture2D" uid="uid://ojeaj1a18a44" path="res://Assets/World/white_64x32.png" id="6_4vay5"]
 [ext_resource type="Texture2D" uid="uid://ckhylkfbvys8s" path="res://Assets/World/white_64x32_a0.5.png" id="7_2c0dm"]
+[ext_resource type="PackedScene" uid="uid://bka87rk8lk7kb" path="res://Assets/Player/PlayerHUD2.tscn" id="11_ucwor"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8btl"]
 shader = ExtResource("5_xwy3w")
@@ -60,7 +60,10 @@ tile_set = SubResource("TileSet_qxykv")
 zoom = Vector2(0.25, 0.25)
 script = ExtResource("4_ryeen")
 
-[node name="UI" parent="." instance=ExtResource("5_uonbl")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHud2" parent="CanvasLayer" instance=ExtResource("11_ucwor")]
+script = null
 
 [connection signal="build_tile_layer_build_road" from="Terrain" to="Builded" method="build_road"]
 [connection signal="builded_highlight_road" from="Terrain" to="Builded" method="highlight_road"]

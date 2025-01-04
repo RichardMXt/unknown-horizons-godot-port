@@ -14,14 +14,13 @@ signal building_started
 @onready var body := find_child("Body") as Control
 
 func _ready() -> void:
-  if owner is PlayerHUD:
-    connect("button_tear_pressed", Callable(owner, "_on_TabWidget_button_tear_pressed"))
-    connect("button_logbook_pressed", Callable(owner, "_on_TabWidget_button_logbook_pressed"))
-    connect("button_build_menu_pressed", Callable(owner, "_on_TabWidget_button_build_menu_pressed"))
-    connect("button_diplomacy_pressed", Callable(owner, "_on_TabWidget_button_diplomacy_pressed"))
-    connect("button_game_menu_pressed", Callable(owner, "_on_TabWidget_button_game_menu_pressed"))
-    if not Engine.is_editor_hint():
-      building_started.connect(BuildingManager.set_building_to_build)
+  var playerHUD = owner as PlayerHUD;
+  if playerHUD != null:
+    button_tear_pressed.connect(owner._on_TabWidget_button_tear_pressed)
+    button_logbook_pressed.connect(owner._on_TabWidget_button_logbook_pressed)
+    button_build_menu_pressed.connect(playerHUD._on_TabWidget_button_build_menu_pressed)
+    button_diplomacy_pressed.connect(owner._on_TabWidget_button_diplomacy_pressed)
+    button_game_menu_pressed.connect(owner._on_TabWidget_button_game_menu_pressed)
 
     # Hide empty detail widget section on runtime
     if body.get_child(0).get_child_count() == 0:
@@ -79,26 +78,53 @@ func _on_TabContainer_sort_children() -> void:
 #			prints(self, "has been parented.")
 
 func _on_TearButton_pressed() -> void:
-  emit_signal("button_tear_pressed")
+  button_tear_pressed.emit()
 
 func _on_LogbookButton_pressed() -> void:
-  emit_signal("button_logbook_pressed")
+  button_logbook_pressed.emit()
 
 func _on_BuildMenuButton_pressed() -> void:
-  emit_signal("button_build_menu_pressed")
+  var event = InputEventAction.new();
+  event.action = "toggle_building_menu";
+  event.pressed = true;
+  Input.parse_input_event(event);
+  # event.is_action_pressed("toggle_building_menu")
+  # button_build_menu_pressed.emit()
 
 func _on_DiplomacyButton_pressed() -> void:
-  emit_signal("button_diplomacy_pressed")
+  button_diplomacy_pressed.emit()
 
 func _on_GameMenuButton_pressed() -> void:
-  emit_signal("button_game_menu_pressed")
+  button_game_menu_pressed.emit()
 
 func _on_TabWidget_visibility_changed() -> void:
   if self.name != "TabWidget":
     if visible:
       prints(self.name, "opened.")
 
+func _input(event: InputEvent) -> void:
+  if event.is_action_pressed("toggle_building_menu"):
+    # print("Hi!")
+    # print(event)
+    # self._on_BuildMenuButton_pressed()
+    button_build_menu_pressed.emit()
 
+  # elif event.is_action_pressed("toggle_diplomacy_menu"):
+  #   button_diplomacy_pressed.emit()
 
-func BuildBuilding(building_name: String) -> void:
-  building_started.emit(building_name)
+  # elif event.is_action_pressed("toggle_game_menu"):
+  #   button_game_menu_pressed.emit()
+
+  # elif event.is_action_pressed("toggle_logbook"):
+  #   button_logbook_pressed.emit()
+
+  # elif event.is_action_pressed("toggle_tear"):
+  #   button_tear_pressed.emit()
+
+# func BuildBuilding(building_name: String) -> void:
+#   var event = InputEventAction.new();
+#   event.action = "toggle_build_building";
+#   event.pressed = true;
+#   event.set_meta("building_name", building_name);
+#   Input.parse_input_event(event);
+  # building_started.emit(building_name)
