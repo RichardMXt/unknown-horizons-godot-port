@@ -1,20 +1,7 @@
-extends Node2D
+extends Building2D
+## inherited by all 2D production buildings, it has all the parameters and functions that all production buildings need
 
 class_name ProductionBuilding2D
-
-#@export_category("ProductionBuilding2D")
-@export var game_name: String
-@export var max_storage_capacity: int = 10
-
-@export_group("time")
-@export var processing_time: int = 10
-@export var load_or_unload_time: float = 2
-
-@export_group("product")
-@export var output_product: String
-@export_subgroup("input product")
-@export var input_product: String = ""
-@export var needs_intake_product: bool = false
 
 @onready var prod_timer: Timer = self.get_node("ProdTimer")
 @onready var carrier: Carrier = self.get_node("Carrier")
@@ -49,7 +36,7 @@ func show_tooltip_animation(amount: int):
 
 
 func produce_product():
-  if self.needs_intake_product:
+  if self.building_data.needs_intake_product:
     if self.number_of_intake_products > 0:
       self.number_of_intake_products -= 1
     else:
@@ -85,7 +72,7 @@ func find_closest_warehouse():
 
 func new_building_built(building):
 #check if building is warehouse
-  if building.game_name == "warehouse":
+  if building.building_data.game_name == "warehouse":
     var path_to_warehouse = self.get_parent().get_path_to_dest(self.position, building.position)
     if path_to_warehouse != null and (len(path_to_warehouse) < len(closest_warehouse_path) or len(closest_warehouse_path) == 0):
       closest_warehouse_path = path_to_warehouse
@@ -102,8 +89,8 @@ func road_built():
 
 
 func get_resourses_needed() -> Array:
-  if needs_intake_product:
-    return [input_product, max_storage_capacity - number_of_intake_products]
+  if building_data.needs_intake_product:
+    return [building_data.input_product, building_data.max_storage_capacity - number_of_intake_products]
   else:
     return ["", 0]
 
@@ -111,17 +98,17 @@ func get_resourses_needed() -> Array:
 
 func unload_carrier(object_carring: String, amount: int) -> int:
   if object_carring == "":
-    await self.get_tree().create_timer(load_or_unload_time / 2).timeout
+    await self.get_tree().create_timer(building_data.load_or_unload_time / 2).timeout
 
-    number_of_intake_products = min(number_of_intake_products + amount,  max_storage_capacity)
+    number_of_intake_products = min(number_of_intake_products + amount, building_data.max_storage_capacity)
 
   return 0
 
 
 
 func load_carrier() -> Array:
-  await self.get_tree().create_timer(load_or_unload_time / 2).timeout
+  await self.get_tree().create_timer(building_data.load_or_unload_time / 2).timeout
 
   var amount_to_load = min(number_of_output_products, carrier.max_carry_limit)
   number_of_output_products -= amount_to_load
-  return [amount_to_load, self.output_product]
+  return [amount_to_load, self.building_data.output_product]

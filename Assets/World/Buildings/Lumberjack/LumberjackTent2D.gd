@@ -9,7 +9,7 @@ func _ready():
   production_loop()
 
 func production_loop():
-  while self.number_of_output_products < self.max_storage_capacity:
+  while self.number_of_output_products < self.building_data.max_storage_capacity:
     if self.number_of_intake_products <= 0:
       await wait_for_wood()
     await produce_wood()
@@ -22,7 +22,7 @@ func wait_for_wood():
 
 func produce_wood():
   if self.number_of_intake_products > 0:
-    await self.get_tree().create_timer(self.processing_time).timeout
+    await self.get_tree().create_timer(self.building_data.processing_time).timeout
     self.number_of_intake_products -= 1
     self.number_of_output_products += 1
     self.show_tooltip_animation(1) # fire and forget
