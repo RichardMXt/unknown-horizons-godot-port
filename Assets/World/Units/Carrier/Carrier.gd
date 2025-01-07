@@ -43,7 +43,7 @@ func load_resources_from_building():
   self.count_of_objects = object_data[0]
 
 func move_to_warehouse():
-  # for safety
+  # make sure that object carring data if valid
   if self.object_carring == "" or self.count_of_objects <= 0:
     return
   if len(path) > 0 and not is_moving and max_carry_limit >= self.count_of_objects:

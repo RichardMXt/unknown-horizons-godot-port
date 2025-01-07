@@ -4,14 +4,19 @@ extends Node
 ## building data folder
 const bdf = "res://Assets/World/BuildingData/"
 
-var building_data: Dictionary = {
-  preload(bdf + "FarmData.tres").game_name : preload(bdf + "FarmData.tres"),
-  preload(bdf + "LumberjackData.tres").game_name : preload(bdf + "LumberjackData.tres"),
-  preload(bdf + "RoadData.tres").game_name : preload(bdf + "RoadData.tres"),
-  preload(bdf + "WarehouseData.tres").game_name : preload(bdf + "WarehouseData.tres"),
-}
-
+var building_data: Dictionary = {}
 var building_to_build: BuildingData = null
+
+func _ready():
+#  convert a list of building data files to a dictionary
+  var building_data_files = [
+    preload(bdf + "FarmData.tres"),
+    preload(bdf + "LumberjackData.tres"),
+    preload(bdf + "RoadData.tres"),
+    preload(bdf + "WarehouseData.tres")
+  ]
+  for building_data_file in building_data_files:
+    building_data[building_data_file.name] = building_data_file
 
 func set_building_to_build(building_name: String):
   building_to_build = building_data.get(building_name)
