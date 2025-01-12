@@ -16,7 +16,7 @@ func _ready():
     preload(bdf + "WarehouseData.tres")
   ]
   for building_data_file in building_data_files:
-    building_data[building_data_file.name] = building_data_file
+    building_data[building_data_file.game_name] = building_data_file
 
 func set_building_to_build(building_name: String):
   building_to_build = building_data.get(building_name)

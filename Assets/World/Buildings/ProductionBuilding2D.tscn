@@ -16,6 +16,7 @@ script = ExtResource("1_hq3n1")
 
 [node name="Carrier" parent="." instance=ExtResource("2_bbdpa")]
 visible = false
+max_carry_limit = 10
 
 [node name="ItemProducedTooltip" type="Control" parent="."]
 visible = false

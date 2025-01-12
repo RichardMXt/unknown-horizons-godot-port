@@ -10,6 +10,4 @@ class_name ProductionBuildingData
 
 @export_group("product")
 @export var output_product: String
-@export_subgroup("input product")
-@export var input_product: String
-@export var needs_intake_product: bool = true
+@export var input_products: Dictionary = {}

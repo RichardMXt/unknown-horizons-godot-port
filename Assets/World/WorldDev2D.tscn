@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Assets/World/Tilemaps/Built/TileMapLayerNavigation2D.gd" id="4_w5w5r"]
 [ext_resource type="Material" uid="uid://cltmqu62mbu3g" path="res://Assets/World/new_shader_material.tres" id="5_5dqjl"]
 [ext_resource type="PackedScene" uid="uid://djjjex62e2o56" path="res://Assets/World/UI2D.tscn" id="5_uonbl"]
-[ext_resource type="Shader" path="res://Assets/World/Tilemaps/Highlighter.gdshader" id="5_xwy3w"]
+[ext_resource type="Shader" path="res://Assets/World/Tilemaps/Highlight/Highlighter.gdshader" id="5_xwy3w"]
 [ext_resource type="Texture2D" uid="uid://ojeaj1a18a44" path="res://Assets/World/white_64x32.png" id="6_4vay5"]
 [ext_resource type="Script" path="res://Assets/World/Tilemaps/Highlight/RoadHighlighter.gd" id="6_gvw4r"]
 [ext_resource type="Texture2D" uid="uid://ckhylkfbvys8s" path="res://Assets/World/white_64x32_a0.5.png" id="7_2c0dm"]
