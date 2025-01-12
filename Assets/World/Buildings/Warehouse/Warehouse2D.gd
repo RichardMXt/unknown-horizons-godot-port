@@ -25,8 +25,8 @@ func load_unload_worker(unload_quantity: Dictionary, load_quantity: Dictionary) 
   cur_loading_and_unloading += 1
 
   # load and unload worker
-  var objects_to_load: Dictionary = await unload_worker(unload_quantity)
-  objects_to_load = await load_worker(load_quantity)
+  await unload_worker(unload_quantity)
+  var objects_to_load = await load_worker(load_quantity)
 
 #  finish loading and unloading
   cur_loading_and_unloading -= 1
@@ -36,10 +36,10 @@ func load_unload_worker(unload_quantity: Dictionary, load_quantity: Dictionary) 
 
 
 
-func unload_worker(objects_to_unload: Dictionary) -> Dictionary:
+func unload_worker(objects_to_unload: Dictionary) -> void:
   # if no request on unloading
   if objects_to_unload == {}:
-    return {}
+    return
   await self.get_tree().create_timer(load_and_unload_time / 2).timeout
   # for future multi loads if any, wraped in for loop
   for object in objects_to_unload.keys():
@@ -50,8 +50,6 @@ func unload_worker(objects_to_unload: Dictionary) -> Dictionary:
       GameStats.game_stats_resource.resources[object] = amount
     #update_resources.emit()
     print("the amount of %s is %s" % [object, GameStats.game_stats_resource.resources[object]])
-
-  return {}
 
 func load_worker(objects_to_load: Dictionary) -> Dictionary:
   # if no request on loading
