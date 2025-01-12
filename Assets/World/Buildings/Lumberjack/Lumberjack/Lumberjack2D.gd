@@ -32,9 +32,12 @@ func is_cell_a_tree(tree_pos: Vector2) -> bool:
 func is_tree_available_for_choping(tree_pos: Vector2) -> bool:
   return is_cell_a_tree(tree_pos) and not self.get_parent().get_parent().trees_getting_choped.has(tree_pos)
 
-func walk(where: Vector2, animation_prefix: String = "Move"):
+func walk(where: Vector2):
   var tween_time = self.global_position.distance_to(where) / speed_px_per_sec
-  self.person_sprite.play(animation_prefix + str(self.get_sprite_angle(where)))
+  if count_of_objects >= 1:
+    self.person_sprite.play("MoveFull" + str(self.get_sprite_angle(where)))
+  else:
+    self.person_sprite.play("Move" + str(self.get_sprite_angle(where)))
   var move_tween: Tween = self.get_tree().create_tween().bind_node(self)
   move_tween.tween_property(self, "global_position", where, tween_time)
   await move_tween.finished
@@ -53,15 +56,12 @@ func movement_loop():
     lock_tree(tree_pos)
 
     self.visible = true
-    await walk(tree_pos, "Move")
+    await walk(tree_pos)
 
     if is_cell_a_tree(tree_pos):
       await chopdown_tree(tree_pos)
 
-    if count_of_objects >= 1:
-      await walk(self.get_parent().global_position, "MoveFull")
-    else:
-      await walk(self.get_parent().global_position, "Move")
+    await walk(self.get_parent().global_position)
     self.visible = false
     await unload()
 
