@@ -8,7 +8,7 @@
 [node name="BuildingMenuTabWidget" instance=ExtResource("3")]
 script = ExtResource("2")
 
-[node name="WidgetDetail" parent="." index="2"]
+[node name="WidgetDetail" parent="." index="0"]
 custom_minimum_size = Vector2(251, 0)
 
 [node name="BuildingSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="0" instance=ExtResource("4")]

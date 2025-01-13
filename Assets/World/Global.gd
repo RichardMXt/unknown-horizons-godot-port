@@ -292,7 +292,7 @@ var has_pirates := true
 var has_disasters := false
 
 var World: Node3D = null
-var PlayerStart: Node3D = null
+#var PlayerStart: Node3D = null
 
 @warning_ignore("unused_private_class_variable")
 var _warning := false # DEBUG

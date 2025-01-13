@@ -21,14 +21,13 @@ class_name SwitchTabWidget
 #	for sibling in get_parent().get_children():
 #		sibling.tab_changed.connect(_on_SwitchTabWidget_tab_changed)
 
-func _draw() -> void:
+#func _draw() -> void:
 #	if texture_normal:
 #		custom_minimum_size = texture_normal.get_size()
 #	else:
 #		custom_minimum_size = size
-  custom_minimum_size.y = 46
-
-  notify_property_list_changed()
+  #custom_minimum_size.y = 46
+  #notify_property_list_changed()
 
 # func get_tab_container() -> TabContainer:
 #   if owner is TabWidget:

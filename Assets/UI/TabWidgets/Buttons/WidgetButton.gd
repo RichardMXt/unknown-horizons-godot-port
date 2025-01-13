@@ -3,17 +3,17 @@ extends TextureButton
 class_name WidgetButton
 
 ## Name of the input action to be triggered when the button is pressed.
-@export var input_action_name: String:
-  set(name):
-    input_action_name = name
-    if name != "":
-      if not InputMap.has_action(name):
-        push_warning("Input action not found in InputMap (project settings):", name)
-      else:
-        prints("Input action found in InputMap (project settings):", name)
+@export var input_action_name := ""#:
+  # set(name):
+  #   input_action_name = name
+  #   if name != "":
+  #     if not InputMap.has_action(name):
+  #       push_warning("Input action not found in InputMap (project settings):", name)
+  #     else:
+  #       prints("Input action found in InputMap (project settings):", name)
 
 ## Additional meta data for the input action.
-@export var input_action_meta: Dictionary = {}
+@export var input_action_meta := {}
 
 
 ## Base class for all widget buttons.
@@ -71,13 +71,13 @@ func _draw() -> void:
 func _pressed() -> void:
   Audio.play_snd_click()
   if self.input_action_name != "":
-      var event = InputEventAction.new();
-      event.action = self.input_action_name;
-      event.pressed = true;
-      for key in self.input_action_meta.keys():
-        event.set_meta(key, self.input_action_meta[key]);
-      # event.set_meta("building_name", "road");
-      Input.parse_input_event(event);
+    var event = InputEventAction.new();
+    event.action = self.input_action_name;
+    event.pressed = true;
+    for key in self.input_action_meta.keys():
+      event.set_meta(key, self.input_action_meta[key]);
+    # event.set_meta("building_name", "road");
+    Input.parse_input_event(event);
 
 func _notification(what: int) -> void:
   match what:

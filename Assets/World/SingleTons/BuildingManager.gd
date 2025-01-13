@@ -16,10 +16,12 @@ enum Buildings {
 
 func _input(event: InputEvent) -> void:
   var build_building_name := ""
+
   if event.is_action_pressed("toggle_build_building"):
     build_building_name = event.get_meta("building_name")
     if build_building_name == null or build_building_name== "":
       push_error("`toggle_build_building` action is pressed, but `building_name` meta is null or empty.")
+
   if event.is_action_pressed("toggle_build_road"):
     build_building_name = "road"
     
