@@ -36,15 +36,13 @@ signal highlighter_highlight_road
 
 func _ready():
   person_pathfinding.set_points(self.get_used_cells(), is_movable_on)
-  #forester_pathfinding.set_points_passable(get_trees(), false)
-
-func _init():
+  print(self.get_children())
   for child in self.get_children():
-    building_pos_to_building[child.global_position] = child
-    if building_name_to_building_poses.has(child.building_data.game_name):
-      building_name_to_building_poses[child.building_data.game_name].append(child.global_position)
-    else:
-      building_name_to_building_poses[child.building_data.game_name] = [child.global_position]
+    person_pathfinding.set_point_solid(local_to_map(child.position), false)
+    road_building_pathfindng.set_point_solid(local_to_map(child.position), true)
+  # person_pathfinding.set_point_solid(Vector2i(0, 0), false)
+  print(person_pathfinding.is_point_solid(Vector2i(0, 0)))
+
 
 func _unhandled_input(event):
   if event is InputEventMouseButton:
@@ -107,7 +105,9 @@ func is_road_buildable_on(cell) -> bool:
 
 func is_movable_on(cell) -> bool:
   #print(self.get_cell_tile_data(cell).get_custom_data("is_navigatable"))
-  return self.get_cell_tile_data(cell) == null or self.get_cell_tile_data(cell).get_custom_data(is_navigatable)
+  return (
+    self.get_cell_tile_data(cell) != null and
+    self.get_cell_tile_data(cell).get_custom_data(is_navigatable))
 
 
 
@@ -131,8 +131,10 @@ func register_building(building) -> void:
       building_poses.append(building.position)
     else:
       building_name_to_building_poses[building.building_data.game_name] = [building.position]
+    # set points for pathfinding
+    person_pathfinding.set_point_solid(self.local_to_map(building.position), false)
+    road_building_pathfindng.set_point_solid(self.local_to_map(building.position), true)
     # handle signals
-    #new_building_built.emit(building.position)
     new_building_built.emit(building)
     if building is ProductionBuilding2D:
       new_building_built.connect(building.new_building_built)
@@ -168,8 +170,6 @@ func check_and_build() -> void:
     var tile_id = Buildings.get(building_to_build)
     if tile_id != null:
       if BuildingManager.has_resources_for_building():
-        person_pathfinding.set_point_solid(grid_building_pos, false)
-        road_building_pathfindng.set_point_solid(grid_building_pos, true)
         BuildingManager.spend_resources_for_building()
         self.set_scene(grid_building_pos, 0, Vector2i(0, 0), tile_id)
 
@@ -197,3 +197,15 @@ func build_road(start_point: Vector2, finish_point: Vector2i) -> void:
 
     person_pathfinding.set_points_passable(path, true)
     road_built.emit()
+
+var nodes_to_update: Array[Node] = []
+func nodes_entered_tree_batch():
+  for node in nodes_to_update:
+    register_building(node)
+  nodes_to_update = []
+
+func _on_child_entered_tree(node: Node):
+  if node is Building2D:
+    nodes_to_update.append(node)
+    if len(nodes_to_update) == 1:
+      nodes_entered_tree_batch.call_deferred() # defer the call for batch update
