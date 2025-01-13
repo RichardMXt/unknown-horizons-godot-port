@@ -38,7 +38,13 @@ func _ready():
   person_pathfinding.set_points(self.get_used_cells(), is_movable_on)
   #forester_pathfinding.set_points_passable(get_trees(), false)
 
-
+func _init():
+  for child in self.get_children():
+    building_pos_to_building[child.global_position] = child
+    if building_name_to_building_poses.has(child.building_data.game_name):
+      building_name_to_building_poses[child.building_data.game_name].append(child.global_position)
+    else:
+      building_name_to_building_poses[child.building_data.game_name] = [child.global_position]
 
 func _unhandled_input(event):
   if event is InputEventMouseButton:
@@ -101,7 +107,7 @@ func is_road_buildable_on(cell) -> bool:
 
 func is_movable_on(cell) -> bool:
   #print(self.get_cell_tile_data(cell).get_custom_data("is_navigatable"))
-  return self.get_cell_tile_data(cell).get_custom_data(is_navigatable)
+  return self.get_cell_tile_data(cell) == null or self.get_cell_tile_data(cell).get_custom_data(is_navigatable)
 
 
 
