@@ -191,14 +191,6 @@ func build_road(start_point: Vector2, finish_point: Vector2i) -> void:
     person_pathfinding.set_points_passable(path, true)
     road_built.emit()
 
-var nodes_to_update: Array[Node] = []
-func nodes_entered_tree_batch():
-  for node in nodes_to_update:
-    register_building(node)
-  nodes_to_update = []
-
 func _on_child_entered_tree(node: Node):
   if node is Building2D:
-    nodes_to_update.append(node)
-    if len(nodes_to_update) == 1:
-      nodes_entered_tree_batch.call_deferred() # defer the call for batch update
+    register_building(node)
