@@ -36,13 +36,6 @@ signal highlighter_highlight_road
 
 func _ready():
   person_pathfinding.set_points(self.get_used_cells(), is_movable_on)
-  print(self.get_children())
-  for child in self.get_children():
-    person_pathfinding.set_point_solid(local_to_map(child.position), false)
-    road_building_pathfindng.set_point_solid(local_to_map(child.position), true)
-  # person_pathfinding.set_point_solid(Vector2i(0, 0), false)
-  print(person_pathfinding.is_point_solid(Vector2i(0, 0)))
-
 
 func _unhandled_input(event):
   if event is InputEventMouseButton:
