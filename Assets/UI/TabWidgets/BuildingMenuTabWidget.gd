@@ -1,3 +1,3 @@
 @tool
-extends TabWidget
+extends Control
 class_name BuildingMenuTabWidget

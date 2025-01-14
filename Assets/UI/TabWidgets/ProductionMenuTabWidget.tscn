@@ -5,8 +5,8 @@
 
 [node name="ProductionMenuTabWidget" instance=ExtResource("2")]
 
-[node name="WidgetDetail" parent="." index="2"]
-offset_bottom = 209.5
+[node name="WidgetDetail" parent="." index="0"]
+offset_bottom = 230.0
 
 [node name="Body" parent="WidgetDetail" index="1"]
 custom_minimum_size = Vector2(0, 82)

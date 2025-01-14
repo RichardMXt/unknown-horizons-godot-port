@@ -16,6 +16,7 @@ layout_mode = 2
 [node name="SettlementInventory" type="VBoxContainer" parent="WidgetDetail/Body/TabContainer" index="2"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="CaptionBlock" parent="WidgetDetail/Body/TabContainer/SettlementInventory" index="0" instance=ExtResource("3_owhu8")]
 layout_mode = 2

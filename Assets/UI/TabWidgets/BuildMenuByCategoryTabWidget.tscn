@@ -32,29 +32,40 @@
 [ext_resource type="PackedScene" uid="uid://bttl07b8eembn" path="res://Assets/UI/TabWidgets/Buttons/ActionButton/ActionButtons/BuildButtons/BuildHunterButton.tscn" id="31"]
 
 [node name="BuildMenuByCategoryTabWidget" instance=ExtResource("2")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.5
+offset_right = 125.5
+grow_horizontal = 2
 
-[node name="WidgetDetail" parent="." index="2"]
-offset_bottom = 537.5
+[node name="WidgetDetail" parent="." index="0"]
+offset_bottom = 558.0
 
 [node name="Body" parent="WidgetDetail" index="1"]
 custom_minimum_size = Vector2(0, 410)
 
-[node name="ResidentialSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="0" instance=ExtResource("3")]
+[node name="ResidentialSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="0" node_paths=PackedStringArray("target_control") instance=ExtResource("3")]
 custom_minimum_size = Vector2(40, 46)
 layout_mode = 2
+target_control = NodePath("../../TabContainer/Settlement")
 
-[node name="FieldsSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="1" instance=ExtResource("5")]
+[node name="FieldsSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="1" node_paths=PackedStringArray("target_control") instance=ExtResource("5")]
 layout_mode = 2
+target_control = NodePath("../../TabContainer/Fields")
 
-[node name="AgriculturalSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="2" instance=ExtResource("6")]
+[node name="AgriculturalSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="2" node_paths=PackedStringArray("target_control") instance=ExtResource("6")]
 layout_mode = 2
+target_control = NodePath("../../TabContainer/Agriculture")
 
-[node name="CompaniesSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="3" instance=ExtResource("7")]
+[node name="CompaniesSwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="3" node_paths=PackedStringArray("target_control") instance=ExtResource("7")]
 layout_mode = 2
+target_control = NodePath("../../TabContainer/Companies")
 
-[node name="MilitarySwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="4" instance=ExtResource("4")]
+[node name="MilitarySwitchTabWidget" parent="WidgetDetail/Body/TabSwitches" index="4" node_paths=PackedStringArray("target_control") instance=ExtResource("4")]
 custom_minimum_size = Vector2(40, 46)
 layout_mode = 2
+target_control = NodePath("../../TabContainer/Military")
 
 [node name="TabContainer" parent="WidgetDetail/Body" index="1"]
 offset_bottom = 410.0
@@ -460,11 +471,6 @@ layout_mode = 2
 
 [node name="BuildBoatBuilderButton" parent="WidgetDetail/Body/TabContainer/Military/MarginContainer/VBoxContainer/VBoxContainer4/BuildMenuContainer" index="0" instance=ExtResource("25")]
 layout_mode = 2
-
-[connection signal="pressed" from="WidgetDetail/Body/TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer/BuildTrailButton" to="." method="BuildBuilding" binds= ["road"]]
-[connection signal="pressed" from="WidgetDetail/Body/TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer/BuildStorageButton" to="." method="BuildBuilding" binds= ["warehouse"]]
-[connection signal="pressed" from="WidgetDetail/Body/TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer/BuildFarmButton" to="." method="BuildBuilding" binds= ["farm"]]
-[connection signal="pressed" from="WidgetDetail/Body/TabContainer/Companies/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer/BuildLumberjackButton" to="." method="BuildBuilding" binds= ["lumberjack"]]
 
 [editable path="WidgetDetail/Body/TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer"]
 [editable path="WidgetDetail/Body/TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer"]

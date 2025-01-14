@@ -10,19 +10,16 @@
 script = ExtResource("5")
 
 [node name="WidgetDetail" parent="." index="2"]
-layout_mode = 1
 offset_bottom = 308.5
 
 [node name="Body" parent="WidgetDetail" index="1"]
 custom_minimum_size = Vector2(0, 181)
-layout_mode = 2
 size_flags_vertical = 1
 
 [node name="TabContainer" parent="WidgetDetail/Body" index="1"]
 offset_bottom = 229.0
 
 [node name="CaptionBlock" parent="WidgetDetail/Body/TabContainer/VBoxContainer" index="0"]
-layout_mode = 2
 text = "Lumberjack"
 
 [node name="ProductionChain" parent="WidgetDetail/Body/TabContainer/VBoxContainer" index="2" instance=ExtResource("3")]
