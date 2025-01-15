@@ -9,26 +9,6 @@ class_name SwitchTabWidget
 @export var texture_active: Texture2D
 @onready var _texture_normal := texture_normal
 
-# @onready var tab_container: TabContainer : get = get_tab_container
-
-#func _ready() -> void:
-#	if not Engine.is_editor_hint():
-#		if get_index() == 0: # => every other switch node is ready
-#			for sibling in get_parent().get_children():
-#				sibling._listen_to_other_switches()
-#
-#func _listen_to_other_switches() -> void:
-#	for sibling in get_parent().get_children():
-#		sibling.tab_changed.connect(_on_SwitchTabWidget_tab_changed)
-
-#func _draw() -> void:
-#	if texture_normal:
-#		custom_minimum_size = texture_normal.get_size()
-#	else:
-#		custom_minimum_size = size
-  #custom_minimum_size.y = 46
-  #notify_property_list_changed()
-
 # func get_tab_container() -> TabContainer:
 #   if owner is TabWidget:
 #     if tab_container == null:
@@ -40,13 +20,36 @@ class_name SwitchTabWidget
 
 #   return tab_container
 
+var target_tab_container: TabContainer
+
+func _ready() -> void:
+  var node := get_node("../../../TabContainer")
+  if node == null:
+    push_error("../../../TabContainer not found for SwitchTabWidget", self)
+    return
+  self.target_tab_container = node as TabContainer
+  if self.target_tab_container == null:
+    push_error("../../../TabContainer is not of type TabContainer", self)
+    return
+  if self.target_tab_container.get_child_count() != self.get_parent().get_child_count():
+    push_error("TabContainer child count does not match SwitchTabWidget count", self)
+    return
+
 func _pressed() -> void:
   Audio.play_snd_click()
 
 func _on_SwitchTabWidget_pressed() -> void:
-  if self.target_control == null:
-    push_warning("target_control is not set.")
-    return;
+  if self.target_control == null && self.target_tab_container == null:
+    push_error("SwitchTabWidget target_control and target_tab_container are not set", self)
+    return
+
+  if self.target_control == null && self.target_tab_container != null:
+    # target_control is not set - use the "by convention" approach:
+    # the index of the SwitchTabWidget in its parent is the index of the tab to switch to
+    var index := get_parent().get_children().find(self)
+    self.target_tab_container.current_tab = index
+    return
+
   # find the tab container:
   var tab_container := target_control.get_parent() as TabContainer
   if tab_container == null:

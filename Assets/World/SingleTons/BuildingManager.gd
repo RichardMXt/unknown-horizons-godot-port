@@ -21,8 +21,6 @@ func _ready():
 #var Farm2D = preload("res://Assets/World/Buildings/Agricultural/Farm2D/Farm2D.tscn")
 #var WareHouse = preload("res://Assets/World/Buildings/WareHouse2D/ware_house2D.tscn")
 
-var building_to_build = null
-
 const road = "road"
 
 enum Buildings {

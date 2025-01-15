@@ -51,29 +51,30 @@ theme_override_constants/separation = -57
 [node name="WidgetTop" parent="VBoxContainer" instance=ExtResource("4_nvuti")]
 layout_mode = 2
 
-[node name="TabContainer2" type="TabContainer" parent="VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 mouse_filter = 2
 current_tab = 1
 tabs_visible = false
 
-[node name="EmptyPanelContainer" type="PanelContainer" parent="VBoxContainer/TabContainer2"]
+[node name="EmptyPanelContainer" type="PanelContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme = SubResource("Theme_nxfqi")
 metadata/_tab_index = 0
 
-[node name="BuildMenuByCategoryTabWidget" parent="VBoxContainer/TabContainer2" instance=ExtResource("5_xapp0")]
+[node name="BuildMenuByCategoryTabWidget" parent="VBoxContainer/TabContainer" instance=ExtResource("5_xapp0")]
+unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="BakeryTabWidget" parent="VBoxContainer/TabContainer2" instance=ExtResource("20_a0y8v")]
+[node name="BakeryTabWidget" parent="VBoxContainer/TabContainer" instance=ExtResource("20_a0y8v")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="BarracksTabWidget" parent="VBoxContainer/TabContainer2" instance=ExtResource("21_ckfr0")]
+[node name="BarracksTabWidget" parent="VBoxContainer/TabContainer" instance=ExtResource("21_ckfr0")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3

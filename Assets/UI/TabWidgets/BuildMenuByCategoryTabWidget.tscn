@@ -39,30 +39,24 @@ offset_left = -125.5
 offset_right = 125.5
 grow_horizontal = 2
 
-[node name="ResidentialSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="0" node_paths=PackedStringArray("target_control") instance=ExtResource("3")]
+[node name="ResidentialSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="0" instance=ExtResource("3")]
 custom_minimum_size = Vector2(40, 46)
 layout_mode = 2
-target_control = NodePath("../../TabContainer/Settlement")
 
-[node name="FieldsSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="1" node_paths=PackedStringArray("target_control") instance=ExtResource("5")]
+[node name="FieldsSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="1" instance=ExtResource("5")]
 layout_mode = 2
-target_control = NodePath("../../TabContainer/Fields")
 
-[node name="AgriculturalSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="2" node_paths=PackedStringArray("target_control") instance=ExtResource("6")]
+[node name="AgriculturalSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="2" instance=ExtResource("6")]
 layout_mode = 2
-target_control = NodePath("../../TabContainer/Agriculture")
 
-[node name="CompaniesSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="3" node_paths=PackedStringArray("target_control") instance=ExtResource("7")]
+[node name="CompaniesSwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="3" instance=ExtResource("7")]
 layout_mode = 2
-target_control = NodePath("../../TabContainer/Companies")
 
-[node name="MilitarySwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="4" node_paths=PackedStringArray("target_control") instance=ExtResource("4")]
+[node name="MilitarySwitchTabWidget" parent="LeftFloatingPanel/TabSwitches" index="4" instance=ExtResource("4")]
 custom_minimum_size = Vector2(40, 46)
 layout_mode = 2
-target_control = NodePath("../../TabContainer/Military")
 
 [node name="TabContainer" parent="." index="1"]
-offset_bottom = 410.0
 current_tab = 0
 
 [node name="Settlement" type="VBoxContainer" parent="TabContainer" index="1"]
@@ -465,7 +459,3 @@ layout_mode = 2
 
 [node name="BuildBoatBuilderButton" parent="TabContainer/Military/MarginContainer/VBoxContainer/VBoxContainer4/BuildMenuContainer" index="0" instance=ExtResource("25")]
 layout_mode = 2
-
-[editable path="WidgetDetail/Body/TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer"]
-[editable path="WidgetDetail/Body/TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer"]
-[editable path="WidgetDetail/Body/TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer"]
