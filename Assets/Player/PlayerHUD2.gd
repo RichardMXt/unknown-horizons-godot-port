@@ -3,14 +3,15 @@ extends Control
 func get_tab_index(tab_container: TabContainer, target_control: Control) -> int:
   var tab_index := -1
   for i in range(tab_container.get_tab_count()):
-    if tab_container.get_tab_control(i) == target_control:
+    var tab_control_i = tab_container.get_tab_control(i)
+    if tab_control_i == target_control:
       tab_index = i
       break
   return tab_index
 
 func toggle_tab_widget(tab_widget: Control):
   var tab_container: TabContainer = tab_widget.get_parent();
-  var tab_index := get_tab_index(tab_container, tab_container)
+  var tab_index := get_tab_index(tab_container, tab_widget)
   if tab_container.current_tab == tab_index:
     tab_container.current_tab = 0 # switch off the tabs, by switching to the first tab
   else:
