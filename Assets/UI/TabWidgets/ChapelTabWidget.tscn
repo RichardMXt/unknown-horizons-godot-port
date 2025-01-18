@@ -5,11 +5,6 @@
 
 [node name="ChapelTabWidget" instance=ExtResource("1_o5m4e")]
 
-[node name="WidgetDetail" parent="." index="2"]
-layout_mode = 1
-offset_bottom = 264.5
-
-
 [node name="CaptionBlock" parent="TabContainer/VBoxContainer" index="0"]
 layout_mode = 2
 text = "Pavilion"

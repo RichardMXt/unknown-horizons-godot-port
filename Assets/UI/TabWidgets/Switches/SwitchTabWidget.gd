@@ -25,14 +25,18 @@ var target_tab_container: TabContainer
 func _ready() -> void:
   var node := get_node("../../../TabContainer")
   if node == null:
-    push_error("../../../TabContainer not found for SwitchTabWidget", self)
+    push_error("../../../TabContainer not found for SwitchTabWidget for ", self)
     return
   self.target_tab_container = node as TabContainer
   if self.target_tab_container == null:
-    push_error("../../../TabContainer is not of type TabContainer", self)
+    push_error("../../../TabContainer is not of type TabContainer for ", self)
     return
+  
+  if Engine.is_editor_hint():
+    return
+  
   if self.target_tab_container.get_child_count() != self.get_parent().get_child_count():
-    push_error("TabContainer child count does not match SwitchTabWidget count", self)
+    push_error("TabContainer child count does not match SwitchTabWidget count for ", self)
     return
 
 func _pressed() -> void:

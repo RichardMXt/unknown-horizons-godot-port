@@ -20,12 +20,6 @@
 [node name="FarmTabWidget" instance=ExtResource("1")]
 script = ExtResource("2")
 
-[node name="WidgetDetail" parent="." index="2"]
-layout_mode = 1
-offset_bottom = 318.5
-
-size_flags_vertical = 1
-
 [node name="CaptionBlock" parent="TabContainer/VBoxContainer" index="0"]
 layout_mode = 2
 text = "Farm"
