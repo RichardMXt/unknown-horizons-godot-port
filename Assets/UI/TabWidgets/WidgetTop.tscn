@@ -191,7 +191,6 @@ offset_bottom = 115.0
 scale = Vector2(0.9, 0.9)
 size_flags_horizontal = 6
 input_action_name = "toggle_building_menu"
-input_action_meta = {}
 
 [node name="DiplomacyButton" parent="." instance=ExtResource("14_nlvgi")]
 layout_mode = 1

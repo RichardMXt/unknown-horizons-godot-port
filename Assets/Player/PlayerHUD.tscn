@@ -234,9 +234,6 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[node name="TabContainer" parent="MarginContainer/HBoxContainer/Widgets/LumberjackTabWidget/WidgetDetail/Body" index="1"]
-offset_bottom = 202.0
-
 [node name="BuildRelatedBuildings" parent="MarginContainer/HBoxContainer/Widgets/LumberjackTabWidget/WidgetDetail/Body/TabContainer" index="2"]
 metadata/_tab_index = 1
 
