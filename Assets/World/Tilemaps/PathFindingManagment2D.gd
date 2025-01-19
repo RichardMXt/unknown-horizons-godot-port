@@ -3,21 +3,23 @@ extends AStarGrid2D
 class_name PathFindingManagment2D
 
 var tile_map_layer: TileMapLayer
-
+var straight_first: bool
 
 
 func _init(used_tile_map_layer: TileMapLayer,
-  default_compute_heuristic = HEURISTIC_MANHATTAN,
-  cell_shape = self.CELL_SHAPE_ISOMETRIC_DOWN,
-  diagonal_mode = self.DIAGONAL_MODE_NEVER):
+  straight_first_mode := true,
+  diagonal_mode := self.DIAGONAL_MODE_NEVER,
+  default_compute_heuristic := self.HEURISTIC_MANHATTAN,
+    cell_shape := self.CELL_SHAPE_ISOMETRIC_DOWN):
 
   tile_map_layer = used_tile_map_layer
-  setup_a_star(default_compute_heuristic, cell_shape, diagonal_mode)
+  setup_a_star(straight_first_mode, diagonal_mode, default_compute_heuristic, cell_shape)
 
 
 
-func setup_a_star(default_compute_heuristic, cell_shape, diagonal_mode):
+func setup_a_star(straight_first_mode, diagonal_mode, default_compute_heuristic, cell_shape):
   
+  straight_first = straight_first_mode
   self.default_compute_heuristic = default_compute_heuristic
   self.cell_shape = cell_shape
   self.diagonal_mode = diagonal_mode
@@ -27,7 +29,7 @@ func setup_a_star(default_compute_heuristic, cell_shape, diagonal_mode):
 
   self.update()
   self.fill_solid_region(self.region, true)
-#  set the cost high to then lower it on preferable path
+  # set the cost high to then lower it on preferable path
   self.fill_weight_scale_region(self.region, 1000)
 
 
@@ -39,7 +41,7 @@ func update_region():
   self.update()
 
 
-func set_points_passable(cells: Array[Vector2i], passable: bool = true):
+func set_points_passable(cells: Array, passable: bool = true):
   for cell in cells:
     self.set_point_solid(cell, not passable)
 
@@ -85,16 +87,18 @@ func get_path_to_dest(start: Vector2, final_dest: Vector2, in_grid: bool = false
   else:
     grid_start = start
     grid_final_dest = final_dest
-
- #set preferable path points to lower weight(one less than usual)
-  var ideal_path = get_ideal_path(grid_start, grid_final_dest)
-  set_points_weight(ideal_path, 999)
+  #if prefered straight path set preferable path points to lower weight(one less than usual)
+  var ideal_path: Array[Vector2i] = []
+  if straight_first:
+    set_points_weight(get_ideal_path(grid_start, grid_final_dest), 999)
+    ideal_path = get_ideal_path(grid_start, grid_final_dest)
+    set_points_weight(ideal_path, 999)
   
   #for y in range(y1-10, y2+11):
     #for x in range(x1-10, x2+11):
       #self.set_point_weight_scale(Vector2i(x,y), 10)
-
-# get path and convert to correct system (world or grid)
+  
+  # get path and convert to correct system (world or grid)
   var tile_map_layer_path = self.get_id_path(grid_start, grid_final_dest)
   var path: Array = []
   if not get_back_in_grid:
@@ -104,8 +108,9 @@ func get_path_to_dest(start: Vector2, final_dest: Vector2, in_grid: bool = false
   else:
     path = tile_map_layer_path
 
-# set point weight back to normal
-  set_points_weight(ideal_path, 1000)
+  # set point weight back to normal
+  if straight_first:
+    set_points_weight(ideal_path, 1000)
 
   if len(path) > 0:
     return path

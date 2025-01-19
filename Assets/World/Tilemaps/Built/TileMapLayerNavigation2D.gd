@@ -14,7 +14,7 @@ enum Buildings {
 const is_navigatable: String = "is_navigatable"
 const is_tree: String = "is_tree"
 
-var person_pathfinding = PathFindingManagment2D.new(self)
+var person_pathfinding = PathFindingManagment2D.new(self, false)
 var road_building_pathfindng = PathFindingManagment2D.new(self)
 #var forester_pathfinding = PathFindingManagment2D.new(self)
 
