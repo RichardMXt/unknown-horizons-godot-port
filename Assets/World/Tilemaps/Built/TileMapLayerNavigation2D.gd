@@ -46,7 +46,7 @@ func _unhandled_input(event):
 
       if event.button_index == MOUSE_BUTTON_RIGHT:
         BuildingManager.building_to_build = null
-        highlighter_highlight_road.emit([], false)
+        highlighter_highlight_road.emit([])
         #return
 
 
