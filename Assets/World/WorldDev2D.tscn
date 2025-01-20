@@ -74,6 +74,6 @@ size_flags_vertical = 6
 
 [connection signal="build_tile_layer_build_road" from="Terrain" to="Built" method="build_road"]
 [connection signal="built_highlight_road" from="Terrain" to="Built" method="highlight_road"]
-[connection signal="set_solid_and_liquid_points" from="Terrain" to="Built" method="set_road_building_terrain_points"]
+[connection signal="set_land_and_water_points" from="Terrain" to="Built" method="set_road_building_terrain_points"]
 [connection signal="child_entered_tree" from="Built" to="Built" method="_on_child_entered_tree"]
 [connection signal="highlighter_highlight_road" from="Built" to="RoadHighlighter" method="highlight_road"]
