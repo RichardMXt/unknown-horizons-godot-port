@@ -33,6 +33,7 @@ func get_sprite_angle(next_point: Vector2):
 
 
 func move(animation_prefix: String, path: Array = path_there):
+  # save the current states to restore them at the end of the function
   var last_visible_state = self.visible
   self.visible = true
   var last_move_state = self.is_moving
@@ -59,5 +60,6 @@ func move(animation_prefix: String, path: Array = path_there):
   self.global_position = path[len(path) - 1]
   await self.get_tree().create_timer(0.05).timeout # let the _process run once.
   person_sprite.stop()
+  # restore the states
   self.is_moving = last_move_state
   self.visible = last_visible_state

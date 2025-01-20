@@ -26,10 +26,12 @@ func add_visit_point():
   var mouse_pos: Vector2 = tile_map_layer.get_global_mouse_position()
   if tile_map_layer.ship_pathfinding.is_point_solid(tile_map_layer.local_to_map(mouse_pos)):
     return
+  # if the shift key is not pressed, delete all buoys
   if not Input.is_key_pressed(KEY_SHIFT):
-    self.is_moving = false
+    self.is_moving = false # stop the current ship movement.
     for buoy in buoys.get_children():
       buoy.queue_free()
+  # add a new buoy
   var buoy_inst: StaticBody2D = buoy.instantiate()
   buoys.add_child(buoy_inst)
   buoy_inst.global_position = tile_map_layer.map_to_local(tile_map_layer.local_to_map(mouse_pos))
