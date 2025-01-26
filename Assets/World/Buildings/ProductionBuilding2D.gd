@@ -63,6 +63,9 @@ func produce_product():
 
 
 func find_closest_warehouse():
+  if !(self.get_parent() is TileMapLayerNavigation):
+    return
+
   var warehouse_poses = self.get_parent().building_name_to_building_poses.get("warehouse")
 
 # make sure there are warehouses

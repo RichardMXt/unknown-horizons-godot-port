@@ -62,7 +62,8 @@ material = SubResource("ShaderMaterial_g8btl")
 tile_set = SubResource("TileSet_qxykv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.25, 0.25)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 script = ExtResource("4_ryeen")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

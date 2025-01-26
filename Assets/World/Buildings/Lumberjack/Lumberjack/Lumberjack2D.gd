@@ -13,6 +13,9 @@ func _ready():
   movement_loop()
 
 func set_closest_trees():
+  if !(self.get_parent() is TileMapLayerNavigation):
+    return
+
   closest_trees = self.get_parent().get_parent().get_trees(false)
   if closest_trees.has(closest_trees[0]):
     pass
