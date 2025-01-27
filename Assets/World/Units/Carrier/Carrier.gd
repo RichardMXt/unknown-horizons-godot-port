@@ -67,7 +67,7 @@ func move_to_warehouse():
 
 func load_and_unload_at_warehouse():
   self.visible = false
-  var building = self.get_parent().get_parent().building_pos_to_building.get(self.global_position)
+  var building = self.get_parent().get_parent().building_position_to_building.get(self.global_position)
   if building != null and building is Warehouse2D:
     if building.max_loading_and_unloading_limit <= building.cur_loading_and_unloading:
       await building.slot_opened
