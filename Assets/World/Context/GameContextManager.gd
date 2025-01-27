@@ -8,9 +8,9 @@ var current_context: BaseContext = null:
   get:
     return current_context
   set(value):
+    if current_context:
+      current_context.is_active = false
+      current_context.context_exited()
+    value.is_active = true
+    value.context_entered()
     current_context = value
-    for child in self.get_children():
-      if child is BaseContext and not child == value:
-        child.is_active = false
-      if child is BaseContext and child == value:
-        child.is_active = true

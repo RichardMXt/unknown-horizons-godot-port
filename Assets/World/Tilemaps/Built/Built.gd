@@ -1,4 +1,4 @@
-extends SceneTileMapLayer
+extends TileMapLayer
 
 class_name Built
 
