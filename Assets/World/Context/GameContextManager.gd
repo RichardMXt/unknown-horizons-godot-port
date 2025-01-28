@@ -11,6 +11,7 @@ var current_context: BaseContext = null:
     if current_context:
       current_context.is_active = false
       current_context.context_exited()
-    value.is_active = true
-    value.context_entered()
+    if value:
+      value.is_active = true
+      value.context_entered()
     current_context = value

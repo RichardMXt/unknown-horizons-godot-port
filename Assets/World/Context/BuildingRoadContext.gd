@@ -35,6 +35,7 @@ func _unhandled_input(event):
             %GameContextManager.current_context = null
           else:
             self.is_road_building_started = false
+            road_highlighter.clear()
   
     if event is InputEventMouseMotion and is_road_building_started:
       highlight_road()
