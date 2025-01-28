@@ -1,13 +1,6 @@
 extends TileMapLayer
 
-class_name Built
-
-enum Buildings {
-  farm =            1,
-  warehouse =       2,
-  cattle_run =      3,
-  lumberjack = 4,
-}
+class_name BuiltTileMap
 
 const is_tree: String = "is_tree"
 const is_road: String = "is_road"

@@ -7,14 +7,7 @@ class_name BuildingContext
 @export var building_data: Dictionary = {}
 
 @onready var terrain_tilemap: TerrainTileMap = %TerrainTileMap
-@onready var built_tilemap: Built = %Built
-
-enum Buildings {
-  farm =       1,
-  warehouse =  2,
-  cattle_run = 3,
-  lumberjack = 4,
-}
+@onready var built_tilemap: BuiltTileMap = %BuiltTileMap
 
 var building_to_build: BuildingData = null
 
@@ -86,7 +79,7 @@ func build() -> void:
   if terrain_name == "Shallow" or terrain_name == "Deep":
     return
   if building_to_build != null:
-    var tile_id = Buildings.get(building_to_build.game_name)
+    var tile_id = building_to_build.building_tile
     if tile_id != null:
       if has_resources_for_building():
         spend_resources_for_building()

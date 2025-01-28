@@ -25,7 +25,7 @@ func is_first_tree_closer(first, second) -> bool:
     return false
 
 func is_cell_a_tree(tree_pos: Vector2) -> bool:
-  var tile_map_layer: Built = self.get_parent().get_parent()
+  var tile_map_layer: BuiltTileMap = self.get_parent().get_parent()
   var cell_data = tile_map_layer.get_cell_tile_data(tile_map_layer.local_to_map(tree_pos))
   return cell_data != null and cell_data.get_custom_data(tile_map_layer.is_tree)
 
@@ -91,7 +91,7 @@ func chopdown_tree(tree_pos):
   await self.get_tree().create_timer(choping_down_tree_time).timeout
   if not is_cell_a_tree(tree_pos):
     return
-  var tile_map_layer: Built = self.get_parent().get_parent()
+  var tile_map_layer: BuiltTileMap = self.get_parent().get_parent()
   tile_map_layer.set_cell(tile_map_layer.local_to_map(tree_pos), -1)
   count_of_objects = 1
   tile_map_layer.trees_getting_choped.erase(tree_pos)

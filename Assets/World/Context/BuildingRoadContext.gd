@@ -3,11 +3,11 @@ extends BaseContext
 class_name BuildingRoadContext
 
 @onready var terrain_tilemap: TerrainTileMap = %TerrainTileMap
-@onready var built_tilemap: Built = %Built
+@onready var built_tilemap: BuiltTileMap = %BuiltTileMap
 @onready var road_highlighter: TileMapLayer = %RoadHighlighter
 
 ## pathfinding for road building
-@onready var road_building_pathfindng = PathFindingManagement2D.new(%Built)
+@onready var road_building_pathfindng = PathFindingManagement2D.new(%BuiltTileMap)
 
 var is_road_building_started: bool = false
 var road_start_tile_position: Vector2i = Vector2i(0,0)
@@ -49,10 +49,10 @@ func respond_to_left_click() -> void:
   is_road_building_started = not is_road_building_started
 
 func highlight_road() -> void:
-  var mouse_position: Vector2i = terrain_tilemap.get_global_mouse_position()
+  var tile_mouse_position: Vector2i = terrain_tilemap.local_to_map(terrain_tilemap.get_global_mouse_position())
   # check if mouse is not on the same tile as last time
-  if last_mouse_tile_position != terrain_tilemap.local_to_map(mouse_position) and is_road_building_started:
-    last_mouse_tile_position = terrain_tilemap.local_to_map(mouse_position)
+  if last_mouse_tile_position != tile_mouse_position and is_road_building_started:
+    last_mouse_tile_position = tile_mouse_position
     var path = road_building_pathfindng.get_path_to_dest(road_start_tile_position, last_mouse_tile_position, true, true)
     road_highlighter.clear()
     if path != null:

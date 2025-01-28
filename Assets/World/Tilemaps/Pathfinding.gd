@@ -2,8 +2,8 @@ extends Node
 
 class_name Pathfinding
 
-@onready var terrain_tilemap: TileMapLayer = %TerrainTileMap
-@onready var built_tilemap: TileMapLayer = %Built
+@onready var terrain_tilemap: TerrainTileMap = %TerrainTileMap
+@onready var built_tilemap: BuiltTileMap = %BuiltTileMap
 
 ## pathfinding for ships
 @onready var ship_pathfinding: PathFindingManagement2D = PathFindingManagement2D.new(
@@ -14,7 +14,7 @@ class_name Pathfinding
   AStarGrid2D.CELL_SHAPE_ISOMETRIC_DOWN)
 
 ## pathfinding for Carriers
-@onready var carrier_pathfinding = PathFindingManagement2D.new(%Built, false)
+@onready var carrier_pathfinding = PathFindingManagement2D.new(%BuiltTileMap, false)
 
 func _ready():
   var terrain_points = terrain_tilemap.get_terrain_points()
