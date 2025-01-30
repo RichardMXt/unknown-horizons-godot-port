@@ -3,6 +3,7 @@ extends Building2D
 
 class_name ProductionBuilding2D
 
+@onready var built_tilemap: BuiltTileMap = self.get_parent()
 @onready var prod_timer: Timer = self.get_node("ProdTimer")
 @onready var carrier: Carrier = self.get_node("Carrier")
 @onready var tooltip: Control = self.get_node("ItemProducedTooltip")
@@ -63,7 +64,7 @@ func produce_product():
 
 
 func find_closest_warehouse():
-  var warehouse_poses = self.get_parent().building_name_to_building_poses.get("warehouse")
+  var warehouse_poses = built_tilemap.building_name_to_building_poses.get("warehouse")
 
 # make sure there are warehouses
   if warehouse_poses == null:

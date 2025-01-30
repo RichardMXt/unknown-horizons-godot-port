@@ -1,5 +1,5 @@
 extends BaseContext
-## manages the buildings in the game
+## The BuildingContext is responsible for building buildings.
 
 class_name BuildingContext
 

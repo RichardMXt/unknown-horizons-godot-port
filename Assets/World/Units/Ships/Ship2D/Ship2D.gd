@@ -5,6 +5,7 @@ class_name Ship2D
 @export var buoy: PackedScene = preload("res://Assets/World/Buoy/Buoy2D.tscn")
 
 @onready var buoys: StaticBody2D = self.get_parent().get_node("Buoys")
+@onready var terrain_tilemap: TerrainTileMap = self.get_parent().get_parent()
 @onready var pathfinding: Pathfinding = self.get_node("/root/Main/Pathfinding")
 signal buoy_added
 
@@ -22,9 +23,8 @@ func _unhandled_input(event):
       #     buoy.queue_free()
 
 func add_visit_point():
-  var tile_map_layer: TerrainTileMap = self.get_parent().get_parent()
-  var mouse_pos: Vector2 = tile_map_layer.get_global_mouse_position()
-  if pathfinding.ship_pathfinding.is_point_solid(tile_map_layer.local_to_map(mouse_pos)):
+  var mouse_pos: Vector2 = terrain_tilemap.get_global_mouse_position()
+  if pathfinding.ship_pathfinding.is_point_solid(terrain_tilemap.local_to_map(mouse_pos)):
     return
   # if the shift key is not pressed, delete all buoys
   if not Input.is_key_pressed(KEY_SHIFT):
@@ -34,7 +34,7 @@ func add_visit_point():
   # add a new buoy
   var buoy_inst: StaticBody2D = buoy.instantiate()
   buoys.add_child(buoy_inst)
-  buoy_inst.global_position = tile_map_layer.map_to_local(tile_map_layer.local_to_map(mouse_pos))
+  buoy_inst.global_position = terrain_tilemap.map_to_local(terrain_tilemap.local_to_map(mouse_pos))
   buoy_added.emit()
 
 func movement_loop():

@@ -43,10 +43,8 @@ func _unhandled_input(event):
 func respond_to_left_click() -> void:
   if is_road_building_started:
     build_road()
-
   else:
     road_start_tile_position = terrain_tilemap.local_to_map(terrain_tilemap.get_global_mouse_position())
-
   is_road_building_started = not is_road_building_started
 
 func highlight_road() -> void:
