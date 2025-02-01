@@ -16,6 +16,7 @@ class_name Carrier
 var objects_carring: Dictionary
 
 func _ready():
+  self.set_up_unit()
   movment_loop()
 
 func is_resource_load_valid() -> bool:

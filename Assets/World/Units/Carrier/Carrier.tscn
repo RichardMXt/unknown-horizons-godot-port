@@ -1,8 +1,9 @@
-[gd_scene load_steps=69 format=3 uid="uid://ciacneie4013w"]
+[gd_scene load_steps=70 format=3 uid="uid://ciacneie4013w"]
 
 [ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/Units/Unit2D.tscn" id="1_r8tsm"]
 [ext_resource type="Script" path="res://Assets/World/Units/Carrier/Carrier.gd" id="2_1mxto"]
 [ext_resource type="Texture2D" uid="uid://d27bgm1fyexyv" path="res://Assets/World/Units/Carrier/CarrierFrames.png" id="3_giikh"]
+[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_2swlj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6lrfr"]
 atlas = ExtResource("3_giikh")
@@ -538,6 +539,7 @@ animations = [{
 [node name="Carrier" instance=ExtResource("1_r8tsm")]
 z_index = 11
 script = ExtResource("2_1mxto")
+max_carry_limit = 10
 speed_tile_per_sec = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
@@ -546,3 +548,5 @@ sprite_frames = SubResource("SpriteFrames_wtlg1")
 animation = &"Move315"
 speed_scale = 1.2
 offset = Vector2(0, -16)
+
+[node name="Selectable" parent="." index="1" instance=ExtResource("4_2swlj")]

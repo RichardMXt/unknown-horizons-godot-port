@@ -4,14 +4,9 @@ class_name Unit2D
 
 @export var speed_tile_per_sec: float = 0.5
 
-@onready var person_sprite: AnimatedSprite2D = self.get_child(0)
-
-#enum CarrierState {
-  #Empty       = 0,
-  #WithCargo = 1,
-#}
-#
-#var carrier_state: CarrierState = CarrierState.Empty
+## The main sprite of the unit.
+## If set to null, will set the first AnimatedSprite2D child found.
+@export var unit_sprite: AnimatedSprite2D = null
 
 var path: Array = []
 var path_there: Array = []
@@ -19,7 +14,18 @@ var path_back: Array = []
 
 var is_moving: bool = false
 
+## set up the unit
+func set_up_unit():
+  if not unit_sprite:
+    for child in self.get_children():
+      if child is AnimatedSprite2D:
+        unit_sprite = child
+  if not unit_sprite:
+    push_warning("Unit2D: No person sprite found")
 
+## To be overridden for functionality on inputs when the building is selected
+func handle_context_input(_event: InputEvent):
+  pass
 
 func get_sprite_angle(next_point: Vector2):
   var move_vec: Vector2 = next_point - self.global_position
@@ -29,8 +35,6 @@ func get_sprite_angle(next_point: Vector2):
   var move_angle_0_to_8 = move_angle_0_to_2PI * 8 / (2 * PI)
   var sprite_angle = int(round(move_angle_0_to_8) * 45) % 360
   return sprite_angle
-
-
 
 func move(animation_prefix: String, path: Array = path_there):
   # save the current states to restore them at the end of the function
@@ -48,7 +52,7 @@ func move(animation_prefix: String, path: Array = path_there):
     var sprite_angle = get_sprite_angle(point)
     if last_direction != sprite_angle:
       last_direction = sprite_angle
-      person_sprite.play(animation_prefix + str(sprite_angle))
+      unit_sprite.play(animation_prefix + str(sprite_angle))
 
     #print(sprite_angle)
     var move_tween = self.create_tween().bind_node(self)
@@ -59,7 +63,7 @@ func move(animation_prefix: String, path: Array = path_there):
   
   self.global_position = path[len(path) - 1]
   await self.get_tree().create_timer(0.05).timeout # let the _process run once.
-  person_sprite.stop()
+  unit_sprite.stop()
   # restore the states
   self.is_moving = last_move_state
   self.visible = last_visible_state
