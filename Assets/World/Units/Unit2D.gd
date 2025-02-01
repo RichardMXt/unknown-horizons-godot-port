@@ -2,8 +2,7 @@ extends AnimatableBody2D
 
 class_name Unit2D
 
-@export var speed_tile_per_sec: float = 0.5
-
+@export var unit_data: UnitData = null
 ## The main sprite of the unit.
 ## If set to null, will set the first AnimatedSprite2D child found.
 @export var unit_sprite: AnimatedSprite2D = null
@@ -56,7 +55,7 @@ func move(animation_prefix: String, path: Array = path_there):
 
     #print(sprite_angle)
     var move_tween = self.create_tween().bind_node(self)
-    move_tween.tween_property(self, "global_position", point, speed_tile_per_sec)
+    move_tween.tween_property(self, "global_position", point, unit_data.speed_tile_per_sec)
     await move_tween.finished
     #pass
     #move_tween.kill()

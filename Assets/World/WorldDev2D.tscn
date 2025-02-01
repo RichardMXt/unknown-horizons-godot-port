@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://caaq1eo2tha3s"]
+[gd_scene load_steps=27 format=4 uid="uid://caaq1eo2tha3s"]
 
 [ext_resource type="Script" path="res://Assets/World/Context/GameContextManager.gd" id="1_4ru01"]
 [ext_resource type="Script" path="res://Assets/World/Tilemaps/Pathfinding.gd" id="1_fhei5"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://Assets/World/Context/SelectionContext.gd" id="8_afdhk"]
 [ext_resource type="Script" path="res://Assets/World/Tilemaps/BuiltTileMap/BuiltTileMap.gd" id="8_epgui"]
 [ext_resource type="PackedScene" uid="uid://cm6yol3av2mwf" path="res://Assets/World/Context/SelectionBox.tscn" id="9_xd2e2"]
+[ext_resource type="Script" path="res://Assets/World/Context/ObjectSelectedContext.gd" id="10_c4elk"]
 [ext_resource type="PackedScene" uid="uid://bka87rk8lk7kb" path="res://Assets/Player/PlayerHUD2.tscn" id="11_2r8bi"]
 [ext_resource type="Material" path="res://Assets/World/Tilemaps/Highlight/RoadShader.tres" id="16_lq7rl"]
 
@@ -72,6 +73,9 @@ script = ExtResource("8_afdhk")
 
 [node name="SelectionBox" parent="GameContextManager/SelectionContext/CanvasLayer" instance=ExtResource("9_xd2e2")]
 visible = false
+
+[node name="ObjectSelectedContext" type="Node" parent="GameContextManager"]
+script = ExtResource("10_c4elk")
 
 [node name="Pathfinding" type="Node" parent="."]
 unique_name_in_owner = true

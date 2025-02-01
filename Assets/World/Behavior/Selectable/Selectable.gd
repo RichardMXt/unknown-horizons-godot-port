@@ -53,7 +53,7 @@ func is_in_rect(rect: Rect2) -> bool:
       else:
         sprite_size = sprite.texture.get_size() * sprite.scale
     var sprite_rect: Rect2 = Rect2(sprite.global_position - sprite_size/2, sprite_size).abs()
-    var does_intersect: bool = rect.intersects(sprite_rect)
+    var does_intersect: bool = rect.intersects(sprite_rect) and parent.visible
     return does_intersect
   else:
     return false

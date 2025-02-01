@@ -7,6 +7,12 @@ var sel_pos_start := Vector2(0,0) # first click position
 @export var line_color: Color = Color(1, 1, 1, 0.5)
 @export var line_width: float = 2
 
+func _unhandled_input(event):
+  if event is InputEventMouseButton:
+    if event.button_index == MOUSE_BUTTON_LEFT:
+      if event.pressed == true:
+        sel_pos_start = get_viewport().get_mouse_position()
+
 func _process(_delta: float) -> void:
   queue_redraw()
 

@@ -25,3 +25,12 @@ func _input(event: InputEvent) -> void:
   if event.is_action_pressed("toggle_diplomacy_menu"):
     push_warning("Diplomacy menu is not implemented yet.")
     # toggle_tab_widget(%BuildMenuByCategoryTabWidget);
+  
+  if event.is_action_pressed("toggle_building_info_menu"):
+    var tab_container: TabContainer = self.get_node("HBoxContainer/VBoxContainer/TabContainer")
+    var needed_tab_widget_name = event.get_meta("tab_widget_name")
+    for tab_widget in tab_container.get_children():
+      if tab_widget.name == needed_tab_widget_name:
+        var tab_index := get_tab_index(tab_container, tab_widget)
+        tab_container.current_tab = tab_index
+        break
