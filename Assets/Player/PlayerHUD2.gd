@@ -29,8 +29,11 @@ func _input(event: InputEvent) -> void:
   if event.is_action_pressed("toggle_building_info_menu"):
     var tab_container: TabContainer = self.get_node("HBoxContainer/VBoxContainer/TabContainer")
     var needed_tab_widget_name = event.get_meta("tab_widget_name")
+    var selected_objects: Array = event.get_meta("selected_objects")
     for tab_widget in tab_container.get_children():
       if tab_widget.name == needed_tab_widget_name:
+        if tab_widget is BuildingMenuTabWidget:
+          tab_widget.selected_objects = selected_objects
         var tab_index := get_tab_index(tab_container, tab_widget)
         tab_container.current_tab = tab_index
         break
