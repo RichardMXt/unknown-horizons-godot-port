@@ -13,12 +13,12 @@ var current_context: BaseContext:
     if current_context:
       current_context.is_active = false
       current_context.context_exited()
-    if not value:
+    if value == null:
       value = selection_context
     if value:# value might be null if the selection_context is not loaded.
       value.is_active = true
       value.context_entered()
-      current_context = value
+    current_context = value
 
 func _ready():
   current_context = selection_context

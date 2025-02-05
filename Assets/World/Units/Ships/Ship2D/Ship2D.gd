@@ -10,7 +10,7 @@ class_name Ship2D
 signal buoy_added
 
 func _ready():
-  self.set_up_unit()
+  self.setup_unit()
   movement_loop()
 
 func handle_context_input(event: InputEvent):

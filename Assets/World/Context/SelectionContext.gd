@@ -42,6 +42,6 @@ func select_objects():
   for selectable_object: Selectable in selectable_objects:
     if selectable_object.is_in_rect(selection_rect):
       selected_objects.append(selectable_object)
-  if not object_selected_context.is_active:
-    %GameContextManager.current_context = object_selected_context
-  object_selected_context.selected_objects = selected_objects
+  if object_selected_context.is_active == false:
+    self.game_context_manager.current_context = object_selected_context
+  object_selected_context.set_selected_objects(selected_objects)

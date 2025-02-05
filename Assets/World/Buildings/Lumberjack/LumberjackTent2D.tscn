@@ -25,6 +25,4 @@ speed_px_per_sec = 64.0
 [node name="ImagePlaceholder" parent="ItemProducedTooltip/Background/HBoxContainer/ItemImageContainer" index="0"]
 texture = ExtResource("5_tw14m")
 
-[node name="Selectable" parent="." index="5" instance=ExtResource("7_phfxb")]
-
-[connection signal="timeout" from="ProdTimer" to="." method="_on_prod_timer_timeout"]
+[node name="Selectable" parent="." index="4" instance=ExtResource("7_phfxb")]

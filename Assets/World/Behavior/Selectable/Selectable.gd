@@ -5,7 +5,12 @@ class_name Selectable
 
 ## The sprite to be highlighted when selected.
 ## If null, will use the first found animated sprite sibling.
-@export var sprite: Node2D
+@export var sprite: Node2D:
+  get:
+    return sprite
+  set(value):
+    assert(value is Sprite2D or value is AnimatedSprite2D, "Sprite must be an AnimatedSprite2D or Sprite2D")
+    sprite = value
 ## The shader to be used to highlight the sprite.
 @export var shader: ShaderMaterial = preload("res://Assets/World/Behavior/Selectable/SelectableDefultShader.tres")
 
@@ -27,11 +32,12 @@ var is_selected: bool = false:
         sprite.material.set_shader_parameter("width", 0)
 
 func _ready():
-  if not sprite or not (sprite is AnimatedSprite2D or sprite is Sprite2D):
+  if sprite == null:
     for child in self.get_parent().get_children():
       if child is AnimatedSprite2D or child is Sprite2D:
         sprite = child
-  if not sprite:
+        break
+  if sprite == null:
     push_warning("There was no sprite found to highlight in %s." % self.get_parent().name)
   else:
     sprite.material = shader.duplicate(true)

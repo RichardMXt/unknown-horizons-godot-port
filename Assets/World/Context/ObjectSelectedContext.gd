@@ -8,35 +8,15 @@ class_name ObjectSelectedContext
 ## are all selected objects of the same type
 var are_selected_objects_same_type: bool = true
 
-var selected_objects: Array[Selectable] = []:
-  get:
-    return selected_objects
-  set(value):
-    var last_selected_objects: Array[Selectable] = selected_objects
-    selected_objects = value
-    # deselect all selected objects
-    for object: Selectable in last_selected_objects:
-      object.is_selected = false
-    # check if there are some selected objects
-    if not selected_objects:
-      are_selected_objects_same_type = false
-      %GameContextManager.current_context = null
-    else:
-      # select all objects to select and check if all are of the same type
-      var one_of_selected_objects_types: String = selected_objects[0].get_parent().get_class()
-      are_selected_objects_same_type = true
-      for object: Selectable in selected_objects:
-        are_selected_objects_same_type = are_selected_objects_same_type and object.get_parent().is_class(one_of_selected_objects_types)
-        object.is_selected = true
-    set_tab_widget()
+var selected_objects: Array[Selectable] = []
 
 func _unhandled_input(event):
   if self.is_active:
-    if event.is_action_released("exit") and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+    if event.is_action_released("exit") and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) == false:
       for object: Selectable in selected_objects:
         object.is_selected = false
       selected_objects = []
-      %GameContextManager.current_context = null
+      game_context_manager.current_context = null
 
 func set_tab_widget():
   var tab_widget_name: String = ""
@@ -69,3 +49,21 @@ func set_tab_widget():
   event.set_meta("selected_objects", selected_buildings_and_units)
   Input.parse_input_event(event)
 
+func set_selected_objects(new_selected_objects: Array):
+  var last_selected_objects: Array = selected_objects
+  selected_objects = new_selected_objects
+  # deselect all selected objects
+  for object: Selectable in last_selected_objects:
+    object.is_selected = false
+  # check if there are some selected objects
+  if not selected_objects:
+    are_selected_objects_same_type = false
+    game_context_manager.current_context = null
+  else:
+    # select all objects to select and check if all are of the same type
+    var one_of_selected_objects_types: String = selected_objects[0].get_parent().get_class()
+    are_selected_objects_same_type = true
+    for object: Selectable in selected_objects:
+      are_selected_objects_same_type = are_selected_objects_same_type and object.get_parent().is_class(one_of_selected_objects_types)
+      object.is_selected = true
+  set_tab_widget()

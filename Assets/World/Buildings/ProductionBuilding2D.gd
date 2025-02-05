@@ -7,6 +7,7 @@ class_name ProductionBuilding2D
 @onready var carrier: Carrier = self.get_node("Carrier")
 @onready var tooltip: Control = self.get_node("ItemProducedTooltip")
 @onready var product_amount_placeholder: Label = tooltip.get_node("Background/HBoxContainer/ItemAmountContainer/AmountPlaceholder")
+@onready var pathfinding: Pathfinding = self.get_node("/root/Main/Pathfinding")
 
 var closest_warehouse_path: Array = []
 var number_of_output_products = 0
@@ -24,7 +25,7 @@ var should_produce = false:
     var last_value = should_produce
     should_produce = value
     if last_value != should_produce and should_produce:
-      production_loop()
+      production_loop() # fire and forget
 
 func setup_building():
   var closest_warehouse_path_or_null = find_closest_warehouse()
@@ -60,7 +61,7 @@ func find_closest_warehouse():
     return null
   var closest_warehouse_path_yet = null
   for warehouse_pos in warehouse_poses:
-    var warehouse_path = self.get_node("/root/Main/Pathfinding").carrier_pathfinding.get_path_to_dest(self.position, warehouse_pos)
+    var warehouse_path = pathfinding.carrier_pathfinding.get_path_to_dest(self.position, warehouse_pos)
   # check if there is a path
     if warehouse_path == null:
       continue
@@ -116,7 +117,7 @@ func is_enough_to_produce() -> bool:
 
 func production_loop():
   while should_produce:
-    if not is_enough_to_produce():
+    if is_enough_to_produce() == false:
       await self.get_tree().create_timer(1).timeout
       continue
     production_timer = self.get_tree().create_timer(self.building_data.processing_time)

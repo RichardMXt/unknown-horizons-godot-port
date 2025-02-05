@@ -13,7 +13,7 @@ var closest_trees: Array = []
 var count_of_objects: int = 0
 
 func _ready():
-  self.set_up_unit()
+  self.setup_unit()
   set_closest_trees()
   movement_loop()
 

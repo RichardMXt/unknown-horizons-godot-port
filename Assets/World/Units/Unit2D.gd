@@ -14,12 +14,12 @@ var path_back: Array = []
 var is_moving: bool = false
 
 ## set up the unit
-func set_up_unit():
-  if not unit_sprite:
+func setup_unit():
+  if unit_sprite == null:
     for child in self.get_children():
       if child is AnimatedSprite2D:
         unit_sprite = child
-  if not unit_sprite:
+  if unit_sprite == null:
     push_warning("Unit2D: No person sprite found")
 
 ## To be overridden for functionality on inputs when the building is selected
