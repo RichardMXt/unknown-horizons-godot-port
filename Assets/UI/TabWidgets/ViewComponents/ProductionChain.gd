@@ -32,7 +32,8 @@ class_name ProductionChain
 @onready var input_three := find_child("InputThree") as InventorySlot
 @onready var output := find_child("Output") as InventorySlot
 
-@onready var progress_bar: HBoxContainer = self.get_node("MarginContainer/VBoxContainer/MiddleSection/Control/ProgressBar/ProgressBar")
+@onready var progress_bar: ColorRect = self.get_node("MarginContainer/VBoxContainer/MiddleSection/Control/ProgressBar/ProgressBar/ProgressBar")
+@onready var progress_bar_spacer: Control = self.get_node("MarginContainer/VBoxContainer/MiddleSection/Control/ProgressBar/ProgressBar/Spacer")
 
 func _ready():
   if Engine.is_editor_hint():
@@ -55,9 +56,8 @@ func _process(_delta):
 
 ## Sets the progress bar to the given progress, 0 to 1 
 func set_progress_bar(progress: float = 0):
-  progress_bar.get_node("ProgressBar").size_flags_stretch_ratio = progress
-  progress_bar.get_node("Spacer").size_flags_stretch_ratio = 1 - progress
-
+  progress_bar.size_flags_stretch_ratio = progress
+  progress_bar_spacer.size_flags_stretch_ratio = 1 - progress
 
 func set_number_inputs(new_number_inputs: int) -> void:
   if not is_inside_tree():
