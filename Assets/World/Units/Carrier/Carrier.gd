@@ -17,7 +17,7 @@ var objects_carring: Dictionary
 
 func _ready():
   self.setup_unit()
-  movment_loop()
+  movement_loop()
 
 func is_resource_load_valid() -> bool:
   for resource in objects_carring.keys():
@@ -25,7 +25,7 @@ func is_resource_load_valid() -> bool:
       return false
   return true
 
-func movment_loop():
+func movement_loop():
   while true:
     await wait_for_resources()
 
