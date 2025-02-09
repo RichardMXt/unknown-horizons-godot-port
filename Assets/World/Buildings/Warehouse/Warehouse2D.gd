@@ -4,6 +4,7 @@ class_name Warehouse2D
 
 @export var load_and_unload_time: float = 2
 @export var max_loading_and_unloading_limit: int = 2
+@export var storage_capacity: int = 100
 
 @onready var LoadUnloadTimer: Timer = get_node("LoadUnloadTimer")
 
@@ -33,10 +34,11 @@ func unload_worker(objects_to_unload: Dictionary) -> void:
   # for future multi loads if any, wraped in for loop
   for object: ItemData in objects_to_unload.keys():
     var amount = objects_to_unload.get(object)
-    if GameStats.game_stats_resource.resources.has(object):
-      GameStats.game_stats_resource.resources[object] += amount
+    var resource_amount = GameStats.game_stats_resource.resources.get(object)
+    if resource_amount != null:
+      GameStats.game_stats_resource.resources[object] = min(storage_capacity, resource_amount + amount)
     else:
-      GameStats.game_stats_resource.resources[object] = amount
+      GameStats.game_stats_resource.resources[object] = min(storage_capacity, amount)
     #update_resources.emit()
     print("the amount of %s is now %s" % [object.game_name, GameStats.game_stats_resource.resources[object]])
 
