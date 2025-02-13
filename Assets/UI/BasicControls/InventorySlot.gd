@@ -31,6 +31,8 @@ class_name InventorySlot
     return limit
   set(value):
     limit = value
+    if self.is_node_ready() == false:
+      return
     update_resource_amount_tooltips()
 
 @onready var resource_image: TextureRect = self.get_node("HBoxContainer/ResourceImage")
