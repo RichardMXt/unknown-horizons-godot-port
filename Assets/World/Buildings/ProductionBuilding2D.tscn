@@ -8,11 +8,8 @@
 z_index = 10
 script = ExtResource("1_hq3n1")
 
-[node name="ProdTimer" type="Timer" parent="."]
-
 [node name="Carrier" parent="." instance=ExtResource("2_bbdpa")]
 visible = false
-max_carry_limit = 10
 
 [node name="ItemProducedTooltip" parent="." instance=ExtResource("3_54tuw")]
 visible = false
