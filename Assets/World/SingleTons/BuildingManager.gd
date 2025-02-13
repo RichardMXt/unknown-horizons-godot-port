@@ -18,7 +18,7 @@ func _ready():
   for building_data_file in building_data_files:
     building_data[building_data_file.game_name] = building_data_file
 #
-#var Farm2D = preload("res://Assets/World/Buildings/Agricultural/Farm2D/Farm2D.tscn")
+#var Farm2D = preload("res://Assets/World/Buildings/Agricultural/Farm/Farm2D.tscn")
 #var WareHouse = preload("res://Assets/World/Buildings/WareHouse2D/ware_house2D.tscn")
 
 const road = "road"
