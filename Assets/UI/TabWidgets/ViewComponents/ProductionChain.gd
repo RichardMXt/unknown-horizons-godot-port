@@ -44,16 +44,12 @@ func _ready():
 func _process(_delta):
   if self.owner.visible:
     var selected_objects = self.owner.selected_objects
-    var progress
+    var progress: float = 0
     if len(selected_objects) == 1:
       var building = selected_objects[0]
       if building.production_timer != null:
         var production_time = building.building_data.processing_time
         progress = (production_time - building.production_timer.time_left) / production_time
-      else:
-        progress = 0
-    else:
-      progress = 0
     set_progress_bar(progress)
 
 ## Sets the progress bar to the given progress, 0 to 1 

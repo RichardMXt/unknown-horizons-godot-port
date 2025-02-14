@@ -39,7 +39,7 @@ func unload_worker(objects_to_unload: Dictionary) -> void:
       GameStats.game_stats_resource.resources[object] = min(storage_capacity, resource_amount + amount)
     else:
       GameStats.game_stats_resource.resources[object] = min(storage_capacity, amount)
-    #update_resources.emit()
+    # TODO: notify the player if the resources are thrown out
     print("the amount of %s is now %s" % [object.game_name, GameStats.game_stats_resource.resources[object]])
 
 func load_worker(objects_to_load: Dictionary) -> Dictionary:

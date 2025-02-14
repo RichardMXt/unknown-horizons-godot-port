@@ -9,7 +9,7 @@ class_name InventorySlot
     return resource_type
   set(value):
     resource_type = value
-    if self.is_node_ready() == false:
+    if resource_image == null:
       return
     # set the tooltips to the correct values
     if resource_type:
@@ -22,7 +22,7 @@ class_name InventorySlot
     return resource_amount
   set(value):
     resource_amount = min(limit, value)
-    if self.is_node_ready() == false:
+    if amount_label == null:
       return
     update_resource_amount_tooltips()
 
