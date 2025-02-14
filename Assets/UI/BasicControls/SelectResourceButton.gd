@@ -2,6 +2,8 @@ extends InventorySlot
 
 class_name SelectResourceButton
 
+@onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap")
+
 func _process(_delta):
   if self.is_visible_in_tree():
     if self.resource_type:
@@ -10,3 +12,7 @@ func _process(_delta):
         self.resource_amount = resource_amount
       else:
         self.resource_amount = 0
+      var warehouse_poses = built_tilemap.building_name_to_building_poses.get("warehouse")
+      if warehouse_poses != null and len(warehouse_poses) > 0:
+        var warehouse = built_tilemap.building_position_to_building.get(warehouse_poses[0])
+        self.limit = warehouse.storage_capacity
