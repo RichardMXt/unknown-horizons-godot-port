@@ -1,17 +1,9 @@
 extends Node2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-  pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-
-  pass
-
-func on_mouse_hovered():
+func on_mouse_entered():
+  print("mouse_entered")
   $AnimatedSprite2D.material.set_shader_parameter("width", 3)
 
-func on_mouse_unhovered():
+func on_mouse_exited():
+  print("mouse_exited")
   $AnimatedSprite2D.material.set_shader_parameter("width", 0)

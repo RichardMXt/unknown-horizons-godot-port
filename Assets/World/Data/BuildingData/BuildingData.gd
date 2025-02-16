@@ -7,3 +7,4 @@ class_name BuildingData
 @export var cost: Dictionary
 @export var building_tile: int
 @export var info_tab_widget: PackedScene
+@export var building_size: Vector2i = Vector2i(1, 1)

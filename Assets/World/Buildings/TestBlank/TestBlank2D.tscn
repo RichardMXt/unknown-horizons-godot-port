@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq0cmv6efhj4b"]
+
+[ext_resource type="Script" path="res://Assets/World/Buildings/TestBlank/TestBlank2D.gd" id="1_w4xyu"]
+[ext_resource type="Resource" uid="uid://crxcfvn84blsi" path="res://Assets/World/Data/BuildingData/TestBlankData.tres" id="2_ilvtc"]
+[ext_resource type="Texture2D" uid="uid://cdnf6eeejvl26" path="res://Assets/World/Buildings/TestBlank/Sprites/TestBlankWooden_idle.png" id="2_w2qwb"]
+[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_psukr"]
+
+[node name="TestBlank" type="Node2D"]
+z_index = 10
+script = ExtResource("1_w4xyu")
+building_data = ExtResource("2_ilvtc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_w2qwb")
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(0, 0, 192, 192)
+
+[node name="Selectable" parent="." instance=ExtResource("4_psukr")]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+mouse_filter = 2

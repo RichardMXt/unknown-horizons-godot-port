@@ -12,12 +12,18 @@ load_and_unload_time = 4.0
 building_data = ExtResource("2_ilvtc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(3.8147e-06, 0)
-scale = Vector2(0.6, 0.75)
 texture = ExtResource("2_w2qwb")
+offset = Vector2(0, -48)
 region_enabled = true
-region_rect = Rect2(32, 64, 160, 128)
+region_rect = Rect2(0, 0, 192, 192)
 
 [node name="LoadUnloadTimer" type="Timer" parent="."]
 
 [node name="Selectable" parent="." instance=ExtResource("4_psukr")]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+mouse_filter = 2

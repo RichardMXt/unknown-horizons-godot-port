@@ -7,7 +7,7 @@ class_name SwitchTabWidget
 @export var target_control: Control
 
 @export var texture_active: Texture2D
-@onready var _texture_normal := texture_normal
+#@onready var _texture_normal := texture_normal
 
 # func get_tab_container() -> TabContainer:
 #   if owner is TabWidget:

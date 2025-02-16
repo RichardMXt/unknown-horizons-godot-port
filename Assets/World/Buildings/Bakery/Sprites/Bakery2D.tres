@@ -1,0 +1,346 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://"]
+
+
+[ext_resource type="Texture2D" uid="uid://" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_idle.png" id="Bakery_idle.png"]
+[ext_resource type="Texture2D" uid="uid://" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_work_anim.png" id="Bakery_work_anim.png"]
+
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
+atlas = ExtResource("Bakery_idle.png")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
+atlas = ExtResource("Bakery_idle.png")
+region = Rect2(128, 0, 128, 128)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
+atlas = ExtResource("Bakery_idle.png")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
+atlas = ExtResource("Bakery_idle.png")
+region = Rect2(128, 128, 128, 128)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_0"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_1"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_2"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_3"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_4"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_5"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_6"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_7"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(896, 0, 128, 128)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_0"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_1"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_2"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_3"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_4"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_5"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_6"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(768, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_7"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(896, 128, 128, 128)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_0"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_1"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_2"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(256, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_3"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(384, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_4"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(512, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_5"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(640, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_6"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(768, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_7"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(896, 256, 128, 128)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_0"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_1"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(128, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_2"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(256, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_3"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(384, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_4"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(512, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_5"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(640, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_6"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(768, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_7"]
+atlas = ExtResource("Bakery_work_anim.png")
+region = Rect2(896, 384, 128, 128)
+
+[resource]
+animations = [
+    {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle",
+    "speed": 5.0
+    },
+    
+  
+    ; special case for work_anim. work_anim spritesheets contain all four animations combined, split them in individual animations:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_6")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_7")
+      },
+    ],
+    "loop": true,
+    "name": &"work_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_6")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_7")
+      },
+    ],
+    "loop": true,
+    "name": &"work_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_6")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_7")
+      },
+    ],
+    "loop": true,
+    "name": &"work_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_6")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_7")
+      },
+    ],
+    "loop": true,
+    "name": &"work_315",
+    "speed": 5.0
+  },
+    
+  
+]

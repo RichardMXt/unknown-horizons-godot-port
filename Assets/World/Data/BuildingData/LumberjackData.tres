@@ -16,3 +16,4 @@ game_name = "lumberjack"
 cost = {}
 building_tile = 4
 info_tab_widget = ExtResource("1_h6057")
+building_size = Vector2i(2, 2)

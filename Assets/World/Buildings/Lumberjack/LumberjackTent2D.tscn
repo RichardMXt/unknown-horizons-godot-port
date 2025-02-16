@@ -15,6 +15,7 @@ building_data = ExtResource("3_building_data")
 
 [node name="BuildingSprite" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("4_building_sprite")
+offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(0, 64, 128, 64)
 
@@ -22,8 +23,15 @@ region_rect = Rect2(0, 64, 128, 64)
 visible = false
 speed_px_per_sec = 64.0
 
-[node name="ItemProducedTooltip" parent="." index="4"]
+[node name="ItemProducedTooltip" parent="." index="3"]
 texture = ExtResource("5_tooltip_image")
 amount = "0"
 
 [node name="Selectable" parent="." index="4" instance=ExtResource("6_selectable")]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="." index="5"]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+mouse_filter = 2
