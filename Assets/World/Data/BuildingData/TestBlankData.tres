@@ -7,4 +7,3 @@ script = ExtResource("1_y64sp")
 game_name = "testblank"
 cost = {}
 building_tile = 2
-building_size = Vector2i(1, 1)

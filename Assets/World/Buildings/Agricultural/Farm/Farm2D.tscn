@@ -12,6 +12,7 @@
 script = ExtResource("2_script")
 building_data = ExtResource("3_building_data")
 info_tab_widget = ExtResource("id_info_tab_widget")
+building_size = Vector2i(3, 3)
 
 [node name="BuildingSprite" type="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = ExtResource("4_animated_sprite")

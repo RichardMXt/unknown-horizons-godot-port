@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ProductionBuildingData" load_steps=5 format=3 uid="uid://bhhs6phyo6c2c"]
+[gd_resource type="Resource" script_class="ProductionBuildingData" load_steps=5 format=3]
 
 [ext_resource type="Resource" uid="uid://cadptbki7hpwf" path="res://Assets/World/Data/ItemData/Food.tres" id="id_output_tres"]
 [ext_resource type="Resource" uid="uid://c5xn4hbcdts6c" path="res://Assets/World/Data/ItemData/Timber.tres" id="id_cost_res"]
@@ -16,4 +16,3 @@ cost = {
 ExtResource("id_cost_res"): 1
 }
 building_tile = 1
-building_size = Vector2i(2, 2)
