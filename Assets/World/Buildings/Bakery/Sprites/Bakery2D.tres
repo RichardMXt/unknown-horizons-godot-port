@@ -1,11 +1,7 @@
-[gd_resource type="SpriteFrames" load_steps=3 format=3]
+[gd_resource type="SpriteFrames" load_steps=39 format=3 uid="uid://b58y5wesdrxyu"]
 
-
-[ext_resource type="Texture2D" uid="uid://" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_idle.png" id="Bakery_idle.png"]
-[ext_resource type="Texture2D" uid="uid://" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_work_anim.png" id="Bakery_work_anim.png"]
-
-
-
+[ext_resource type="Texture2D" uid="uid://bd3pm7y0bwefs" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_idle.png" id="Bakery_idle.png"]
+[ext_resource type="Texture2D" uid="uid://da74xqqvau4lq" path="res://Assets/World/Buildings/Bakery/Sprites/Bakery_work_anim.png" id="Bakery_work_anim.png"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
 atlas = ExtResource("Bakery_idle.png")
@@ -15,7 +11,6 @@ region = Rect2(0, 0, 128, 128)
 atlas = ExtResource("Bakery_idle.png")
 region = Rect2(128, 0, 128, 128)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
 atlas = ExtResource("Bakery_idle.png")
 region = Rect2(0, 128, 128, 128)
@@ -23,8 +18,6 @@ region = Rect2(0, 128, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
 atlas = ExtResource("Bakery_idle.png")
 region = Rect2(128, 128, 128, 128)
-
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_0"]
 atlas = ExtResource("Bakery_work_anim.png")
@@ -58,7 +51,6 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(896, 0, 128, 128)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_0"]
 atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(0, 128, 128, 128)
@@ -91,7 +83,6 @@ region = Rect2(768, 128, 128, 128)
 atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(896, 128, 128, 128)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_0"]
 atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(0, 256, 128, 128)
@@ -123,7 +114,6 @@ region = Rect2(768, 256, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_7"]
 atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(896, 256, 128, 128)
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_0"]
 atlas = ExtResource("Bakery_work_anim.png")
@@ -158,189 +148,152 @@ atlas = ExtResource("Bakery_work_anim.png")
 region = Rect2(896, 384, 128, 128)
 
 [resource]
-animations = [
-    {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle",
-    "speed": 5.0
-    },
-    
-  
-    ; special case for work_anim. work_anim spritesheets contain all four animations combined, split them in individual animations:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_4")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_5")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_6")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_0_7")
-      },
-    ],
-    "loop": true,
-    "name": &"work_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_4")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_5")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_6")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_1_7")
-      },
-    ],
-    "loop": true,
-    "name": &"work_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_4")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_5")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_6")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_2_7")
-      },
-    ],
-    "loop": true,
-    "name": &"work_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_4")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_5")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_6")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_anim_3_7")
-      },
-    ],
-    "loop": true,
-    "name": &"work_315",
-    "speed": 5.0
-  },
-    
-  
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_0")
+}],
+"loop": true,
+"name": &"idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_1")
+}],
+"loop": true,
+"name": &"idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_0")
+}],
+"loop": true,
+"name": &"idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_1")
+}],
+"loop": true,
+"name": &"idle_315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_0_7")
+}],
+"loop": true,
+"name": &"work_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_1_7")
+}],
+"loop": true,
+"name": &"work_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_2_7")
+}],
+"loop": true,
+"name": &"work_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_anim_3_7")
+}],
+"loop": true,
+"name": &"work_315",
+"speed": 5.0
+}]

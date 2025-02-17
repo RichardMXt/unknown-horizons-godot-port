@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=35 format=3 uid="uid://g0x5fr7nbdbv"]
+[gd_resource type="TileSet" load_steps=36 format=3 uid="uid://g0x5fr7nbdbv"]
 
 [ext_resource type="PackedScene" uid="uid://21pewmmm5ykv" path="res://Assets/World/Buildings/Agricultural/Farm/Farm2D.tscn" id="1_s7y1i"]
 [ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.tscn" id="2_582ty"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bq0cmv6efhj4b" path="res://Assets/World/Buildings/TestBlank/TestBlank2D.tscn" id="5_07dhw"]
 [ext_resource type="Texture2D" uid="uid://dvi3gxgx1gre1" path="res://Assets/World/Buildings/Agricultural/PotatoField/Sprites/PotatoField_work_anim.png" id="5_tu0oc"]
 [ext_resource type="Texture2D" uid="uid://b4lvqs0r23ivx" path="res://Assets/World/Buildings/SaltPonds/Sprites/SaltPond_work_anim.png" id="6_g1dfa"]
+[ext_resource type="PackedScene" uid="uid://drx0xfec4ssgp" path="res://Assets/World/Buildings/Bakery/Bakery2D.tscn" id="6_jhc40"]
 [ext_resource type="Texture2D" uid="uid://bn0s41ie0dfyi" path="res://Assets/World/Buildings/Agricultural/SugarField/Sprites/SugarField_work_anim.png" id="7_1r161"]
 [ext_resource type="Texture2D" uid="uid://b4nksjo02hveb" path="res://Assets/World/Buildings/Toolmaker/Sprites/Toolmaker_work_anim.png" id="8_4k1pw"]
 [ext_resource type="Texture2D" uid="uid://bywpxtmebk3ts" path="res://Roads.png" id="9_m4qb1"]
@@ -36,7 +37,8 @@ scenes/1/scene = ExtResource("1_s7y1i")
 scenes/2/scene = ExtResource("2_582ty")
 scenes/3/scene = ExtResource("3_vbb0e")
 scenes/4/scene = ExtResource("4_ci3ky")
-scenes/6/scene = ExtResource("5_07dhw")
+scenes/5/scene = ExtResource("5_07dhw")
+scenes/6/scene = ExtResource("6_jhc40")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7ew"]
 texture = ExtResource("4_spnop")
