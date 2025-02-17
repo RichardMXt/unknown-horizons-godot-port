@@ -1,27 +1,27 @@
 [gd_resource type="TileSet" load_steps=13 format=3 uid="uid://g0x5fr7nbdbv"]
 
-[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Farm/Farm2D.tscn" id="1_s7y1i"]
-[ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.tscn" id="2_582ty"]
-[ext_resource type="PackedScene" uid="uid://dreaq3spettlk" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.tscn" id="3_vbb0e"]
-[ext_resource type="PackedScene" uid="uid://cxg537ramv08c" path="res://Assets/World/Buildings/Lumberjack/LumberjackTent2D.tscn" id="4_ci3ky"]
-[ext_resource type="Texture2D" uid="uid://bpj7a252mpg8h" path="res://Assets/World/Trees/Sprites/Maple1_idle_full.png" id="4_spnop"]
-[ext_resource type="PackedScene" uid="uid://bq0cmv6efhj4b" path="res://Assets/World/Buildings/TestBlank/TestBlank2D.tscn" id="5_07dhw"]
-[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Bakery/Bakery2D.tscn" id="6_jhc40"]
-[ext_resource type="PackedScene" uid="uid://bgykcfttfkw7v" path="res://Assets/World/Buildings/Blender/Blender2D.tscn" id="7_wf2yv"]
-[ext_resource type="Texture2D" uid="uid://bywpxtmebk3ts" path="res://Roads.png" id="9_m4qb1"]
+[ext_resource type="Texture2D" uid="uid://bywpxtmebk3ts" path="res://Roads.png" id="1_m4qb1"]
+[ext_resource type="Texture2D" uid="uid://bpj7a252mpg8h" path="res://Assets/World/Trees/Sprites/Maple1_idle_full.png" id="2_spnop"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Bakery/Bakery2D.tscn" id="Bakery2D.tscn"]
+[ext_resource type="PackedScene" uid="uid://bgykcfttfkw7v" path="res://Assets/World/Buildings/Blender/Blender2D.tscn" id="Blender2D.tscn"]
+[ext_resource type="PackedScene" uid="uid://dreaq3spettlk" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.tscn" id="CattleRun2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Farm/Farm2D.tscn" id="Farm2D.tscn"]
+[ext_resource type="PackedScene" uid="uid://cxg537ramv08c" path="res://Assets/World/Buildings/Lumberjack/LumberjackTent2D.tscn" id="LumberjackTent2D.tscn"]
+[ext_resource type="PackedScene" uid="uid://bq0cmv6efhj4b" path="res://Assets/World/Buildings/TestBlank/TestBlank2D.tscn" id="TestBlank2D.tscn"]
+[ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.tscn" id="Warehouse2D.tscn"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_xv0cf"]
 resource_name = "Buildings"
-scenes/1/scene = ExtResource("1_s7y1i")
-scenes/2/scene = ExtResource("2_582ty")
-scenes/3/scene = ExtResource("3_vbb0e")
-scenes/4/scene = ExtResource("4_ci3ky")
-scenes/5/scene = ExtResource("5_07dhw")
-scenes/6/scene = ExtResource("6_jhc40")
-scenes/8/scene = ExtResource("7_wf2yv")
+scenes/1/scene = ExtResource("Farm2D.tscn")
+scenes/2/scene = ExtResource("Warehouse2D.tscn")
+scenes/3/scene = ExtResource("CattleRun2D.tscn")
+scenes/4/scene = ExtResource("LumberjackTent2D.tscn")
+scenes/5/scene = ExtResource("TestBlank2D.tscn")
+scenes/6/scene = ExtResource("Bakery2D.tscn")
+scenes/8/scene = ExtResource("Blender2D.tscn")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7ew"]
-texture = ExtResource("4_spnop")
+texture = ExtResource("2_spnop")
 texture_region_size = Vector2i(64, 64)
 0:0/size_in_atlas = Vector2i(1, 2)
 0:0/0 = 0
@@ -46,7 +46,7 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_18atu"]
 resource_name = "Roads"
-texture = ExtResource("9_m4qb1")
+texture = ExtResource("1_m4qb1")
 texture_region_size = Vector2i(64, 32)
 4:0/0 = 0
 5:0/0 = 0
