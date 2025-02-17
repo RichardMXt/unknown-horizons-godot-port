@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Assets/World/Buildings/Agricultural/CattleRun/cattle_run_2d.gd" id="1_6qc84"]
 [ext_resource type="Shader" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.gdshader" id="1_6udmt"]
-[ext_resource type="SpriteFrames" uid="uid://bgp4moqtb6d0x" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun2D.tres" id="3_mbec5"]
+[ext_resource type="SpriteFrames" uid="uid://w187tjqv1lky" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun2D.tres" id="3_mbec5"]
 [ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_l4rb2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nnvfk"]

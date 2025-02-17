@@ -25,10 +25,12 @@ func set_tab_widget():
     # get the info tab widget
     var object = selected_objects[0].get_parent()
     var info_tab_widget: Resource
-    if object is Building2D:
-      info_tab_widget = object.building_data.info_tab_widget
-    if object is Unit2D:
-      info_tab_widget = object.unit_data.info_tab_widget
+    var building2d := object as Building2D
+    if building2d != null:
+      info_tab_widget = building2d.info_tab_widget
+    var unit2d := object as Unit2D
+    if unit2d != null:
+      info_tab_widget = unit2d.info_tab_widget
     # get the tab widget name
     if info_tab_widget:
       tab_widget_name = info_tab_widget.resource_path.get_file().get_basename()

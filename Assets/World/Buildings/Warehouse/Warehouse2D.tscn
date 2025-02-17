@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dro3fjo0xo3o"]
+[gd_scene load_steps=6 format=3 uid="uid://dro3fjo0xo3o"]
 
 [ext_resource type="Script" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.gd" id="1_w4xyu"]
 [ext_resource type="Resource" uid="uid://csdims0m0sqnb" path="res://Assets/World/Data/BuildingData/WarehouseData.tres" id="2_ilvtc"]
 [ext_resource type="Texture2D" uid="uid://cpe1pq8aivfqp" path="res://Assets/World/Buildings/Warehouse/Sprites/WarehouseWooden_idle.png" id="2_w2qwb"]
+[ext_resource type="PackedScene" uid="uid://c4guhesfdudwl" path="res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn" id="id_info_tab_widget"]
 [ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_psukr"]
 
 [node name="Warehouse" type="Node2D"]
@@ -10,6 +11,7 @@ z_index = 10
 script = ExtResource("1_w4xyu")
 load_and_unload_time = 4.0
 building_data = ExtResource("2_ilvtc")
+info_tab_widget = ExtResource("id_info_tab_widget")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_w2qwb")

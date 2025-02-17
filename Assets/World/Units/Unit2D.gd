@@ -3,6 +3,7 @@ extends AnimatableBody2D
 class_name Unit2D
 
 @export var unit_data: UnitData = null
+@export var info_tab_widget: PackedScene
 ## The main sprite of the unit.
 ## If set to null, will set the first AnimatedSprite2D child found.
 @export var unit_sprite: AnimatedSprite2D = null

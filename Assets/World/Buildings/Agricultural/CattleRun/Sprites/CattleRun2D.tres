@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=605 format=3 uid="uid://w54e0wpe2bh8"]
+[gd_resource type="SpriteFrames" load_steps=605 format=3 uid="uid://w187tjqv1lky"]
 
 [ext_resource type="Texture2D" uid="uid://bvbq4ud7b5cx6" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun_work_45.png" id="CattleRun_work_45.png"]
 [ext_resource type="Texture2D" uid="uid://cho3yy7cxqnwd" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun_work_135.png" id="CattleRun_work_135.png"]

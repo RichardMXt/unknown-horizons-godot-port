@@ -3,7 +3,6 @@
 [ext_resource type="Resource" uid="uid://cadptbki7hpwf" path="res://Assets/World/Data/ItemData/Food.tres" id="id_output_tres"]
 [ext_resource type="Resource" uid="uid://c5xn4hbcdts6c" path="res://Assets/World/Data/ItemData/Timber.tres" id="id_cost_res"]
 [ext_resource type="Script" path="res://Assets/World/Data/BuildingData/ProductionBuildingData.gd" id="id_script"]
-[ext_resource type="PackedScene" uid="uid://bn83cm4ugjyay" path="res://Assets/UI/TabWidgets/FarmTabWidget.tscn" id="id_info_tab_widget"]
 
 [resource]
 script = ExtResource("id_script")
@@ -17,5 +16,4 @@ cost = {
 ExtResource("id_cost_res"): 1
 }
 building_tile = 1
-info_tab_widget = ExtResource("id_info_tab_widget")
 building_size = Vector2i(2, 2)
