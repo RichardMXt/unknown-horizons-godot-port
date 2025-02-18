@@ -15,4 +15,3 @@ game_name = "blender"
 cost = {
 ExtResource("id_cost_res"): 1
 }
-building_tile = 1

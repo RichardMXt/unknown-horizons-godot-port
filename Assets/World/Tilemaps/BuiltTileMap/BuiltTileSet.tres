@@ -9,6 +9,48 @@
 [ext_resource type="PackedScene" uid="uid://cxg537ramv08c" path="res://Assets/World/Buildings/Lumberjack/LumberjackTent2D.tscn" id="LumberjackTent2D.tscn"]
 [ext_resource type="PackedScene" uid="uid://bq0cmv6efhj4b" path="res://Assets/World/Buildings/TestBlank/TestBlank2D.tscn" id="TestBlank2D.tscn"]
 [ext_resource type="PackedScene" uid="uid://dro3fjo0xo3o" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.tscn" id="Warehouse2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Barracks/Barracks2D.tscn" id="Barracks2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Bath/Bath2D.tscn" id="Bath2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/BoatBuilder/BoatBuilder2D.tscn" id="BoatBuilder2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Brewery/Brewery2D.tscn" id="Brewery2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Brickyard/Brickyard2D.tscn" id="Brickyard2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Butchery/Butchery2D.tscn" id="Butchery2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/CannonFoundry/CannonFoundry2D.tscn" id="CannonFoundry2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Chapel/Chapel2D.tscn" id="Chapel2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/ClayPit/ClayPit2D.tscn" id="ClayPit2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Doctor/Doctor2D.tscn" id="Doctor2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/FireStation/FireStation2D.tscn" id="FireStation2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Fisherman/Fisherman2D.tscn" id="Fisherman2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Hunter/Hunter2D.tscn" id="Hunter2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Lookout/Lookout2D.tscn" id="Lookout2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/MainSquare/MainSquare2D.tscn" id="MainSquare2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/PastryShop/PastryShop2D.tscn" id="PastryShop2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/SaltPonds/SaltPonds2D.tscn" id="SaltPonds2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/School/School2D.tscn" id="School2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/SignalFire/SignalFire2D.tscn" id="SignalFire2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Smeltery/Smeltery2D.tscn" id="Smeltery2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Stonemason/Stonemason2D.tscn" id="Stonemason2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/StonePit/StonePit2D.tscn" id="StonePit2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Storage/Storage2D.tscn" id="Storage2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Tavern/Tavern2D.tscn" id="Tavern2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Tobacconist/Tobacconist2D.tscn" id="Tobacconist2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Weaponsmith/Weaponsmith2D.tscn" id="Weaponsmith2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Weaver/Weaver2D.tscn" id="Weaver2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Windmill/Windmill2D.tscn" id="Windmill2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Winery/Winery2D.tscn" id="Winery2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/WoodenTower/WoodenTower2D.tscn" id="WoodenTower2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Alvearies/Alvearies2D.tscn" id="Alvearies2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/CocoaField/CocoaField2D.tscn" id="CocoaField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/CornField/CornField2D.tscn" id="CornField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Herbary/Herbary2D.tscn" id="Herbary2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/HopField/HopField2D.tscn" id="HopField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Pasture/Pasture2D.tscn" id="Pasture2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Pigsty/Pigsty2D.tscn" id="Pigsty2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/PotatoField/PotatoField2D.tscn" id="PotatoField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/SpiceField/SpiceField2D.tscn" id="SpiceField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/SugarField/SugarField2D.tscn" id="SugarField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/TobaccoField/TobaccoField2D.tscn" id="TobaccoField2D.tscn"]
+[ext_resource type="PackedScene" path="res://Assets/World/Buildings/Agricultural/Vineyard/Vineyard2D.tscn" id="Vineyard2D.tscn"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_xv0cf"]
 resource_name = "Buildings"
@@ -18,7 +60,49 @@ scenes/3/scene = ExtResource("CattleRun2D.tscn")
 scenes/4/scene = ExtResource("LumberjackTent2D.tscn")
 scenes/5/scene = ExtResource("TestBlank2D.tscn")
 scenes/6/scene = ExtResource("Bakery2D.tscn")
+scenes/7/scene = ExtResource("Barracks2D.tscn")
 scenes/8/scene = ExtResource("Blender2D.tscn")
+scenes/9/scene = ExtResource("Bath2D.tscn")
+scenes/10/scene = ExtResource("BoatBuilder2D.tscn")
+scenes/11/scene = ExtResource("Brewery2D.tscn")
+scenes/12/scene = ExtResource("Brickyard2D.tscn")
+scenes/13/scene = ExtResource("Butchery2D.tscn")
+scenes/14/scene = ExtResource("CannonFoundry2D.tscn")
+scenes/15/scene = ExtResource("Chapel2D.tscn")
+scenes/16/scene = ExtResource("ClayPit2D.tscn")
+scenes/17/scene = ExtResource("Doctor2D.tscn")
+scenes/18/scene = ExtResource("FireStation2D.tscn")
+scenes/19/scene = ExtResource("Fisherman2D.tscn")
+scenes/20/scene = ExtResource("Hunter2D.tscn")
+scenes/21/scene = ExtResource("Lookout2D.tscn")
+scenes/22/scene = ExtResource("MainSquare2D.tscn")
+scenes/23/scene = ExtResource("PastryShop2D.tscn")
+scenes/24/scene = ExtResource("SaltPonds2D.tscn")
+scenes/25/scene = ExtResource("School2D.tscn")
+scenes/26/scene = ExtResource("SignalFire2D.tscn")
+scenes/27/scene = ExtResource("Smeltery2D.tscn")
+scenes/28/scene = ExtResource("Stonemason2D.tscn")
+scenes/29/scene = ExtResource("StonePit2D.tscn")
+scenes/30/scene = ExtResource("Storage2D.tscn")
+scenes/31/scene = ExtResource("Tavern2D.tscn")
+scenes/32/scene = ExtResource("Tobacconist2D.tscn")
+scenes/33/scene = ExtResource("Weaponsmith2D.tscn")
+scenes/34/scene = ExtResource("Weaver2D.tscn")
+scenes/35/scene = ExtResource("Windmill2D.tscn")
+scenes/36/scene = ExtResource("Winery2D.tscn")
+scenes/37/scene = ExtResource("WoodenTower2D.tscn")
+scenes/38/scene = ExtResource("Alvearies2D.tscn")
+scenes/39/scene = ExtResource("CocoaField2D.tscn")
+scenes/40/scene = ExtResource("CornField2D.tscn")
+scenes/41/scene = ExtResource("Herbary2D.tscn")
+scenes/42/scene = ExtResource("HopField2D.tscn")
+scenes/43/scene = ExtResource("Pasture2D.tscn")
+scenes/44/scene = ExtResource("Pigsty2D.tscn")
+scenes/45/scene = ExtResource("PotatoField2D.tscn")
+scenes/46/scene = ExtResource("SpiceField2D.tscn")
+scenes/47/scene = ExtResource("SugarField2D.tscn")
+scenes/48/scene = ExtResource("TobaccoField2D.tscn")
+scenes/49/scene = ExtResource("Vineyard2D.tscn")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7ew"]
 texture = ExtResource("2_spnop")

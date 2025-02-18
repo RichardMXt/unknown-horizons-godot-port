@@ -1,41 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://dreaq3spettlk"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://Assets/World/Buildings/Agricultural/CattleRun/cattle_run_2d.gd" id="1_6qc84"]
-[ext_resource type="Shader" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.gdshader" id="1_6udmt"]
-[ext_resource type="SpriteFrames" uid="uid://w187tjqv1lky" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun2D.tres" id="3_mbec5"]
-[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_l4rb2"]
+[ext_resource type="PackedScene" uid="uid://c14jc7hm1oowb" path="res://Assets/World/Buildings/ProductionBuilding2D.tscn" id="1_ProductionBuilding2D"]
+[ext_resource type="Script" path="res://Assets/World/Buildings/Agricultural/CattleRun/CattleRun2D.gd" id="2_script"]
+[ext_resource type="Resource" path="res://Assets/World/Data/BuildingData/CattleRun2DData.tres" id="3_building_data"]
+[ext_resource type="SpriteFrames" path="res://Assets/World/Buildings/Agricultural/CattleRun/Sprites/CattleRun2D.tres" id="4_animated_sprite"]
+[ext_resource type="Texture2D" uid="uid://brmfkn8sfum3n" path="res://Assets/UI/Icons/Resources/32/005.png" id="5_tooltip_image"]
+[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="6_selectable"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nnvfk"]
-shader = ExtResource("1_6udmt")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/width = 0.0
-shader_parameter/pattern = 0
-shader_parameter/inside = true
-shader_parameter/add_margins = true
+[node name="CattleRun2D" instance=ExtResource("1_ProductionBuilding2D")]
+script = ExtResource("2_script")
+building_data = ExtResource("3_building_data")
+info_tab_widget = null 
+building_size = Vector2i(3, 3)
+built_tile_map_tile_id = 3
 
-[node name="CattleRun2d" type="Node2D"]
-script = ExtResource("1_6qc84")
+[node name="BuildingSprite" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = ExtResource("4_animated_sprite")
+offset = Vector2(0, -16)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_nnvfk")
-sprite_frames = ExtResource("3_mbec5")
-animation = &"work_045"
-offset = Vector2(0, -48)
+[node name="ItemProducedTooltip" parent="." index="2"]
+texture = ExtResource("5_tooltip_image")
+amount = "0"
 
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
+[node name="Selectable" parent="." index="3" instance=ExtResource("6_selectable")]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(-96, 0, 0, -48, 96, 0, 0, 48)
-
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="." index="4"]
 offset_left = -32.0
 offset_top = -16.0
 offset_right = 32.0
 offset_bottom = 16.0
 mouse_filter = 2
-
-[node name="Selectable" parent="." instance=ExtResource("4_l4rb2")]
-
-[connection signal="mouse_entered" from="Area2D" to="." method="on_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="on_mouse_exited"]

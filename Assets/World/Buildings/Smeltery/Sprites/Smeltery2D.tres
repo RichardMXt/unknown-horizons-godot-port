@@ -1,0 +1,278 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3]
+
+
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Smeltery/Sprites/Smeltery_idle.png" id="Smeltery_idle.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Smeltery/Sprites/Smeltery_work.png" id="Smeltery_work.png"]
+
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
+atlas = ExtResource("Smeltery_idle.png")
+region = Rect2(0, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
+atlas = ExtResource("Smeltery_idle.png")
+region = Rect2(256, 0, 256, 160)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
+atlas = ExtResource("Smeltery_idle.png")
+region = Rect2(0, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
+atlas = ExtResource("Smeltery_idle.png")
+region = Rect2(256, 160, 256, 160)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_0"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(0, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_1"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(256, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_2"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(512, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_3"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(768, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_4"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1024, 0, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_0_5"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1280, 0, 256, 160)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_0"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(0, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_1"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(256, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_2"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(512, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_3"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(768, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_4"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1024, 160, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_1_5"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1280, 160, 256, 160)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_0"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(0, 320, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_1"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(256, 320, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_2"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(512, 320, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_3"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(768, 320, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_4"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1024, 320, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_2_5"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1280, 320, 256, 160)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_0"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(0, 480, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_1"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(256, 480, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_2"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(512, 480, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_3"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(768, 480, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_4"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1024, 480, 256, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_3_5"]
+atlas = ExtResource("Smeltery_work.png")
+region = Rect2(1280, 480, 256, 160)
+
+[resource]
+animations = [
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_315",
+    "speed": 5.0
+  },
+    {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_0_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_1_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_2_5")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_4")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_3_5")
+      },
+    ],
+    "loop": true,
+    "name": &"work",
+    "speed": 5.0
+    },
+]

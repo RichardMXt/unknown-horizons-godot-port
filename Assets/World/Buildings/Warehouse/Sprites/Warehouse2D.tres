@@ -1,0 +1,268 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3]
+
+
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Warehouse/Sprites/WarehouseStone_idle.png" id="WarehouseStone_idle.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Warehouse/Sprites/WarehouseTimberFramed_idle.png" id="WarehouseTimberFramed_idle.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Warehouse/Sprites/WarehouseWooden_idle.png" id="WarehouseWooden_idle.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Warehouse/Sprites/Warehouse_idle.png" id="Warehouse_idle.png"]
+
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Stone_idle_0_0"]
+atlas = ExtResource("WarehouseStone_idle.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Stone_idle_0_1"]
+atlas = ExtResource("WarehouseStone_idle.png")
+region = Rect2(192, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Stone_idle_1_0"]
+atlas = ExtResource("WarehouseStone_idle.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Stone_idle_1_1"]
+atlas = ExtResource("WarehouseStone_idle.png")
+region = Rect2(192, 192, 192, 192)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_TimberFramed_idle_0_0"]
+atlas = ExtResource("WarehouseTimberFramed_idle.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_TimberFramed_idle_0_1"]
+atlas = ExtResource("WarehouseTimberFramed_idle.png")
+region = Rect2(192, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_TimberFramed_idle_1_0"]
+atlas = ExtResource("WarehouseTimberFramed_idle.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_TimberFramed_idle_1_1"]
+atlas = ExtResource("WarehouseTimberFramed_idle.png")
+region = Rect2(192, 192, 192, 192)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Wooden_idle_0_0"]
+atlas = ExtResource("WarehouseWooden_idle.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Wooden_idle_0_1"]
+atlas = ExtResource("WarehouseWooden_idle.png")
+region = Rect2(192, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Wooden_idle_1_0"]
+atlas = ExtResource("WarehouseWooden_idle.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_Wooden_idle_1_1"]
+atlas = ExtResource("WarehouseWooden_idle.png")
+region = Rect2(192, 192, 192, 192)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
+atlas = ExtResource("Warehouse_idle.png")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
+atlas = ExtResource("Warehouse_idle.png")
+region = Rect2(192, 0, 192, 128)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
+atlas = ExtResource("Warehouse_idle.png")
+region = Rect2(0, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
+atlas = ExtResource("Warehouse_idle.png")
+region = Rect2(192, 128, 192, 128)
+
+[resource]
+animations = [
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Stone_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"Stone_idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Stone_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"Stone_idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Stone_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"Stone_idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Stone_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"Stone_idle_315",
+    "speed": 5.0
+  },
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_TimberFramed_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"TimberFramed_idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_TimberFramed_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"TimberFramed_idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_TimberFramed_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"TimberFramed_idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_TimberFramed_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"TimberFramed_idle_315",
+    "speed": 5.0
+  },
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Wooden_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"Wooden_idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Wooden_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"Wooden_idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Wooden_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"Wooden_idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_Wooden_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"Wooden_idle_315",
+    "speed": 5.0
+  },
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_315",
+    "speed": 5.0
+  },
+]

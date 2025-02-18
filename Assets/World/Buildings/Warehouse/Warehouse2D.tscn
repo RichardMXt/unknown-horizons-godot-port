@@ -1,29 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://dro3fjo0xo3o"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.gd" id="1_w4xyu"]
-[ext_resource type="Resource" uid="uid://csdims0m0sqnb" path="res://Assets/World/Data/BuildingData/WarehouseData.tres" id="2_ilvtc"]
-[ext_resource type="Texture2D" uid="uid://cpe1pq8aivfqp" path="res://Assets/World/Buildings/Warehouse/Sprites/WarehouseWooden_idle.png" id="2_w2qwb"]
-[ext_resource type="PackedScene" uid="uid://c4guhesfdudwl" path="res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn" id="id_info_tab_widget"]
-[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="4_psukr"]
+[ext_resource type="PackedScene" uid="uid://c14jc7hm1oowb" path="res://Assets/World/Buildings/ProductionBuilding2D.tscn" id="1_ProductionBuilding2D"]
+[ext_resource type="Script" path="res://Assets/World/Buildings/Warehouse/Warehouse2D.gd" id="2_script"]
+[ext_resource type="Resource" path="res://Assets/World/Data/BuildingData/Warehouse2DData.tres" id="3_building_data"]
+[ext_resource type="SpriteFrames" path="res://Assets/World/Buildings/Warehouse/Sprites/Warehouse2D.tres" id="4_animated_sprite"]
+[ext_resource type="Texture2D" uid="uid://brmfkn8sfum3n" path="res://Assets/UI/Icons/Resources/32/005.png" id="5_tooltip_image"]
+[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="6_selectable"]
+[ext_resource type="PackedScene" path="res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn" id="id_info_tab_widget"]
 
-[node name="Warehouse" type="Node2D"]
-z_index = 10
-script = ExtResource("1_w4xyu")
-load_and_unload_time = 4.0
-building_data = ExtResource("2_ilvtc")
-info_tab_widget = ExtResource("id_info_tab_widget")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_w2qwb")
-offset = Vector2(0, -48)
-region_enabled = true
-region_rect = Rect2(0, 0, 192, 192)
+[node name="Warehouse2D" instance=ExtResource("1_ProductionBuilding2D")]
+script = ExtResource("2_script")
+building_data = ExtResource("3_building_data")
+info_tab_widget = ExtResource("id_info_tab_widget") 
+building_size = Vector2i(3, 3)
+built_tile_map_tile_id = 2
 
-[node name="LoadUnloadTimer" type="Timer" parent="."]
+[node name="BuildingSprite" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = ExtResource("4_animated_sprite")
+offset = Vector2(0, -16)
 
-[node name="Selectable" parent="." instance=ExtResource("4_psukr")]
+[node name="ItemProducedTooltip" parent="." index="2"]
+texture = ExtResource("5_tooltip_image")
+amount = "0"
 
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="Selectable" parent="." index="3" instance=ExtResource("6_selectable")]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="." index="4"]
 offset_left = -32.0
 offset_top = -16.0
 offset_right = 32.0

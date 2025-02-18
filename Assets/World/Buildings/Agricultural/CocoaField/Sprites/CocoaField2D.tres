@@ -1,0 +1,311 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3]
+
+
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/CocoaField/Sprites/CocoaField_idle.png" id="CocoaField_idle.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/CocoaField/Sprites/CocoaField_idle_full.png" id="CocoaField_idle_full.png"]
+[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/CocoaField/Sprites/CocoaField_work_anim.png" id="CocoaField_work_anim.png"]
+
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
+atlas = ExtResource("CocoaField_idle.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
+atlas = ExtResource("CocoaField_idle.png")
+region = Rect2(192, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
+atlas = ExtResource("CocoaField_idle.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
+atlas = ExtResource("CocoaField_idle.png")
+region = Rect2(192, 192, 192, 192)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_0_0"]
+atlas = ExtResource("CocoaField_idle_full.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_0_1"]
+atlas = ExtResource("CocoaField_idle_full.png")
+region = Rect2(192, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_1_0"]
+atlas = ExtResource("CocoaField_idle_full.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_1_1"]
+atlas = ExtResource("CocoaField_idle_full.png")
+region = Rect2(192, 192, 192, 192)
+
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_0"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_1"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_2"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_3"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_0_4"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(768, 0, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_0"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_1"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_2"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_3"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_1_4"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(768, 192, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_0"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_1"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_2"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_3"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(576, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_2_4"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(768, 384, 192, 192)
+
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_0"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(0, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_1"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(192, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_2"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(384, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_3"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(576, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_work_anim_3_4"]
+atlas = ExtResource("CocoaField_work_anim.png")
+region = Rect2(768, 576, 192, 192)
+
+[resource]
+animations = [
+  ; `idle_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_0_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_0")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_315",
+    "speed": 5.0
+  },
+    {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_full_0_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_full_0_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_full_1_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_idle_full_1_1")
+      },
+    ],
+    "loop": true,
+    "name": &"idle_full",
+    "speed": 5.0
+    },
+  ; `work_anim`:
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_0_4")
+      },
+    ],
+    "loop": true,
+    "name": &"work_045",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_1_4")
+      },
+    ],
+    "loop": true,
+    "name": &"work_135",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_2_4")
+      },
+    ],
+    "loop": true,
+    "name": &"work_225",
+    "speed": 5.0
+  },
+  {
+    "frames": [
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_0")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_1")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_2")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_3")
+      },
+      {
+        "duration": 1.0,
+        "texture": SubResource("AtlasTexture_work_anim_3_4")
+      },
+    ],
+    "loop": true,
+    "name": &"work_315",
+    "speed": 5.0
+  },
+]
