@@ -1,10 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3]
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://club6q5ijfpdi"]
 
-
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/StonePit/Sprites/StonePit_idle.png" id="StonePit_idle.png"]
-
-
-
+[ext_resource type="Texture2D" uid="uid://co1g0ifx4u866" path="res://Assets/World/Buildings/StonePit/Sprites/StonePit_idle.png" id="StonePit_idle.png"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
 atlas = ExtResource("StonePit_idle.png")
@@ -13,7 +9,6 @@ region = Rect2(0, 0, 192, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
 atlas = ExtResource("StonePit_idle.png")
 region = Rect2(192, 0, 192, 128)
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
 atlas = ExtResource("StonePit_idle.png")
@@ -24,50 +19,36 @@ atlas = ExtResource("StonePit_idle.png")
 region = Rect2(192, 128, 192, 128)
 
 [resource]
-animations = [
-  ; `idle_anim`:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_315",
-    "speed": 5.0
-  },
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_0")
+}],
+"loop": true,
+"name": &"idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_1")
+}],
+"loop": true,
+"name": &"idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_0")
+}],
+"loop": true,
+"name": &"idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_1")
+}],
+"loop": true,
+"name": &"idle_315",
+"speed": 5.0
+}]

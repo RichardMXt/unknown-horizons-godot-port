@@ -1,12 +1,8 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3]
+[gd_resource type="SpriteFrames" load_steps=28 format=3 uid="uid://gtydwmj5ah50"]
 
-
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_idle.png" id="Vineyard_idle.png"]
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_idle_full.png" id="Vineyard_idle_full.png"]
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_work.png" id="Vineyard_work.png"]
-
-
-
+[ext_resource type="Texture2D" uid="uid://b6pobqbre6es1" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_idle.png" id="Vineyard_idle.png"]
+[ext_resource type="Texture2D" uid="uid://pb6asestnqqd" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_idle_full.png" id="Vineyard_idle_full.png"]
+[ext_resource type="Texture2D" uid="uid://6gv6q0lps02d" path="res://Assets/World/Buildings/Agricultural/Vineyard/Sprites/Vineyard_work.png" id="Vineyard_work.png"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
 atlas = ExtResource("Vineyard_idle.png")
@@ -16,7 +12,6 @@ region = Rect2(0, 0, 192, 192)
 atlas = ExtResource("Vineyard_idle.png")
 region = Rect2(192, 0, 192, 192)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
 atlas = ExtResource("Vineyard_idle.png")
 region = Rect2(0, 192, 192, 192)
@@ -24,8 +19,6 @@ region = Rect2(0, 192, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
 atlas = ExtResource("Vineyard_idle.png")
 region = Rect2(192, 192, 192, 192)
-
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_0_0"]
 atlas = ExtResource("Vineyard_idle_full.png")
@@ -35,7 +28,6 @@ region = Rect2(0, 0, 192, 192)
 atlas = ExtResource("Vineyard_idle_full.png")
 region = Rect2(192, 0, 192, 192)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_1_0"]
 atlas = ExtResource("Vineyard_idle_full.png")
 region = Rect2(0, 192, 192, 192)
@@ -43,8 +35,6 @@ region = Rect2(0, 192, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_full_1_1"]
 atlas = ExtResource("Vineyard_idle_full.png")
 region = Rect2(192, 192, 192, 192)
-
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_0_0"]
 atlas = ExtResource("Vineyard_work.png")
@@ -62,7 +52,6 @@ region = Rect2(384, 0, 192, 192)
 atlas = ExtResource("Vineyard_work.png")
 region = Rect2(576, 0, 192, 192)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_1_0"]
 atlas = ExtResource("Vineyard_work.png")
 region = Rect2(0, 192, 192, 192)
@@ -79,7 +68,6 @@ region = Rect2(384, 192, 192, 192)
 atlas = ExtResource("Vineyard_work.png")
 region = Rect2(576, 192, 192, 192)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_2_0"]
 atlas = ExtResource("Vineyard_work.png")
 region = Rect2(0, 384, 192, 192)
@@ -95,7 +83,6 @@ region = Rect2(384, 384, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_2_3"]
 atlas = ExtResource("Vineyard_work.png")
 region = Rect2(576, 384, 192, 192)
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_work_3_0"]
 atlas = ExtResource("Vineyard_work.png")
@@ -114,144 +101,106 @@ atlas = ExtResource("Vineyard_work.png")
 region = Rect2(576, 576, 192, 192)
 
 [resource]
-animations = [
-  ; `idle_anim`:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_315",
-    "speed": 5.0
-  },
-    {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_full_0_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_full_0_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_full_1_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_full_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_full",
-    "speed": 5.0
-    },
-    {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_0_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_0_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_0_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_0_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_1_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_1_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_1_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_1_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_2_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_2_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_2_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_2_3")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_3_0")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_3_1")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_3_2")
-      },
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_work_3_3")
-      },
-    ],
-    "loop": true,
-    "name": &"work",
-    "speed": 5.0
-    },
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_0")
+}],
+"loop": true,
+"name": &"idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_1")
+}],
+"loop": true,
+"name": &"idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_0")
+}],
+"loop": true,
+"name": &"idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_1")
+}],
+"loop": true,
+"name": &"idle_315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_full_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_full_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_full_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_full_1_1")
+}],
+"loop": true,
+"name": &"idle_full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_0_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_1_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_1_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_1_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_2_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_2_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_2_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_3_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_3_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_3_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_work_3_3")
+}],
+"loop": true,
+"name": &"work",
+"speed": 5.0
+}]

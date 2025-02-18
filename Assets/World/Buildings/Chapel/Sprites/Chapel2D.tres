@@ -1,12 +1,8 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3]
+[gd_resource type="SpriteFrames" load_steps=16 format=3 uid="uid://biy07ds4v1ngc"]
 
-
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Chapel/Sprites/ChapelClinker_idle.png" id="ChapelClinker_idle.png"]
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Chapel/Sprites/Chapel_idle.png" id="Chapel_idle.png"]
-[ext_resource type="Texture2D" path="res://Assets/World/Buildings/Chapel/Sprites/SunSail_idle.png" id="SunSail_idle.png"]
-
-
-
+[ext_resource type="Texture2D" uid="uid://dnypuefdoltmj" path="res://Assets/World/Buildings/Chapel/Sprites/ChapelClinker_idle.png" id="ChapelClinker_idle.png"]
+[ext_resource type="Texture2D" uid="uid://uuxpi1ymt3ym" path="res://Assets/World/Buildings/Chapel/Sprites/Chapel_idle.png" id="Chapel_idle.png"]
+[ext_resource type="Texture2D" uid="uid://dxsuv7mfyp2mp" path="res://Assets/World/Buildings/Chapel/Sprites/SunSail_idle.png" id="SunSail_idle.png"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_Clinker_idle_0_0"]
 atlas = ExtResource("ChapelClinker_idle.png")
@@ -16,7 +12,6 @@ region = Rect2(0, 0, 128, 160)
 atlas = ExtResource("ChapelClinker_idle.png")
 region = Rect2(128, 0, 128, 160)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_Clinker_idle_1_0"]
 atlas = ExtResource("ChapelClinker_idle.png")
 region = Rect2(0, 160, 128, 160)
@@ -24,27 +19,6 @@ region = Rect2(0, 160, 128, 160)
 [sub_resource type="AtlasTexture" id="AtlasTexture_Clinker_idle_1_1"]
 atlas = ExtResource("ChapelClinker_idle.png")
 region = Rect2(128, 160, 128, 160)
-
-
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
-atlas = ExtResource("Chapel_idle.png")
-region = Rect2(0, 0, 128, 160)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
-atlas = ExtResource("Chapel_idle.png")
-region = Rect2(128, 0, 128, 160)
-
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
-atlas = ExtResource("Chapel_idle.png")
-region = Rect2(0, 160, 128, 160)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
-atlas = ExtResource("Chapel_idle.png")
-region = Rect2(128, 160, 128, 160)
-
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_SunSail_idle_0_0"]
 atlas = ExtResource("SunSail_idle.png")
@@ -54,7 +28,6 @@ region = Rect2(0, 0, 128, 128)
 atlas = ExtResource("SunSail_idle.png")
 region = Rect2(128, 0, 128, 128)
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_SunSail_idle_1_0"]
 atlas = ExtResource("SunSail_idle.png")
 region = Rect2(0, 128, 128, 128)
@@ -63,141 +36,117 @@ region = Rect2(0, 128, 128, 128)
 atlas = ExtResource("SunSail_idle.png")
 region = Rect2(128, 128, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_0"]
+atlas = ExtResource("Chapel_idle.png")
+region = Rect2(0, 0, 128, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0_1"]
+atlas = ExtResource("Chapel_idle.png")
+region = Rect2(128, 0, 128, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_0"]
+atlas = ExtResource("Chapel_idle.png")
+region = Rect2(0, 160, 128, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1_1"]
+atlas = ExtResource("Chapel_idle.png")
+region = Rect2(128, 160, 128, 160)
+
 [resource]
-animations = [
-  ; `idle_anim`:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_Clinker_idle_0_0")
-      },
-    ],
-    "loop": true,
-    "name": &"Clinker_idle_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_Clinker_idle_0_1")
-      },
-    ],
-    "loop": true,
-    "name": &"Clinker_idle_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_Clinker_idle_1_0")
-      },
-    ],
-    "loop": true,
-    "name": &"Clinker_idle_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_Clinker_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"Clinker_idle_315",
-    "speed": 5.0
-  },
-  ; `idle_anim`:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_0_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_0")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"idle_315",
-    "speed": 5.0
-  },
-  ; `idle_anim`:
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_SunSail_idle_0_0")
-      },
-    ],
-    "loop": true,
-    "name": &"SunSail_idle_045",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_SunSail_idle_0_1")
-      },
-    ],
-    "loop": true,
-    "name": &"SunSail_idle_135",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_SunSail_idle_1_0")
-      },
-    ],
-    "loop": true,
-    "name": &"SunSail_idle_225",
-    "speed": 5.0
-  },
-  {
-    "frames": [
-      {
-        "duration": 1.0,
-        "texture": SubResource("AtlasTexture_SunSail_idle_1_1")
-      },
-    ],
-    "loop": true,
-    "name": &"SunSail_idle_315",
-    "speed": 5.0
-  },
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_Clinker_idle_0_0")
+}],
+"loop": true,
+"name": &"Clinker_idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_Clinker_idle_0_1")
+}],
+"loop": true,
+"name": &"Clinker_idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_Clinker_idle_1_0")
+}],
+"loop": true,
+"name": &"Clinker_idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_Clinker_idle_1_1")
+}],
+"loop": true,
+"name": &"Clinker_idle_315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_SunSail_idle_0_0")
+}],
+"loop": true,
+"name": &"SunSail_idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_SunSail_idle_0_1")
+}],
+"loop": true,
+"name": &"SunSail_idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_SunSail_idle_1_0")
+}],
+"loop": true,
+"name": &"SunSail_idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_SunSail_idle_1_1")
+}],
+"loop": true,
+"name": &"SunSail_idle_315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_0")
+}],
+"loop": true,
+"name": &"idle_045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0_1")
+}],
+"loop": true,
+"name": &"idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_0")
+}],
+"loop": true,
+"name": &"idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1_1")
+}],
+"loop": true,
+"name": &"idle_315",
+"speed": 5.0
+}]
