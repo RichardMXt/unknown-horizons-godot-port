@@ -10,7 +10,7 @@ var selected_objects: Array[Selectable] = []
 func _unhandled_input(event):
   if self.is_active:
     if event.is_action_released("exit") and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) == false:
-      for object: Selectable in selected_objects:
+      for object in selected_objects:
         object.is_selected = false
       selected_objects = []
       game_context_manager.current_context = null
@@ -41,7 +41,7 @@ func set_tab_widget():
   # get the parent of the selectable characteristic
   ## the parents of the selectable characteristic
   var selected_buildings_and_units: Array = []
-  for object: Selectable in selected_objects:
+  for object in selected_objects:
     selected_buildings_and_units.append(object.get_parent())  
   event.set_meta("selected_objects", selected_buildings_and_units)
   Input.parse_input_event(event)
@@ -57,13 +57,13 @@ func set_selected_objects(new_selected_objects: Array[Selectable]):
     game_context_manager.current_context = null
   else:
     # select all objects to select and check if all are of the same type
-    for object: Selectable in selected_objects:
+    for object in selected_objects:
       object.is_selected = true
   set_tab_widget()
 
 func context_exited():
   super()
   # deselect all selected objects
-  for object: Selectable in selected_objects:
+  for object in selected_objects:
     object.is_selected = false
   selected_objects = []
