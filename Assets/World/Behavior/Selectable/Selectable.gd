@@ -9,7 +9,7 @@ class_name Selectable
   get:
     return sprite
   set(value):
-    assert(value is Sprite2D or value is AnimatedSprite2D, "Sprite must be an AnimatedSprite2D or Sprite2D")
+    assert(value is Sprite2D or value is AnimatedSprite2D or value == null, "Sprite must be an AnimatedSprite2D or Sprite2D")
     sprite = value
 ## The shader to be used to highlight the sprite.
 @export var shader: ShaderMaterial = preload("res://Assets/World/Behavior/Selectable/SelectableDefultShader.tres")
