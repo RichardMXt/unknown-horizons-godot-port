@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://csdims0m0sqnb" path="res://Assets/World/Data/BuildingData/WarehouseData.tres" id="4_ec8bt"]
 [ext_resource type="Resource" uid="uid://ncfp5csitmj4" path="res://Assets/World/Data/UnitData/ShipData.tres" id="4_p2d6v"]
 [ext_resource type="Resource" uid="uid://cadptbki7hpwf" path="res://Assets/World/Data/ItemData/Food.tres" id="5_f8i0t"]
-[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Behavior/Selectable/Selectable.tscn" id="5_vdlap"]
+[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Components/Selectable/Selectable.tscn" id="5_vdlap"]
 
 [node name="Ship2D" type="Node2D"]
 z_index = 15

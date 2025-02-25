@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7w3xnajww1kq"]
+
+[ext_resource type="Script" path="res://Assets/World/Components/ActionSet/ActionSet.gd" id="1_tj2mk"]
+
+[node name="ActionSet" type="Node"]
+script = ExtResource("1_tj2mk")
+change_sprite_at_tier_sailors = null
+change_sprite_at_tier_pioneers = null
+change_sprite_at_tier_settlers = null
+change_sprite_at_tier_citizens = null
+change_sprite_at_tier_merchants = null
+rotation_to_nearest_45_deg = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdvte7s6m26nc"]
+
+[ext_resource type="Script" path="res://Assets/World/Buildings/Bakery/Bakery2D.gd" id="1_4w467"]
+[ext_resource type="PackedScene" uid="uid://c7w3xnajww1kq" path="res://Assets/World/Components/ActionSet/ActionSet.tscn" id="2_4ivvs"]
+[ext_resource type="SpriteFrames" uid="uid://cpt5t0hywe5qt" path="res://Assets/World/Buildings/Bakery/Sprites/BakeryFrames.tres" id="3_nvofw"]
+
+[node name="Bakery2D" type="Node2D"]
+script = ExtResource("1_4w467")
+
+[node name="ActionSet" parent="." instance=ExtResource("2_4ivvs")]
+sprite_frames = ExtResource("3_nvofw")
+change_sprite_at_tier_sailors = false
+change_sprite_at_tier_pioneers = false
+change_sprite_at_tier_settlers = false
+change_sprite_at_tier_citizens = true
+change_sprite_at_tier_merchants = false
+tier = 4
+rotation_to_nearest_45_deg = 45
