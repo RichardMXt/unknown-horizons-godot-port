@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdvte7s6m26nc"]
+[gd_scene load_steps=5 format=3 uid="uid://bdvte7s6m26nc"]
 
 [ext_resource type="Script" path="res://Assets/World/Buildings/Bakery/Bakery2D.gd" id="1_4w467"]
 [ext_resource type="PackedScene" uid="uid://c7w3xnajww1kq" path="res://Assets/World/Components/ActionSet/ActionSet.tscn" id="2_4ivvs"]
 [ext_resource type="SpriteFrames" uid="uid://cpt5t0hywe5qt" path="res://Assets/World/Buildings/Bakery/Sprites/BakeryFrames.tres" id="3_nvofw"]
+[ext_resource type="PackedScene" uid="uid://ck36mqeae5ana" path="res://Assets/World/Components/Storage/SlotStorageComponent.tscn" id="4_re5r3"]
 
 [node name="Bakery2D" type="Node2D"]
 script = ExtResource("1_4w467")
@@ -16,3 +17,9 @@ change_sprite_at_tier_citizens = true
 change_sprite_at_tier_merchants = false
 tier = 4
 rotation_to_nearest_45_deg = 45
+
+[node name="SlotStorageComponent" parent="." instance=ExtResource("4_re5r3")]
+max_capacity = {
+"Flour": 10,
+"Food": 10
+}
