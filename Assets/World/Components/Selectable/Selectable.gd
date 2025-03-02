@@ -12,7 +12,7 @@ class_name Selectable
     assert(value is Sprite2D or value is AnimatedSprite2D or value == null, "Sprite must be an AnimatedSprite2D or Sprite2D")
     sprite = value
 ## The shader to be used to highlight the sprite.
-@export var shader: ShaderMaterial = preload("res://Assets/World/Behavior/Selectable/SelectableDefultShader.tres")
+@export var shader: ShaderMaterial = preload("res://Assets/World/Components/Selectable/SelectableDefultShader.tres")
 
 @onready var parent: WorldThing2D = self.get_parent()
 

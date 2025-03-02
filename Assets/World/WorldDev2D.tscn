@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bfln186sfga2v" path="res://Assets/World/Units/Ships/Ship2D/Ship2D.tscn" id="3_oiu6s"]
 [ext_resource type="Script" path="res://Assets/World/Context/BuildingRoadContext.gd" id="3_r4jkl"]
 [ext_resource type="Script" path="res://Assets/World/MainCamera.gd" id="4_ryeen"]
-[ext_resource type="Shader" path="res://Assets/World/Behavior/Selectable/Highlighter.gdshader" id="5_xwy3w"]
+[ext_resource type="Shader" path="res://Assets/World/Components/Selectable/Highlighter.gdshader" id="5_xwy3w"]
 [ext_resource type="Texture2D" uid="uid://ojeaj1a18a44" path="res://Assets/World/white_64x32.png" id="6_4vay5"]
 [ext_resource type="Texture2D" uid="uid://ckhylkfbvys8s" path="res://Assets/World/white_64x32_a0.5.png" id="7_2c0dm"]
 [ext_resource type="Script" path="res://Assets/World/Context/SelectionContext.gd" id="8_afdhk"]
