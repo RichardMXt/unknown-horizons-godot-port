@@ -60,12 +60,21 @@ class_name ActionSet
 
 @onready var animated_sprite: AnimatedSprite2D = self.get_node("AnimatedSprite2D")
 
+var production_line: ProductionLineComponent
+
 const empty_animation: String = "Empty"
 
 func _ready():
   if animated_sprite:
     animated_sprite.sprite_frames = sprite_frames
+
+func set_components(components: Array[BaseComponent]):
+  for component in components:
+    if component is ProductionLineComponent:
+      production_line = component
+  
   update_animtion()
+  production_line.production_state_changed.connect(update_animtion)
 
 func update_animtion() -> void:
   # if the sprite frames or the animated sprite is null then return because there is nothing to update
@@ -97,9 +106,8 @@ func update_animtion() -> void:
   else:
     var tier_state: String = last_sprite_change_tier_name.to_lower()
     var work_state: String = "idle"
-    # TODO: get the work state from a production line when defined ->
-    # if production_line != null and production_line.should_produce:
-    #   work_state = "work"
+    if production_line != null and production_line.production_stage == ProductionLineComponent.ProductionStages.PRODUCING:
+      work_state = "work"
     var animation_name: String = tier_state + "_" + work_state + "_" + str(rotation_to_nearest_45_deg)
     if animation_name in sprite_frames.get_animation_names():
       animated_sprite.play(animation_name)
