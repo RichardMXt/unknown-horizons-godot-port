@@ -15,7 +15,7 @@ static var item_map: Dictionary = {
 }
 
 ## @deprecated: Use strings for keys instead, until typed dictionaries are supported
-enum resources {
+enum Resources {
   FLOUR,
   FOOD,
   TIMBER,

@@ -11,7 +11,7 @@ expand_margin_top = 4.0
 expand_margin_right = 4.0
 expand_margin_bottom = 4.0
 
-[node name="ProductionLineComponent" type="Node"]
+[node name="ProductionLineComponent" type="Node2D"]
 script = ExtResource("1_h1x8g")
 
 [node name="ItemProducedTooltip" type="Control" parent="."]

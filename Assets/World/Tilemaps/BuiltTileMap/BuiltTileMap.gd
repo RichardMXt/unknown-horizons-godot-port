@@ -38,7 +38,7 @@ func register_building(building) -> void:
   else:
     building_name_to_building_poses[building.building_data.game_name] = [building.position]
   # set points for pathfinding
-  %Pathfinding.carrier_pathfinding.set_point_solid(self.local_to_map(building.position), false)
+  %Pathfinding.road_pathfinding.set_point_solid(self.local_to_map(building.position), false)
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
   road_building_context.road_building_pathfindng.set_point_solid(self.local_to_map(building.position), true)
   # handle notifications

@@ -49,38 +49,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_cux7k")
-}],
-"loop": true,
-"name": &"citizens_idle_135",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_72fa0")
-}],
-"loop": true,
-"name": &"citizens_idle_225",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_nhmwy")
-}],
-"loop": true,
-"name": &"citizens_idle_315",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_7shv1")
-}],
-"loop": true,
-"name": &"citizens_idle_45",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("1_vlvdn")
 }, {
 "duration": 1.0,
@@ -105,7 +73,7 @@ animations = [{
 "texture": ExtResource("8_r56k4")
 }],
 "loop": true,
-"name": &"citizens_work_135",
+"name": &"citizens_active_135",
 "speed": 5.0
 }, {
 "frames": [{
@@ -134,7 +102,7 @@ animations = [{
 "texture": ExtResource("16_cg1s6")
 }],
 "loop": true,
-"name": &"citizens_work_225",
+"name": &"citizens_active_225",
 "speed": 5.0
 }, {
 "frames": [{
@@ -163,7 +131,7 @@ animations = [{
 "texture": ExtResource("24_qsbx3")
 }],
 "loop": true,
-"name": &"citizens_work_315",
+"name": &"citizens_active_315",
 "speed": 5.0
 }, {
 "frames": [{
@@ -192,6 +160,38 @@ animations = [{
 "texture": ExtResource("16_uj1pm")
 }],
 "loop": true,
-"name": &"citizens_work_45",
+"name": &"citizens_active_45",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cux7k")
+}],
+"loop": true,
+"name": &"citizens_idle_135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_72fa0")
+}],
+"loop": true,
+"name": &"citizens_idle_225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_nhmwy")
+}],
+"loop": true,
+"name": &"citizens_idle_315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_7shv1")
+}],
+"loop": true,
+"name": &"citizens_idle_45",
 "speed": 5.0
 }]

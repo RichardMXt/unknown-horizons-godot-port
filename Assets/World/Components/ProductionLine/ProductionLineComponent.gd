@@ -54,21 +54,30 @@ var production_stage: ProductionStages = ProductionStages.IDLE:
     var last_stage: ProductionStages = production_stage
     production_stage = value
     if last_stage != production_stage:
-      production_state_changed.emit()
+      update_action_set()
     if last_stage == ProductionStages.IDLE and production_stage == ProductionStages.START:
       production_loop()
 
 var storage_component: SlotStorageComponent
 
-## emited when the production state changes
-signal production_state_changed
+var action_set: BuildingActionSet = null
 
 func set_components(components: Array[BaseComponent]):
   for component in components:
     if component is SlotStorageComponent:
       storage_component = component
+    if component is BuildingActionSet:
+      action_set = component
   production_stage = ProductionStages.START
 
+
+func update_action_set():
+  if action_set != null:
+    match production_stage:
+      ProductionStages.IDLE:
+        action_set.building_state = BuildingActionSet.BuildingStates.IDLE
+      ProductionStages.PRODUCING:
+        action_set.building_state = BuildingActionSet.BuildingStates.ACTIVE
 
 func notify_resource_produced():
   if len(produces.keys()) <= 0: # check that there is an output product
