@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bo27kwd5m1jmc"]
 
-[ext_resource type="Script" path="res://Assets/World/Components/ProductionLine/ProductionLineComponent.gd" id="1_h1x8g"]
+[ext_resource type="Script" uid="uid://cpdls1hcfybhm" path="res://Assets/World/Components/ProductionLine/ProductionLineComponent.gd" id="1_h1x8g"]
 [ext_resource type="Texture2D" uid="uid://dsgbcjg1tplnf" path="res://Assets/UI/Images/Background/produced_notification.png" id="2_16oi7"]
 [ext_resource type="Texture2D" uid="uid://dt1ef2m6h6d7x" path="res://Assets/UI/Icons/Resources/32/placeholder.png" id="3_kr37i"]
 
