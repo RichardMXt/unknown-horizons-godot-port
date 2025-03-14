@@ -14,5 +14,6 @@
     "local"
   ],
   "git.enableCommitSigning": false,
-  "git.replaceTagsWhenPull": false
+  "git.replaceTagsWhenPull": false,
+  "editor.renderWhitespace": "all"
 }

@@ -2,22 +2,12 @@ extends BaseComponent
 
 class_name ProductionLineComponent
 
-## The resources needed to produce the output product[br]
-## [b]Format[/b]: {resource([String]): amount([int])}
-@export var consumes: Dictionary = {}:
-  set(value):
-    consumes = value
-    for resource in value.keys(): # check if the given dictionary is in the right format
-      assert(resource is String and value[resource] is int, "The consumes dictionary must be in the format (resource: amount)")
+## The resources needed to produce the output product
+@export var consumes: Dictionary[ResourceConfig.Resources, int] = {}
 
 ## The product that will be produced[br]
-## [b]Format[/b]: {resource([String]): amount([int])}[br]
 ## [b]Note[/b]: Only [b]one[/b] resource can be produced
-@export var produces: Dictionary = {}:
-  set(value):
-    produces = value
-    for resource in value.keys(): # check if the given dictionary is in the right format
-      assert(resource is String and value[resource] is int, "The produces dictionary must be in the format (resource: amount)")
+@export var produces: Dictionary[ResourceConfig.Resources, int] = {}
 
 @export var production_time: float = 10
 
@@ -75,6 +65,8 @@ func update_action_set():
   if action_set != null:
     match production_stage:
       ProductionStages.IDLE:
+        action_set.building_state = BuildingActionSet.BuildingStates.IDLE
+      ProductionStages.WAITING_FOR_RESOURCES:
         action_set.building_state = BuildingActionSet.BuildingStates.IDLE
       ProductionStages.PRODUCING:
         action_set.building_state = BuildingActionSet.BuildingStates.ACTIVE
