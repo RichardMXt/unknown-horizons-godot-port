@@ -1,4 +1,4 @@
-extends Node2D
+extends WorldThing2D
 
 class_name BaseComponent
 

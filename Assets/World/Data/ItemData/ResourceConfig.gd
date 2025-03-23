@@ -15,6 +15,7 @@ static var item_map: Dictionary[Resources, ItemData] = {
 
 ## The enum representing the resources
 enum Resources {
+  NONE,
   FLOUR,
   FOOD,
   TIMBER,

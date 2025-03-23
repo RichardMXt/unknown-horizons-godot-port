@@ -123,7 +123,7 @@ func produce():
   if len(produces.keys()) <= 0:
     return
   production_stage = ProductionStages.PRODUCING
-  await self.get_tree().create_timer(production_time).timeout
+  await self.sleep(production_time)
   spend_resources()
   var produced_item = produces.keys()[0]
   storage_component.set_storage_item_amount(produced_item, produces[produced_item])
