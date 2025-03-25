@@ -15,19 +15,19 @@ class_name CollectorActionSet
     animated_sprite.sprite_frames = sprite_frames
     if sprite_frames == null:
       push_warning("No sprite frames assigned")
-    update_animtion()
+    update_animation()
 
 ## The rotation of the building, used to determine the animation
-@export var rotation_to_nearest_45_deg: int = 45:
+@export var direction: int = 45:
   set(value):
-    rotation_to_nearest_45_deg = int(value / 45.0 + 0.5) * 45
-    update_animtion()
+    direction = value
+    update_animation()
 
 ## The current tier
 @export var tier: ActionSetEnum.tiers = ActionSetEnum.tiers.SAILORS:
   set(value):
     tier = value
-    update_animtion()
+    update_animation()
 
 @onready var animated_sprite: AnimatedSprite2D = self.get_node("AnimatedSprite2D")
 
@@ -35,13 +35,13 @@ class_name CollectorActionSet
 var collector_action: CollectorActions = CollectorActions.IDLE:
   set(value):
     collector_action = value
-    update_animtion()
+    update_animation()
 
 ## Does the collector have any load
 var has_load: bool = false:
   set(value):
     has_load = value
-    update_animtion()
+    update_animation()
 
 ## The possible states of the collector
 enum CollectorActions{
@@ -56,14 +56,14 @@ const empty_animation: String = "Empty"
 func _ready():
   if animated_sprite:
     animated_sprite.sprite_frames = sprite_frames
-  update_animtion()
+  update_animation()
 
-func update_animtion() -> void:
+func update_animation() -> void:
   # if the sprite frames or the animated sprite is null then return because there is nothing to update
   if animated_sprite == null or sprite_frames == null:
     return
   
-  var rotation_str: String = str(rotation_to_nearest_45_deg) # get the rotation as string
+  var rotation_str: String = str(snappedi(self.direction, 45)) # get the rotation as string
   # get the state as string
   var state_str: String = CollectorActions.find_key(collector_action).to_lower()
   if has_load: # if the collector has load add "_full" to fullfill the state

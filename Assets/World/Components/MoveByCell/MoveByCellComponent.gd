@@ -50,11 +50,10 @@ var move_state: MoveStates = MoveStates.IDLE:
 func _ready():
   if object_to_be_moved == null:
     object_to_be_moved = self.get_node("..")
-  # set pathfinding by allowed movement
-  if pathfinding_node == null: # if pathfinding node is not set,
-    pathfinding_node = self.get_node("/root/Main/Pathfinding") # then set it to default
-  if pathfinding_node == null: # if still not found,
-    push_warning("Pathfinding node is not found") # raise warning
+  if pathfinding_node == null:
+    pathfinding_node = self.get_node("/root/Main/Pathfinding")
+  if pathfinding_node == null:
+    push_warning("Pathfinding node is not found")
   else:
     match allowed_movement:
       AllowedMovementTypes.MOVE_ON_WATER:
@@ -86,10 +85,11 @@ func move(go_to_position: Vector2) -> void:
     path.pop_front() # remove the starting position because the object is already there
     for new_position in path:
       var move_vec: Vector2 = new_position - object_to_be_moved.global_position
-      var move_angle = rad_to_deg(move_vec.angle_to(Vector2(1, 0)))
-      move_angle = posmod(move_angle, 360) # make in range of 0-359
-      if action_set: # if no action set, it still can move.
-        action_set.rotation_to_nearest_45_deg = int(move_angle)
+
+      if action_set:
+        var direction = rad_to_deg(move_vec.angle_to(Vector2(1, 0)))
+        direction = posmod(direction, 360) # make in range of 0-359
+        action_set.direction = direction
       
       var move_tween: Tween = self.get_tree().create_tween().bind_node(self)
       move_tween.tween_property(object_to_be_moved, "global_position", new_position, 1/tile_per_sec)
