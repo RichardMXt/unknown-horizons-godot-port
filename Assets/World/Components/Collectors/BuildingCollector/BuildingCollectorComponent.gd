@@ -87,13 +87,11 @@ func bring_resources_loop():
     # go to the building to collect from
     await move_by_cell.move_to_dest(building_to_collect_from.global_position)
     # collect the resource
-    collect_resource_from_building(building_to_collect_from, resource)
+    await collect_resource_from_building(building_to_collect_from, resource)
     # go back
     await move_by_cell.move_to_dest(storage_component.global_position)
     # drop the resource
-    storage_component.set_storage_item_amount(resource, storage_component.storage[resource] + resource_amount)
-    resource_amount = 0
-    resource = ResourceConfig.Resources.NONE # set the resource carrying to none
+    await unload_resource()
 
 
 ## Returns an array of the needed resources that is sorted by their amount least to greatest
