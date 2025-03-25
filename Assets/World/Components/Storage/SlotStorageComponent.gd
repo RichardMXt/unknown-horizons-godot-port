@@ -1,8 +1,7 @@
 extends BaseComponent
 ## The slot storage component is used in buildings to store resources
 ##
-## The slot storage component is a components storing resources in different slots under a certain amount
-
+## The slot storage component is a components storing resources in different slots below a certain amount
 
 class_name SlotStorageComponent
 
@@ -27,15 +26,11 @@ func _ready():
 
 ## Used to set the storage amount of a specific resource.[br]
 ## The resource key will be created if it does not exist in the storage.[br]
-## The resource key will be deleted if the amount is -1
 func set_storage_item_amount(resource: ResourceConfig.Resources, new_amount: int):
-  if new_amount == -1: # if the resource is null then delete the key
-    storage.erase(resource)
+  var max_amount = max_capacity.get(resource)
+  if max_amount != null:
+    storage[resource] = min(new_amount, max_amount)
   else:
-    var max_amount = max_capacity.get(resource) # the max amount of the resource
-    if max_amount != null: # if max_amount is not null, then set the resource amount to the min of the new_amount and max_amount
-      storage[resource] = min(new_amount, max_amount)
-    else: # else set the resource amount to 0
-      storage[resource] = 0
-      push_warning("The resource %s does not have a max capacity" % resource)
-    storage_changed.emit()
+    storage[resource] = new_amount
+    push_warning("The resource %s does not have a max capacity" % resource)
+  storage_changed.emit()
