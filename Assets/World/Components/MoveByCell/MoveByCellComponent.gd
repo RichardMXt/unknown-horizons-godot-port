@@ -1,21 +1,21 @@
 extends BaseComponent
 ## Moves the an object by cells
 ##
-## The component moves the object given by the node path(usualy "..") by cells.
+## The component moves the object given by the node path(usualy the parent) by cells.
 
 class_name MoveByCellComponent
 
 ## The speed of the object in tiles per second
 @export var tile_per_sec: float = 2
-## The path to the object it is moving.
-@export var object_to_be_moved_path: NodePath = ".."
-## The path to the pathfinding node
-@export var pathfinding_node_path: NodePath = "/root/Main/Pathfinding"
 ## The type of allowed movement
 @export var allowed_movement: AllowedMovementTypes = AllowedMovementTypes.MOVE_ON_ROAD
 
-## The object this component is moving
-@onready var object_to_be_moved: Node2D = self.get_node(object_to_be_moved_path)
+## The object this component is moving[br]
+## Default: ".."
+@export var object_to_be_moved: Node2D = null
+## The pathfinding node[br]
+## Default: "root/Main/Pathfinding"
+@export var pathfinding_node: Pathfinding = null
 
 ## The possible types for determining if movement is allowed
 enum AllowedMovementTypes {
@@ -47,15 +47,14 @@ var move_state: MoveStates = MoveStates.IDLE:
     if last_state != move_state:
       update_action_set()
 
-func set_components(components: Array[BaseComponent]):
-  for component in components:
-    if component is CollectorActionSet:
-      action_set = component
-  
+func _ready():
+  if object_to_be_moved == null:
+    object_to_be_moved = self.get_node("..")
   # set pathfinding by allowed movement
-  var pathfinding_node: Pathfinding = self.get_node(pathfinding_node_path)
-  if pathfinding_node == null:
-    push_warning("Pathfinding node is not found")
+  if pathfinding_node == null: # if pathfinding node is not set,
+    pathfinding_node = self.get_node("/root/Main/Pathfinding") # then set it to default
+  if pathfinding_node == null: # if still not found,
+    push_warning("Pathfinding node is not found") # raise warning
   else:
     match allowed_movement:
       AllowedMovementTypes.MOVE_ON_WATER:
@@ -63,6 +62,10 @@ func set_components(components: Array[BaseComponent]):
       AllowedMovementTypes.MOVE_ON_ROAD:
         pathfinding = pathfinding_node.road_pathfinding
 
+func set_components(components: Array[BaseComponent]):
+  for component in components:
+    if component is CollectorActionSet:
+      action_set = component
 
 func update_action_set():
   if action_set != null:
@@ -70,7 +73,7 @@ func update_action_set():
       MoveStates.IDLE:
         action_set.collector_action = CollectorActionSet.CollectorActions.IDLE
       MoveStates.MOVING:
-        action_set.collector_action = CollectorActionSet.CollectorActions.WALK
+        action_set.collector_action = CollectorActionSet.CollectorActions.MOVE
 
 func move(go_to_position: Vector2) -> void:
   if pathfinding == null:

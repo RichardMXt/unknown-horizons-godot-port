@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b607l3mhn27rv" path="res://Assets/World/Components/CollectorActionSet/CollectorActionSet.tscn" id="4_b8nge"]
 
 [node name="BuildingCollectorComponent" type="Node2D"]
+visible = false
 script = ExtResource("1_ik6oc")
 
 [node name="MoveByCellComponent" parent="." instance=ExtResource("2_tofky")]

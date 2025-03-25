@@ -48,7 +48,7 @@ enum CollectorActions{
   ## The collector is in its idle state
   IDLE,
   ## The collector is in its walking state
-  WALK,
+  MOVE,
 }
 
 const empty_animation: String = "Empty"

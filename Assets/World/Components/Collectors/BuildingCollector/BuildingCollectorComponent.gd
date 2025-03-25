@@ -4,12 +4,12 @@ extends BaseComponent
 
 class_name BuildingCollectorComponent
 
-## The path to the built tilemap node
-@export var path_to_tilemap: NodePath = "/root/Main/BuiltTileMap"
+## The built tilemap[br]
+## Default: "/root/Main/BuiltTileMap"
+@export var built_tilemap: BuiltTileMap = null
 @export var load_or_unload_time: float = 2
 
 
-@onready var built_tilemap: BuiltTileMap = self.get_node(path_to_tilemap)
 @onready var move_by_cell: MoveByCellComponent = self.get_node("MoveByCellComponent")
 @onready var action_set: CollectorActionSet = self.get_node("CollectorActionSet")
 
@@ -21,6 +21,8 @@ var resource: ResourceConfig.Resources = ResourceConfig.Resources.NONE
 var resource_amount: int = 0
 
 func _ready():
+  if built_tilemap == null:
+    built_tilemap = self.get_node("/root/Main/BuiltTileMap")
   # setup components
   var child_components: Array[BaseComponent] = []
   for component in self.get_children():
@@ -69,6 +71,7 @@ func get_resource_order(res_1: ResourceConfig.Resources, res_2: ResourceConfig.R
 func bring_resources_loop():
   while true:
     # wait until there are resources needed
+    self.visible = false
     var needed_resources: Array[ResourceConfig.Resources] = get_needed_resources()
     while len(needed_resources) <= 0:
       await storage_component.storage_changed
@@ -85,10 +88,12 @@ func bring_resources_loop():
       continue
 
     # go to the building to collect from
+    self.visible = true
     await move_by_cell.move_to_dest(building_to_collect_from.global_position)
     # collect the resource
     await collect_resource_from_building(building_to_collect_from, resource)
     # go back
+    self.visible = true
     await move_by_cell.move_to_dest(storage_component.global_position)
     # drop the resource
     await unload_resource()
@@ -122,6 +127,7 @@ func collect_resource_from_building(building: WorldThing2D, needed_resource: Res
   if should_collect_resource_from_building(building, needed_resource) == false: # if we should not collect the resource from the building,
     return # then return(don't collect the resource)
   
+  self.visible = false
   var building_storage: SlotStorageComponent = null # declare the building storage var to null
   for building_component in building.get_children(): # loop through the components and get the storage component
     if building_component is SlotStorageComponent:
@@ -133,6 +139,7 @@ func collect_resource_from_building(building: WorldThing2D, needed_resource: Res
   building_storage.set_storage_item_amount(resource, amount_available - resource_amount) # set the amount of the resource in the building
 
 func unload_resource():
+  self.visible = false
   await self.sleep(load_or_unload_time)
   storage_component.set_storage_item_amount(resource, storage_component.storage[resource] + resource_amount)
   resource_amount = 0
