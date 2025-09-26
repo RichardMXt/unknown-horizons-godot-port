@@ -1,4 +1,4 @@
-extends Building2D
+extends Building2D2
 ## inherited by all 2D production buildings, it has all the parameters and functions that all production buildings need
 
 class_name ProductionBuilding2D
@@ -81,7 +81,7 @@ func find_closest_warehouse():
       closest_warehouse_path_yet = warehouse_path
   return closest_warehouse_path_yet
 
-func new_building_built(building: Building2D):
+func new_building_built(building: Building2D2):
   #check if building is warehouse
   if building.building_data.game_name == "warehouse":
     var path_to_warehouse = self.get_node("/root/Main/Pathfinding").road_pathfinding.get_path_to_dest(self.position, building.position)

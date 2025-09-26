@@ -11,7 +11,7 @@ class_name Carrier
 #}
 @export var max_carry_limit: int = 10
 
-@onready var parent_building: Building2D = self.get_parent()
+@onready var parent_building: Building2D2 = self.get_parent()
 
 var objects_carring: Dictionary
 
@@ -70,7 +70,7 @@ func move_to_warehouse():
 func load_and_unload_at_warehouse():
   self.visible = false
   var building = parent_building.built_tilemap.building_position_to_building.get(self.global_position)
-  if building != null and building is Warehouse2D:
+  if building != null and building is Warehouse2D2:
     if building.max_loading_and_unloading_limit <= building.cur_loading_and_unloading:
       await building.slot_opened
     var resources_to_load: Dictionary = parent_building.get_resourses_needed()

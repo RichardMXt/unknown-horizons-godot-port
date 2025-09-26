@@ -7,7 +7,7 @@ var closest_trees: Array = []
 @export var choping_down_tree_time: float = 2
 @export var speed_px_per_sec: float = 64
 
-@onready var parent_building: Building2D = self.get_parent()
+@onready var parent_building: Building2D2 = self.get_parent()
 @onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap")
 
 var count_of_objects: int = 0

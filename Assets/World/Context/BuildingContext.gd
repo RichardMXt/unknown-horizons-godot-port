@@ -106,7 +106,7 @@ func can_build_building(building_world_position: Vector2 = built_tilemap.to_loca
   return true
 
 func update_building_highlight(building_tile_position: Vector2i = built_tilemap.local_to_map(built_tilemap.to_local(built_tilemap.get_global_mouse_position()))) -> void:
-  var building_instance: Building2D = null
+  var building_instance: Building2D2 = null
   if building_tile_position != last_highlighted_building_position or len(highlighter.highlighted_objects) == 0: # if the mouse moved or there is no highlighted building, then update the highlighter
     last_highlighted_building_position = building_tile_position # update the last highlighted building position
     highlighter.clear() # clear the highlighter
