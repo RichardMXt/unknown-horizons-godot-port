@@ -86,7 +86,7 @@ func can_build_building(building_world_position: Vector2 = built_tilemap.to_loca
   # check if the tile is valid on the built_tilemap
   var is_road: bool = false
   var built_tile_data: TileData = built_tilemap.get_cell_tile_data(building_tile_position)
-  if built_tile_data != null: # if the built_tile_data is null, then it is not a road
+  if built_tile_data != null and built_tile_data.terrain_set != -1: # if the built_tile_data is null, then it is not a road
     var built_terrain_name: String = built_tilemap.tile_set.get_terrain_name(built_tile_data.terrain_set, built_tile_data.terrain)# The terrain name of the tile.
     is_road = built_terrain_name == "DirtRoad" # Is the tile a road?
   var is_building: bool = built_tilemap.building_position_to_building.has(building_world_position)# Is the tile a building?
@@ -95,9 +95,10 @@ func can_build_building(building_world_position: Vector2 = built_tilemap.to_loca
   
   # make sure that the terrain tile is valid
   var terrain_tile_data: TileData = terrain_tilemap.get_cell_tile_data(building_tile_position)
-  var terrain_name: String = terrain_tilemap.tile_set.get_terrain_name(terrain_tile_data.terrain_set, terrain_tile_data.terrain)
-  if terrain_name == "Shallow" or terrain_name == "Deep":
-    return false
+  if terrain_tile_data != null and terrain_tile_data.terrain_set != -1:
+    var terrain_name: String = terrain_tilemap.tile_set.get_terrain_name(terrain_tile_data.terrain_set, terrain_tile_data.terrain)
+    if terrain_name == "Shallow" or terrain_name == "Deep":
+      return false
   
   # make sure that there is enough resources
   if has_resources_for_building(building) == false:
