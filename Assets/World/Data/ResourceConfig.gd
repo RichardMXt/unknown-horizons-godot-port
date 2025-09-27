@@ -14,14 +14,6 @@ static var resource_to_icon: Dictionary[Resources, Texture2D] = {
   Resources.WOOD: preload("res://Assets/UI/Icons/Resources/32/008.png"),
 }
 
-## The map of item names to items.[br]
-static var item_map: Dictionary[Resources, ItemData] = {
-  Resources.FLOUR: preload(item_data_folder_path + "Flour.tres"),
-  Resources.FOOD: preload(item_data_folder_path + "Food.tres"),
-  Resources.TIMBER: preload(item_data_folder_path + "Timber.tres"),
-  Resources.WOOD: preload(item_data_folder_path + "Wood.tres"),
-}
-
 ## The enum representing the resources
 enum Resources {
   NONE,

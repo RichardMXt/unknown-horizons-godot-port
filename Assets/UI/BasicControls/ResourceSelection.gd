@@ -13,8 +13,6 @@ func _ready() -> void:
 
 func add_slots():
   for resource in ResourceConfig.Resources.values():
-    if resource == ResourceConfig.Resources.NONE:
-      continue
     var slot: InventorySlot = self.inventory_slot_scene.instantiate()
     slot.resource_type = resource
     slot.resource_amount = GameStats.game_stats_resource.resources[resource]
