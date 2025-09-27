@@ -16,16 +16,13 @@ tier = 3
 
 [node name="SlotStorageComponent" parent="." instance=ExtResource("4_re5r3")]
 max_capacity = Dictionary[int, int]({
-0: 10,
-1: 10
+1: 10,
+2: 10
 })
 
 [node name="ProductionLineComponent" parent="." instance=ExtResource("5_3id7a")]
-consumes = Dictionary[int, int]({
-0: 1
-})
 produces = Dictionary[int, int]({
-1: 1
+2: 1
 })
 
 [node name="BuildingCollectorComponent" parent="." instance=ExtResource("6_okw1c")]

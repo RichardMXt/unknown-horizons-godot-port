@@ -12,3 +12,4 @@ text = "Bakery"
 layout_mode = 2
 input_two_type = 44
 output_type = 5
+output_value = 1

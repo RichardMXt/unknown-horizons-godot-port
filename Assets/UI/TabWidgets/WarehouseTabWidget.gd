@@ -8,7 +8,7 @@ func _process(_delta):
       update_inventory_slots()
 
 func update_inventory_slots():
-  var resources: Dictionary = GameStats.game_stats_resource.resources
+  var resources: Dictionary[ResourceConfig.Resources, int] = GameStats.game_stats_resource.resources
   for item_slot: InventorySlot in settlement_inventory.get_children():
     if item_slot.resource_type != null: # check if the item slot has a resource to display
       item_slot.limit = self.selected_objects[0].storage_capacity # set the limit

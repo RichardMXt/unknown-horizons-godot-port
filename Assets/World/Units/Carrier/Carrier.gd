@@ -13,7 +13,7 @@ class_name Carrier
 
 @onready var parent_building: Building2D2 = self.get_parent()
 
-var objects_carring: Dictionary
+var objects_carring: Dictionary[ResourceConfig.Resources, int] = {}
 
 func start_working():
   movement_loop()
@@ -73,7 +73,7 @@ func load_and_unload_at_warehouse():
   if building != null and building is Warehouse2D2:
     if building.max_loading_and_unloading_limit <= building.cur_loading_and_unloading:
       await building.slot_opened
-    var resources_to_load: Dictionary = parent_building.get_resourses_needed()
+    var resources_to_load: Dictionary[ResourceConfig.Resources, int] = parent_building.get_resourses_needed()
     objects_carring = await building.load_unload_worker(objects_carring, resources_to_load)
   # raise error if objects carring is invalid
   if not is_resource_load_valid():

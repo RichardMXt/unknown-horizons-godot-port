@@ -7,7 +7,7 @@ const save_path = "user://progress.tres"
 var resources: Dictionary[ResourceConfig.Resources, int] = {}
 
 func _init():
-  for resource in ResourceConfig.Resources.keys():
+  for resource in ResourceConfig.Resources.values():
     resources[resource] = 0
 
 func save_game():

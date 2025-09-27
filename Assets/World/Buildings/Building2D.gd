@@ -2,6 +2,8 @@ extends WorldThing2D
 
 class_name Building2D
 
+@export var production_chain: ProductionChain
+
 func _ready():
   setup_components()
 
@@ -14,7 +16,6 @@ func setup_components() -> void:
   # give all the components the list of all their neighboring components
   for component in components:
     component.set_components(components)
-
 
 func is_resource_available(resource: ResourceConfig.Resources) -> bool:
   var slot_storage: SlotStorageComponent = null
@@ -92,5 +93,3 @@ func load_resources(resource: ResourceConfig.Resources, amount: int) -> int:
   storage_component.set_storage_item_amount(resource, available_amount - amount_to_load)
 
   return amount_to_load
-
-
