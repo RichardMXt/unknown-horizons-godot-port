@@ -50,11 +50,11 @@ func load_worker(objects_to_load: Dictionary[ResourceConfig.Resources, int]) -> 
   var available_objects: Dictionary[ResourceConfig.Resources, int] = {}
   for object in objects_to_load.keys():
     var amount = objects_to_load.get(object)
-    if amount != null:
+    if amount != null and amount > 0:
       if not GameStats.game_stats_resource.resources.has(object):
         continue
       var max_available: int = min(amount, GameStats.game_stats_resource.resources[object])
       GameStats.game_stats_resource.resources[object] -= max_available
       available_objects[object] = max_available
-      print("the amount of %s is now %s" % [object.game_name, GameStats.game_stats_resource.resources[object]])
+      print("the amount of %s is now %s" % [ResourceConfig.Resources.find_key(object), GameStats.game_stats_resource.resources[object]])
   return available_objects

@@ -24,6 +24,9 @@ func is_resource_load_valid() -> bool:
       return false
   return true
 
+func is_carrier_full() -> bool:
+  return self.objects_carring.keys().any(func(resource): return self.objects_carring[resource] > 0)
+
 func movement_loop():
   while true:
     await wait_for_resources()
@@ -43,7 +46,8 @@ func wait_for_resources():
       if parent_building.number_of_output_products > 0:
         return
       if not parent_building.is_storage_full():
-        return
+        if parent_building.building_data.input_products.keys().any(func (resource): return GameStats.game_stats_resource.resources[resource] > 0):
+          return
     await self.get_tree().create_timer(1).timeout
 
 func load_resources_from_building():
@@ -62,7 +66,7 @@ func move_to_warehouse():
     path_back.reverse()
     is_moving = true
     # find the correct animation prefix
-    if objects_carring != {}:
+    if self.is_carrier_full():
       await self.move("MoveFull", self.path_there)
     else:
       await self.move("Move", self.path_there)
@@ -80,7 +84,7 @@ func load_and_unload_at_warehouse():
     push_error("Invalid resource load: %s" % [objects_carring])
 
 func move_back():
-  if objects_carring != {}:
+  if self.is_carrier_full():
     await self.move("MoveFull", self.path_back)
   else:
     await self.move("Move", self.path_back)
