@@ -3,7 +3,7 @@ extends Unit2D
 class_name Ship2D
 
 @export var buoy: PackedScene = preload("res://Assets/World/Buoy/Buoy2D.tscn")
-@export var warehouse_data: BuildingData
+@export var warehouse: BuildingConfig.Buildings = BuildingConfig.Buildings.WAREHOUSE
 @export var ship_inventory: Dictionary[ResourceConfig.Resources, int] = {}
 @export var valid_distance_for_building_harbor: int = 3
 
@@ -57,7 +57,7 @@ func movement_loop():
       buoy.queue_free()
 
 func build_harbor():
-  building_context.building_to_build = warehouse_data
+  building_context.building_to_build = warehouse
   building_context.reference_object = self
 
 func is_tile_valid_for_building(tile: Vector2i) -> bool:

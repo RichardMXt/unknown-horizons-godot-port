@@ -81,7 +81,7 @@ func notify_resource_produced():
     return
   var starting_tooltip_position: Vector2 = item_produced_tooltip.position # the starting position of tooltip
   # set the visuals
-  resource_image_placeholder.texture = ResourceConfig.item_map.get(produces.keys()[0]).icon # set the image
+  resource_image_placeholder.texture = ResourceConfig.resource_to_icon.get(produces.values()[0]) # set the image
   resource_amount_placeholder.text = str(produces.values()[0]) # set the amount
   item_produced_tooltip.visible = true
   # move the tooltip
