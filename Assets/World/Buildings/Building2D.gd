@@ -2,7 +2,7 @@ extends WorldThing2D
 
 class_name Building2D
 
-@export var production_chain: ProductionChain
+#@export var production_chain: ProductionChain
 
 func _ready():
   setup_components()

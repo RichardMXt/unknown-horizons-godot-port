@@ -1,3 +1,5 @@
+@tool
+
 extends Object
 ## The resource config is used to store all the item data, maping, and other item information
 
