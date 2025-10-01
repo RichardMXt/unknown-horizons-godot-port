@@ -64,13 +64,13 @@ func update_resource_amount():
   input_two_value = new_input_two_value
   input_three_value = new_input_three_value
   # set the input limits
-  var limit = self.owner.selected_objects[0].building_data.max_storage_capacity
-  input_one_storage_limit = limit
-  input_two_storage_limit = limit
-  input_three_storage_limit = limit
+  var slot_storage: SlotStorageComponent = self.owner.selected_objects[0].get_components(SlotStorageComponent)[0]
+  input_one_storage_limit = slot_storage.max_capacity.get(input_one_type)
+  input_two_storage_limit = slot_storage.max_capacity.get(input_two_type)
+  input_three_storage_limit = slot_storage.max_capacity.get(input_three_type)
   # set the output value and limit
   output_value = self.owner.selected_objects[0].number_of_output_products
-  output_storage_limit = limit
+  output_storage_limit = slot_storage.max_capacity.get(output_type)
 
 func update_progress_bar():
   var selected_objects = self.owner.selected_objects
@@ -78,7 +78,7 @@ func update_progress_bar():
   if len(selected_objects) == 1:
     var building = selected_objects[0]
     if building.production_timer != null:
-      var production_time = building.building_data.processing_time
+      var production_time = building.get_components(ProductionLineComponent)[0].production_time
       progress = (production_time - building.production_timer.time_left) / production_time
   progress_bar.size_flags_stretch_ratio = progress
   progress_bar_spacer.size_flags_stretch_ratio = 1 - progress

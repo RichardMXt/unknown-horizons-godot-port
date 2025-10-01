@@ -4,8 +4,31 @@ class_name Building2D
 
 #@export var production_chain: ProductionChain
 
+@export var building_type: BuildingConfig.Buildings = BuildingConfig.Buildings.NONE
+
+## is building paused
+var paused: bool = false:
+  set(value):
+    paused = value
+    for node: Node in self.get_children():
+      var component: BaseComponent = node as BaseComponent
+      if component != null:
+        component.paused = self.paused
+    if self.paused == false:
+      unpaused.emit()
+
+signal unpaused
+
 func _ready():
   setup_components()
+
+## returns all the components of the certain type
+func get_components(component_type: Variant = BaseComponent) -> Array:
+  var components: Array = []
+  for component in self.get_children():
+    if is_instance_of(component, component_type):
+      components.append(component)
+  return components
 
 func setup_components() -> void:
   # get a list of all the child components
@@ -71,25 +94,33 @@ func get_needed_resources() -> Array[ResourceConfig.Resources]:
 
   return needed_resources.keys()
 
-func unload_resources(resource: ResourceConfig.Resources, amount: int) -> void:
-  var storage_component: Storage = null
+func unload_resource(resource: ResourceConfig.Resources, amount: int) -> void:
+  var storage_component: SizedStorageComponent = null
   for component in self.get_children():
-    if component is Storage:
+    if component is SizedStorageComponent:
       storage_component = component
       break
   
+  await self.sleep(storage_component.load_or_unload_time)
   var amount_in_storage: int = storage_component.storage.get(resource)
   storage_component.set_storage_item_amount(resource, amount_in_storage + amount)
 
-func load_resources(resource: ResourceConfig.Resources, amount: int) -> int:
-  var storage_component: Storage = null
+func load_resource(resource: ResourceConfig.Resources, amount: int) -> int:
+  var storage_component: SizedStorageComponent = null
   for component in self.get_children():
-    if component is Storage:
+    if component is SizedStorageComponent:
       storage_component = component
       break
 
+  await self.sleep(storage_component.load_or_unload_time)
   var available_amount: int = storage_component.storage.get(resource)
   var amount_to_load: int = min(amount, available_amount)
   storage_component.set_storage_item_amount(resource, available_amount - amount_to_load)
 
   return amount_to_load
+
+func set_can_build_highlight(can_build: bool) -> void:
+  for node: Node in self.get_children():
+    var action_set: BuildingActionSet = node as BuildingActionSet
+    if action_set != null:
+      action_set.set_can_build_shader(can_build)

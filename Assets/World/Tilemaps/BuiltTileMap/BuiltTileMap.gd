@@ -28,24 +28,24 @@ func get_trees(in_grid: bool = true) -> Array[Vector2]:
         trees.append(self.map_to_local(cell))
   return trees
 
-func register_building(building) -> void:
+func register_building(building: Building2D) -> void:
   # register building to building poses
   building_position_to_building[building.global_position] = building
   # register building pos into building array
-  var building_poses = building_name_to_building_poses.get(building.building_data.game_name)
+  var building_poses = building_name_to_building_poses.get(BuildingConfig.Buildings.find_key(building.building_type))
   if building_poses != null:
     building_poses.append(building.global_position)
   else:
-    building_name_to_building_poses[building.building_data.game_name] = [building.position]
+    building_name_to_building_poses[BuildingConfig.Buildings.find_key(building.building_type)] = [building.position]
   # set points for pathfinding
   %Pathfinding.road_pathfinding.set_point_solid(self.local_to_map(building.position), false)
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
   road_building_context.road_building_pathfindng.set_point_solid(self.local_to_map(building.position), true)
   # handle notifications
-  for building_node: Building2D2 in building_position_to_building.values():
+  for building_node: Building2D in building_position_to_building.values():
     if building_node.has_method("new_building_built"):
       building_node.new_building_built(building)
 
 func _on_child_entered_tree(node: Node):
-  if node is Building2D2:
+  if node is Building2D:
     register_building(node)

@@ -10,6 +10,7 @@
 
 [node name="Bakery2D" type="Node2D"]
 script = ExtResource("1_g52qk")
+building_type = 1
 
 [node name="BuildingActionSet" parent="." instance=ExtResource("2_7v2n0")]
 sprite_frames = ExtResource("3_4qe35")

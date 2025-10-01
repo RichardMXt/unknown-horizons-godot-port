@@ -65,6 +65,12 @@ func set_components(components: Array[BaseComponent]):
       action_set = component
   production_stage = ProductionStages.START
 
+func pause_set(value: bool) -> void:
+  super(value)
+  if self.paused:
+    self.production_stage = ProductionStages.IDLE
+  else:
+    self.production_stage = ProductionStages.START
 
 func update_action_set():
   if action_set != null:
@@ -123,6 +129,8 @@ func wait_for_resources():
   production_stage = ProductionStages.WAITING_FOR_RESOURCES
   while has_enough_resources() == false:
     await storage_component.storage_changed
+    if production_stage == ProductionStages.IDLE:
+      await self.unpaused
 
 func produce():
   if len(produces.keys()) <= 0:

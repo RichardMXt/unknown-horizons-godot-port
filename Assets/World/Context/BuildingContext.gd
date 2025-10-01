@@ -101,10 +101,7 @@ func can_build_building(building_world_position: Vector2 = built_tilemap.to_loca
       return false
   
   # make sure that there is enough resources
-  if has_resources_for_building(building) == false:
-    return false
-  
-  return true
+  return has_resources_for_building(building)
 
 func update_building_highlight(building_tile_position: Vector2i = built_tilemap.local_to_map(built_tilemap.to_local(built_tilemap.get_global_mouse_position()))) -> void:
   var building_instance: Node2D = null
@@ -114,19 +111,17 @@ func update_building_highlight(building_tile_position: Vector2i = built_tilemap.
     var building_atlas_position: Vector2i = BuildingConfig.building_to_tile[building_to_build]
     highlighter.set_cell(building_tile_position, building_atlas_position.x, Vector2i.ZERO, building_atlas_position.y) # add the building highlight
     building_instance = await highlighter.new_building_added # wait for the building highlight to be added
-    building_instance.highlight_shader = building_shader
 
   elif building_instance == null: # The highlighted_objects is not empty becouse the previous if statement would be entered and set the building_instance
     building_instance = highlighter.highlighted_objects[0]
   # now that the building instance is not null, highlight is updated, and the shader is set, set the shader to correct color
-  if building_instance is Building2D2:
-    building_instance.highlight_shader.set_shader_parameter("can_build", can_build_building(built_tilemap.map_to_local(building_tile_position)))
-    building_instance.is_highlight = true
-  else:
-    building_instance.material.set_shader_parameter("can_build", can_build_building(built_tilemap.map_to_local(building_tile_position)))
+  var building_instance_2D: Building2D = building_instance as Building2D
+  if building_instance_2D:
+    building_instance_2D.set_can_build_highlight(can_build_building(built_tilemap.map_to_local(building_tile_position)))
+    building_instance_2D.paused = true
 
-func has_resources_for_building(building_data: BuildingConfig.Buildings = building_to_build) -> bool:
-  var cost: Dictionary = BuildingConfig.building_to_cost[building_data] as Dictionary[ResourceConfig.Resources, int]
+func has_resources_for_building(building: BuildingConfig.Buildings =  ) -> bool:
+  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[ResourceConfig.Resources, int]
   for resource: ResourceConfig.Resources in cost.keys():
     var amount_needed: int = cost[resource]
     var amount_available = GameStats.game_stats_resource.resources.get(resource)
@@ -136,8 +131,8 @@ func has_resources_for_building(building_data: BuildingConfig.Buildings = buildi
       return false
   return true
 
-func spend_resources_for_building(building_data: BuildingConfig.Buildings = building_to_build) -> void:
-  var cost: Dictionary = BuildingConfig.building_to_cost[building_data] as Dictionary[ResourceConfig.Resources, int]
+func spend_resources_for_building(building: BuildingConfig.Buildings = building_to_build) -> void:
+  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[ResourceConfig.Resources, int]
   for resource: ResourceConfig.Resources in cost.keys():
     var amount_needed: int = cost[resource]
     GameStats.game_stats_resource.resources[resource] -= amount_needed

@@ -26,6 +26,8 @@ var is_selected: bool = false:
     is_selected = value
     # change the shader transparency to the correct one.
     if sprite:
+      if self.sprite.material != shader:
+        sprite.material = shader.duplicate(true)
       if is_selected:
         sprite.material.set_shader_parameter("width", shader_width)
       else:
@@ -34,7 +36,7 @@ var is_selected: bool = false:
     parent.selected(is_selected)
 
 func _ready():
-  if self.sprite == null: # check the sibling ../BuildingActionSet component:
+  if self.sprite == null and self.has_node("../BuildingActionSet/AnimatedSprite2D"): # check the sibling ../BuildingActionSet component:
     self.sprite = self.get_node("../BuildingActionSet/AnimatedSprite2D") as AnimatedSprite2D
   if self.sprite == null: # fallback to look up any sibling Sprite2D
     for child in self.get_parent().get_children():
@@ -43,17 +45,14 @@ func _ready():
         break
   if self.sprite == null:
     push_warning("There was no sprite found to highlight in %s." % self.get_parent().name)
-  else:
-    self.sprite.material = shader.duplicate(true)
-    self.sprite.material.set_shader_parameter("width", 0)
 
 func _unhandled_input(event):
   if is_selected:
     parent.handle_context_input(event)
 
 func is_in_rect(rect: Rect2) -> bool:
-  var parent_building := parent as Building2D2
-  if parent_building != null and parent_building.is_highlight:# if the parent is a unit, then it will be invisible because it will not start working
+  var parent_building := parent as Building2D
+  if parent_building != null:# if the parent is a unit, then it will be invisible because it will not start working
     return false
   if sprite:
     var sprite_size: Vector2

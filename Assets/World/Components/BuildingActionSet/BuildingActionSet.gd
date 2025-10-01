@@ -68,6 +68,10 @@ func update_animation() -> void:
     # print("sprite_frames.has_animation(animation_name_at_tier='", animation_name_at_tier, "'): ", sprite_frames.has_animation(animation_name_at_tier))
     if sprite_frames.has_animation(animation_name_at_tier): # if we have the animation, set it as a possible animation
       animation_name = animation_name_at_tier
+    else:
+      var animation_at_tier_idle = tier_with_lower + "_" + "idle" + "_" + rotation_str # try idle
+      if sprite_frames.has_animation(animation_at_tier_idle):
+        animation_name = animation_at_tier_idle
     if ActionSetEnum.tiers[cur_tier] == tier: # tier in loop is equal to the actual tier, then break because we have checked all the previous tiers
       break
   
