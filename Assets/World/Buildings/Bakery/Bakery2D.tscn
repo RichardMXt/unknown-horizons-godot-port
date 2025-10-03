@@ -23,6 +23,9 @@ max_capacity = Dictionary[int, int]({
 })
 
 [node name="ProductionLineComponent" parent="." instance=ExtResource("5_3id7a")]
+consumes = Dictionary[int, int]({
+1: 1
+})
 produces = Dictionary[int, int]({
 2: 1
 })

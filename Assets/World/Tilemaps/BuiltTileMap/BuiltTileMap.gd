@@ -6,8 +6,11 @@ const is_tree: String = "is_tree"
 const is_road: String = "is_road"
 
 var building_name_to_building_poses: Dictionary[String, Array] = {}
-var building_position_to_building: Dictionary[Vector2, WorldThing2D] = {}
+var building_position_to_building: Dictionary[Vector2, Building2D] = {}
 var trees_getting_choped: Dictionary = {}
+
+## emited when new buildings were built, usually one building at a time
+signal buildings_built(building: Array[Building2D])
 
 func is_movable_on(cell: Vector2i) -> bool:
   var tile_data: TileData = self.get_cell_tile_data(cell)
@@ -42,9 +45,7 @@ func register_building(building: Building2D) -> void:
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
   road_building_context.road_building_pathfindng.set_point_solid(self.local_to_map(building.position), true)
   # handle notifications
-  for building_node: Building2D in building_position_to_building.values():
-    if building_node.has_method("new_building_built"):
-      building_node.new_building_built(building)
+  buildings_built.emit([building] as Array[Building2D])
 
 func _on_child_entered_tree(node: Node):
   if node is Building2D:

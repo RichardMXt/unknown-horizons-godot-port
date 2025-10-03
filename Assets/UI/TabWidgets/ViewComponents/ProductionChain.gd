@@ -47,7 +47,11 @@ func _process(_delta):
     update_resource_amount()
 
 func update_resource_amount():
-  var input_resources = self.owner.selected_objects[0].input_product_storage
+  var input_resources: Dictionary[ResourceConfig.Resources, int] = {}
+  var slot_storage: SlotStorageComponent = self.owner.selected_objects[0].get_components(SlotStorageComponent)[0]
+
+  for consumes in self.owner.selected_objects[0].get_components(ProductionLineComponent)[0].consumes.keys():
+    input_resources[consumes] = slot_storage.storage[consumes]
   # get the amount of the input resources
   var new_input_one_value = input_resources.get(input_one_type)
   var new_input_two_value = input_resources.get(input_two_type)
@@ -64,22 +68,27 @@ func update_resource_amount():
   input_two_value = new_input_two_value
   input_three_value = new_input_three_value
   # set the input limits
-  var slot_storage: SlotStorageComponent = self.owner.selected_objects[0].get_components(SlotStorageComponent)[0]
-  input_one_storage_limit = slot_storage.max_capacity.get(input_one_type)
-  input_two_storage_limit = slot_storage.max_capacity.get(input_two_type)
-  input_three_storage_limit = slot_storage.max_capacity.get(input_three_type)
+  if slot_storage.max_capacity.has(input_one_type): 
+    input_one_storage_limit = slot_storage.max_capacity.get(input_one_type)
+  if slot_storage.max_capacity.has(input_two_type):
+    input_two_storage_limit = slot_storage.max_capacity.get(input_two_type)
+  if slot_storage.max_capacity.has(input_three_type):
+    input_three_storage_limit = slot_storage.max_capacity.get(input_three_type)
   # set the output value and limit
-  output_value = self.owner.selected_objects[0].number_of_output_products
-  output_storage_limit = slot_storage.max_capacity.get(output_type)
+  if slot_storage.storage.has(output_type): 
+    output_value = slot_storage.storage.get(output_type)
+  if slot_storage.max_capacity.has(output_type):
+    output_storage_limit = slot_storage.max_capacity.get(output_type)
 
 func update_progress_bar():
   var selected_objects = self.owner.selected_objects
   var progress: float = 0
   if len(selected_objects) == 1:
-    var building = selected_objects[0]
-    if building.production_timer != null:
-      var production_time = building.get_components(ProductionLineComponent)[0].production_time
-      progress = (production_time - building.production_timer.time_left) / production_time
+    var building: Building2D = selected_objects[0]
+    var production_line = building.get_components(ProductionLineComponent)[0]
+    progress = 1 - (production_line.production_time_end - Time.get_unix_time_from_system()) / production_line.production_time
+    if progress > 1:
+      progress = 0
   progress_bar.size_flags_stretch_ratio = progress
   progress_bar_spacer.size_flags_stretch_ratio = 1 - progress
 

@@ -53,6 +53,9 @@ var production_stage: ProductionStages = ProductionStages.IDLE:
     if last_stage == ProductionStages.IDLE and production_stage == ProductionStages.START:
       production_loop()
 
+
+var production_time_end: float = 0
+
 var storage_component: SlotStorageComponent
 
 var action_set: BuildingActionSet = null
@@ -102,7 +105,7 @@ func has_enough_resources() -> bool:
   if storage_component == null: # if there is no storage then no resources
     return false
   for resource in consumes:
-    var available_resource_amount = storage_component.storage.get(resource) as int
+    var available_resource_amount = storage_component.storage.get(resource)
     var needed_resource_amount: int = consumes[resource]
     if available_resource_amount == null or available_resource_amount < needed_resource_amount:
       return false
@@ -136,6 +139,7 @@ func produce():
   if len(produces.keys()) <= 0:
     return
   production_stage = ProductionStages.PRODUCING
+  self.production_time_end = Time.get_unix_time_from_system() + production_time
   await self.sleep(production_time)
   spend_resources()
   var produced_item = produces.keys()[0]

@@ -48,8 +48,9 @@ enum BuildingStates{
 const empty_animation: String = "Empty"
 
 func _ready():
-  if animated_sprite:
-    animated_sprite.sprite_frames = sprite_frames
+  if self.animated_sprite:
+    self.animated_sprite.sprite_frames = sprite_frames
+    self.animated_sprite.material = self.animated_sprite.material.duplicate()
   update_animation()
 
 func update_animation() -> void:
@@ -82,3 +83,8 @@ func update_animation() -> void:
       push_error("No animation at or below current tier, how did the building get on the map?")
     animation_name = empty_animation
   animated_sprite.play(animation_name)
+
+func set_can_build_shader(can_build: bool) -> void:
+  if self.animated_sprite and self.animated_sprite.material:
+    self.animated_sprite.material.set_shader_parameter("can_build", can_build)
+    self.animated_sprite.material.set_shader_parameter("should_show", true)

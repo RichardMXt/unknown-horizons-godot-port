@@ -75,6 +75,8 @@ func get_needed_resources() -> Array[ResourceConfig.Resources]:
     needed_resources.merge(production_line.consumes)
   
   for resource in needed_resources.keys(): # get the amount of each resource needed
+    if resource == ResourceConfig.Resources.NONE:
+      continue
     var max_amount: int = 0
     var amount_in_stock: int = 0
     var amount_needed: int = 0
@@ -95,22 +97,20 @@ func get_needed_resources() -> Array[ResourceConfig.Resources]:
   return needed_resources.keys()
 
 func unload_resource(resource: ResourceConfig.Resources, amount: int) -> void:
-  var storage_component: SizedStorageComponent = null
-  for component in self.get_children():
-    if component is SizedStorageComponent:
-      storage_component = component
-      break
+  var storage_components: Array = self.get_components(SizedStorageComponent)
+  if storage_components == []:
+    return
+  var storage_component: SizedStorageComponent = storage_components[0] as SizedStorageComponent
   
   await self.sleep(storage_component.load_or_unload_time)
   var amount_in_storage: int = storage_component.storage.get(resource)
   storage_component.set_storage_item_amount(resource, amount_in_storage + amount)
 
 func load_resource(resource: ResourceConfig.Resources, amount: int) -> int:
-  var storage_component: SizedStorageComponent = null
-  for component in self.get_children():
-    if component is SizedStorageComponent:
-      storage_component = component
-      break
+  var storage_components: Array = self.get_components(SizedStorageComponent)
+  if storage_components == []:
+    return 0
+  var storage_component: SizedStorageComponent = storage_components[0] as SizedStorageComponent
 
   await self.sleep(storage_component.load_or_unload_time)
   var available_amount: int = storage_component.storage.get(resource)

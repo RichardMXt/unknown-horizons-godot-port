@@ -5,6 +5,7 @@ class_name LumberjackWorker2D
 var closest_trees: Array = []
 
 @export var choping_down_tree_time: float = 2
+@export var unload_time: float = 1
 @export var speed_px_per_sec: float = 64
 
 @onready var parent_building: Building2D = self.get_parent()
@@ -95,7 +96,7 @@ func lock_tree(tree_pos: Vector2) -> void:
   built_tilemap.trees_getting_choped[tree_pos] = null
 
 func chopdown_tree(tree_pos):
-  await self.get_tree().create_timer(choping_down_tree_time).timeout
+  await self.sleep(choping_down_tree_time)
   if self.parent_building.paused:
     await self.parent_building.unpaused
   if not is_cell_a_tree(tree_pos):
@@ -107,5 +108,6 @@ func chopdown_tree(tree_pos):
 
 func unload():
   if count_of_objects >= 1:
-    await self.storage_component.set_storage_item_amount(ResourceConfig.Resources.WOOD, self.storage_component.storage.get(ResourceConfig.Resources.WOOD) + 1)
+    await self.sleep(self.unload_time)
+    self.storage_component.set_storage_item_amount(ResourceConfig.Resources.WOOD, self.storage_component.storage.get(ResourceConfig.Resources.WOOD) + 1)
   count_of_objects = 0

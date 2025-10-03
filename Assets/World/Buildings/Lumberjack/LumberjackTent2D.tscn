@@ -29,11 +29,12 @@ production_time = 3.0
 
 [node name="SlotStorageComponent" parent="." instance=ExtResource("5_6a481")]
 max_capacity = Dictionary[int, int]({
-3: 1,
-4: 1
+3: 10,
+4: 10
 })
 
 [node name="Selectable" parent="." instance=ExtResource("6_selectable")]
 
 [node name="Lumberjack" parent="." instance=ExtResource("4_dwcry")]
 visible = false
+unload_time = 1.0

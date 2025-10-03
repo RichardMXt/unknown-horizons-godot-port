@@ -2,7 +2,7 @@ extends WorldThing2D
 
 class_name BaseComponent
 
-var paused: bool = false: set = pause_set
+@export var paused: bool = false: set = pause_set
 
 signal unpaused
 
