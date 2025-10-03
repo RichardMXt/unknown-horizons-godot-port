@@ -103,6 +103,7 @@ func _set(property_name, val):
 var per_tier_animation_names: Array[Array] = []
 
 func _ready():
+  # when ready, update the sprite frames and copy the shader(isn't copied by default)
   if self.animated_sprite:
     self.animated_sprite.sprite_frames = sprite_frames
     self.animated_sprite.material = self.animated_sprite.material.duplicate()

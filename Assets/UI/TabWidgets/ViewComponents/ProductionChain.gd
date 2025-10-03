@@ -50,35 +50,20 @@ func update_resource_amount():
   var input_resources: Dictionary[StringName, int] = {}
   var slot_storage: SlotStorageComponent = self.owner.selected_objects[0].get_components(SlotStorageComponent)[0]
 
-  for consumes in self.owner.selected_objects[0].get_components(ProductionLineComponent)[0].consumes.keys():
-    input_resources[consumes] = slot_storage.storage[consumes]
+  for produciont_line in self.owner.selected_objects[0].get_components(ProductionLineComponent):
+    for consumes in produciont_line.consumes:
+      input_resources[consumes] = slot_storage.storage[consumes]
   # get the amount of the input resources
-  var new_input_one_value = input_resources.get(input_one_type)
-  var new_input_two_value = input_resources.get(input_two_type)
-  var new_input_three_value = input_resources.get(input_three_type)
-  # if no resource of that type, set it to 0
-  if new_input_one_value == null:
-    new_input_one_value = 0
-  if new_input_two_value == null:
-    new_input_two_value = 0
-  if new_input_three_value == null:
-    new_input_three_value = 0
-  # set the input values
-  input_one_value = new_input_one_value
-  input_two_value = new_input_two_value
-  input_three_value = new_input_three_value
-  # set the input limits
-  if slot_storage.max_capacity.has(input_one_type): 
-    input_one_storage_limit = slot_storage.max_capacity.get(input_one_type)
-  if slot_storage.max_capacity.has(input_two_type):
-    input_two_storage_limit = slot_storage.max_capacity.get(input_two_type)
-  if slot_storage.max_capacity.has(input_three_type):
-    input_three_storage_limit = slot_storage.max_capacity.get(input_three_type)
+  self.input_one_value = input_resources.get(input_one_type, ResourceConfig.Resources.NONE)
+  self.input_two_value = input_resources.get(input_two_type, ResourceConfig.Resources.NONE)
+  self.input_three_value = input_resources.get(input_three_type, ResourceConfig.Resources.NONE)
+  # set the input limits 
+  self.input_one_storage_limit = slot_storage.max_capacity.get(input_one_type, 0)
+  self.input_two_storage_limit = slot_storage.max_capacity.get(input_two_type, 0)
+  self.input_three_storage_limit = slot_storage.max_capacity.get(input_three_type, 0)
   # set the output value and limit
-  if slot_storage.storage.has(output_type): 
-    output_value = slot_storage.storage.get(output_type)
-  if slot_storage.max_capacity.has(output_type):
-    output_storage_limit = slot_storage.max_capacity.get(output_type)
+  self.output_value = slot_storage.storage.get(output_type, 0)
+  self.output_storage_limit = slot_storage.max_capacity.get(output_type, 0)
 
 func update_progress_bar():
   var selected_objects = self.owner.selected_objects

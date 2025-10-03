@@ -68,7 +68,7 @@ func set_components(components: Array[BaseComponent]):
       action_set = component
   production_stage = ProductionStages.START
 
-func pause_set(value: bool) -> void:
+func set_pause(value: bool) -> void:
   super(value)
   if self.paused:
     self.production_stage = ProductionStages.IDLE
@@ -139,6 +139,7 @@ func produce():
   if len(produces.keys()) <= 0:
     return
   production_stage = ProductionStages.PRODUCING
+  # simulate production, TODO: switch to Timer for game speed awareness and pauseability
   self.production_time_end = Time.get_unix_time_from_system() + production_time
   await self.sleep(production_time)
   spend_resources()

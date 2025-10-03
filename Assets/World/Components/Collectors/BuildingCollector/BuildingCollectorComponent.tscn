@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://b3hix4pdlnumi" path="res://Assets/World/Components/Storages/SizedStorageComponent/SizedStorageComponent.tscn" id="4_l4sh8"]
 
 [node name="BuildingCollectorComponent" type="Node2D"]
-z_index = 10
+visible = false
+z_index = 5
 script = ExtResource("1_ik6oc")
 
 [node name="MoveByCellComponent" parent="." instance=ExtResource("2_tofky")]

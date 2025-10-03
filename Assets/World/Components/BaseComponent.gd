@@ -2,11 +2,11 @@ extends WorldThing2D
 
 class_name BaseComponent
 
-@export var paused: bool = false: set = pause_set
+@export var paused: bool = false: set = set_pause
 
 signal unpaused
 
-func pause_set(value: bool) -> void:
+func set_pause(value: bool) -> void:
   paused = value
   if self.paused == false:
     unpaused.emit()
