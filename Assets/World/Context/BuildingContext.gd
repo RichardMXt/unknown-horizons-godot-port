@@ -120,9 +120,9 @@ func update_building_highlight(building_tile_position: Vector2i = built_tilemap.
     building_instance_2D.set_can_build_highlight(can_build_building(built_tilemap.map_to_local(building_tile_position)))
     building_instance_2D.paused = true
 
-func has_resources_for_building(building: BuildingConfig.Buildings =  ) -> bool:
-  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[ResourceConfig.Resources, int]
-  for resource: ResourceConfig.Resources in cost.keys():
+func has_resources_for_building(building: BuildingConfig.Buildings = building_to_build) -> bool:
+  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[StringName, int]
+  for resource: StringName in cost.keys():
     var amount_needed: int = cost[resource]
     var amount_available = GameStats.game_stats_resource.resources.get(resource)
     var can_be_built: bool = amount_available != null and amount_needed <= amount_available
@@ -132,8 +132,8 @@ func has_resources_for_building(building: BuildingConfig.Buildings =  ) -> bool:
   return true
 
 func spend_resources_for_building(building: BuildingConfig.Buildings = building_to_build) -> void:
-  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[ResourceConfig.Resources, int]
-  for resource: ResourceConfig.Resources in cost.keys():
+  var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[StringName, int]
+  for resource: StringName in cost.keys():
     var amount_needed: int = cost[resource]
     GameStats.game_stats_resource.resources[resource] -= amount_needed
     print("the amount of %s is now %s" % [str(resource).capitalize(), GameStats.game_stats_resource.resources[resource]])

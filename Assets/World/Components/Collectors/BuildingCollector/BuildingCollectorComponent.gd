@@ -23,12 +23,12 @@ var production_line_components: Array[ProductionLineComponent] = []
 class Job:
   static var NONE: Job = Job.new(ResourceConfig.Resources.NONE, 0, null, null)
 
-  var resource: ResourceConfig.Resources
+  var resource: StringName
   var amount: int
   var building_from: Building2D
   var building_to: Building2D
 
-  func _init(resource: ResourceConfig.Resources, amount: int, building_from: Building2D, building_to: Building2D):
+  func _init(resource: StringName, amount: int, building_from: Building2D, building_to: Building2D):
     self.resource = resource
     self.amount = amount
     self.building_from = building_from
@@ -73,13 +73,13 @@ func set_closest_warehouse(new_buildings: Array[Building2D]):
           self.path_to_warehouse.append(cell as Vector2)
 
 ## Finds the closest building that produces the needed resource, Note: For now, we will only collect from production buildings and not warehouses
-func get_building_to_collect_from(resource: ResourceConfig.Resources) -> Building2D:
+func get_building_to_collect_from(needed_resource: StringName) -> Building2D:
   if built_tilemap == null: # if the built tilemap is null, then return null
     return null
   var closest_building: Building2D = null # declare the closest building var to null
   var distance_to_building: int = 0 # declare the distance to the building
   for building in built_tilemap.building_position_to_building.values(): # loop through the buildings
-    if building.is_resource_available(resource): # if the building has the needed resource and it is its output,
+    if building.is_resource_available(needed_resource): # if the building has the needed resource and it is its output,
       var path_to_building = move_by_cell.pathfinding.get_path_to_dest(self.global_position, building.global_position) # get the path to the building.
       if path_to_building != null and (closest_building == null or len(path_to_building) < distance_to_building): # if the building is closer than the last closest building,
         closest_building = building # set the closest building to the current building,

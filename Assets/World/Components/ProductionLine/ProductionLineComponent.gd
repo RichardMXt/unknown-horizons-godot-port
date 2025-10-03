@@ -4,13 +4,13 @@ class_name ProductionLineComponent
 
 @export_group("production")
 ## The resources needed to produce the output product
-@export var consumes: Dictionary[ResourceConfig.Resources, int] = {}:
+@export var consumes: Dictionary[StringName, int] = {}:
   set(value):
     consumes = value
 
 ## The product that will be produced[br]
 ## [b]Note[/b]: Only [b]one[/b] resource can be produced
-@export var produces: Dictionary[ResourceConfig.Resources, int] = {}
+@export var produces: Dictionary[StringName, int] = {}
 
 @export var production_time: float = 10
 
@@ -104,8 +104,8 @@ func notify_resource_produced():
 func has_enough_resources() -> bool:
   if storage_component == null: # if there is no storage then no resources
     return false
-  for resource in consumes:
-    var available_resource_amount = storage_component.storage.get(resource)
+  for resource in self.consumes:
+    var available_resource_amount: int = storage_component.storage.get(resource, 0)
     var needed_resource_amount: int = consumes[resource]
     if available_resource_amount == null or available_resource_amount < needed_resource_amount:
       return false
@@ -115,7 +115,7 @@ func spend_resources():
   if storage_component == null: # if there is no storage then no resources
     return
   for resource in consumes:
-    var available_resource_amount: int = storage_component.storage.get(resource)
+    var available_resource_amount: int = storage_component.storage.get(resource, 0)
     var needed_resource_amount: int = consumes[resource]
     if available_resource_amount >= needed_resource_amount: # for the case that the resources were not checked before (from unusual function, e.t.c.)
       storage_component.set_storage_item_amount(resource, available_resource_amount - needed_resource_amount)

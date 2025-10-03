@@ -10,10 +10,10 @@ signal slot_opened
 
 var units_loading: int = 0
 
-func is_resource_available(resource: ResourceConfig.Resources) -> bool:
+func is_resource_available(resource: StringName) -> bool:
   return GameStats.game_stats_resource.resources[resource] > 0
 
-func unload_resource(resource: ResourceConfig.Resources, amount: int) -> void:
+func unload_resource(resource: StringName, amount: int) -> void:
   while units_loading >= max_loading_and_unloading_units:
     await self.slot_opened
 
@@ -23,7 +23,7 @@ func unload_resource(resource: ResourceConfig.Resources, amount: int) -> void:
   units_loading -= 1
   slot_opened.emit()
 
-func load_resource(resource: ResourceConfig.Resources, amount: int) -> int:
+func load_resource(resource: StringName, amount: int) -> int:
   while units_loading >= max_loading_and_unloading_units:
     await self.slot_opened
 
