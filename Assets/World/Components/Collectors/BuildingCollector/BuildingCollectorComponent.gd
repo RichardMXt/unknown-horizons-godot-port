@@ -49,8 +49,9 @@ func _ready():
   for component in child_components:
     component.set_components(child_components)
   
-  self.built_tilemap.buildings_built.connect(self.set_closest_warehouse)
-  self.set_closest_warehouse(built_tilemap.building_position_to_building.values())
+  if self.built_tilemap != null:
+    self.built_tilemap.buildings_built.connect(self.set_closest_warehouse)
+    self.set_closest_warehouse(built_tilemap.building_position_to_building.values())
 
 func set_components(components: Array[BaseComponent]):
   for component in components:

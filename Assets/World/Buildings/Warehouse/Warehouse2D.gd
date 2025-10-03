@@ -11,7 +11,7 @@ signal slot_opened
 var units_loading: int = 0
 
 func is_resource_available(resource: StringName) -> bool:
-  return GameStats.game_stats_resource.resources[resource] > 0
+  return GameStats.game_stats_resource.resources.get(resource, 0) > 0
 
 func unload_resource(resource: StringName, amount: int) -> void:
   while units_loading >= max_loading_and_unloading_units:

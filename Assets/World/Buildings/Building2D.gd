@@ -21,6 +21,7 @@ signal unpaused
 
 func _ready():
   setup_components()
+  CamUtils.center_if_no_camera(self)
 
 ## returns all the components of the certain type
 func get_components(component_type: Variant = BaseComponent) -> Array:
