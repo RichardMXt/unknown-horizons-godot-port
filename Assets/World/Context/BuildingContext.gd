@@ -35,18 +35,17 @@ func context_exited() -> void:
   highlighter.clear()
 
 func _unhandled_input(event: InputEvent) -> void:
-  var build_building_data: BuildingConfig.Buildings
+  var build_building_data: BuildingConfig.Buildings = BuildingConfig.Buildings.NONE
 
   if event.is_action_pressed("toggle_build_building"):
     build_building_data = BuildingConfig.Buildings.get(event.get_meta("button_name").replace("Build", "").replace("Button", "").to_upper())
     if build_building_data == null:
       push_error("`toggle_build_building` action is pressed, but `building_name` meta is null or empty.")
 
-  if build_building_data:
+  if build_building_data != BuildingConfig.Buildings.NONE:
     # print_debug(event, ", building_data: ", build_building_data);
-    if (build_building_data != null):
-      building_to_build = build_building_data
-      return
+    building_to_build = build_building_data
+    return
   
   if self.is_active:
     if event is InputEventMouseButton:
@@ -118,7 +117,6 @@ func update_building_highlight(building_tile_position: Vector2i = built_tilemap.
   var building_instance_2D: Building2D = building_instance as Building2D
   if building_instance_2D:
     building_instance_2D.set_can_build_highlight(can_build_building(built_tilemap.map_to_local(building_tile_position)))
-    building_instance_2D.paused = true
 
 func has_resources_for_building(building: BuildingConfig.Buildings = building_to_build) -> bool:
   var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[StringName, int]
@@ -135,7 +133,7 @@ func spend_resources_for_building(building: BuildingConfig.Buildings = building_
   var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[StringName, int]
   for resource: StringName in cost.keys():
     var amount_needed: int = cost[resource]
-    GameStats.game_stats_resource.resources[resource] -= amount_needed
+    GameStats.game_stats_resource.add_resource(resource, -amount_needed)
     print("the amount of %s is now %s" % [str(resource).capitalize(), GameStats.game_stats_resource.resources[resource]])
 
 func build(building_world_position: Vector2 = built_tilemap.to_local(built_tilemap.get_global_mouse_position())) -> void:
