@@ -3,9 +3,6 @@ extends BaseContext
 
 class_name BuildingContext
 
-## The shader used to highlight buildings when in building mode
-@export var building_shader: ShaderMaterial = preload("res://Assets/World/Tilemaps/Highlight/BuildingHighlight.tres")
-
 @onready var object_selected_context: ObjectSelectedContext = self.get_node("/root/Main/GameContextManager/ObjectSelectedContext")
 @onready var terrain_tilemap: TerrainTileMap = %TerrainTileMap
 @onready var built_tilemap: BuiltTileMap = %BuiltTileMap
@@ -107,8 +104,7 @@ func update_building_highlight(building_tile_position: Vector2i = built_tilemap.
   if building_tile_position != last_highlighted_building_position or len(highlighter.highlighted_objects) == 0: # if the mouse moved or there is no highlighted building, then update the highlighter
     last_highlighted_building_position = building_tile_position # update the last highlighted building position
     highlighter.clear() # clear the highlighter
-    var building_atlas_position: Vector2i = BuildingConfig.building_to_tile[building_to_build]
-    highlighter.set_cell(building_tile_position, building_atlas_position.x, Vector2i.ZERO, building_atlas_position.y) # add the building highlight
+    highlighter.set_cell(building_tile_position, 0, Vector2i.ZERO, self.building_to_build) # add the building highlight
     building_instance = await highlighter.new_building_added # wait for the building highlight to be added
 
   elif building_instance == null: # The highlighted_objects is not empty becouse the previous if statement would be entered and set the building_instance
@@ -122,7 +118,7 @@ func has_resources_for_building(building: BuildingConfig.Buildings = building_to
   var cost: Dictionary = BuildingConfig.building_to_cost[building] as Dictionary[StringName, int]
   for resource: StringName in cost.keys():
     var amount_needed: int = cost[resource]
-    var amount_available = GameStats.game_stats_resource.resources.get(resource)
+    var amount_available = GameStats.game_stats_resource.resources.get(resource, 0)
     var can_be_built: bool = amount_available != null and amount_needed <= amount_available
     if not can_be_built:
       # in the future, tell the player the needed resources
@@ -142,6 +138,5 @@ func build(building_world_position: Vector2 = built_tilemap.to_local(built_tilem
   building_world_position = built_tilemap.map_to_local(building_tile_position) # The centered position of the new building
   if building_to_build != BuildingConfig.Buildings.NONE and can_build_building(building_world_position): # If there is a building to build and it can be built
     spend_resources_for_building()
-    var building_atlas_position: Vector2i = BuildingConfig.building_to_tile[building_to_build]
-    built_tilemap.set_cell(building_tile_position, building_atlas_position.x, Vector2i.ZERO, building_atlas_position.y)
+    built_tilemap.set_cell(building_tile_position, 0, Vector2i.ZERO, self.building_to_build)
     highlighter.clear()

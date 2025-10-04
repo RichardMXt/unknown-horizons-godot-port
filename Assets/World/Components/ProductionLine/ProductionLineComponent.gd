@@ -3,6 +3,7 @@ extends BaseComponent
 class_name ProductionLineComponent
 
 @export_group("production")
+@export var line_name: String = ""
 ## The resources needed to produce the output product
 @export var consumes: Dictionary[StringName, int] = {}:
   set(value):

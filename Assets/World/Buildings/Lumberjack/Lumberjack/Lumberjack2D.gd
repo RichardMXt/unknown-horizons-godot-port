@@ -78,9 +78,9 @@ func movement_loop():
 func wait_for_tree_in_need():
 # wait until needs and can go to tree
   while true:
-    var wood_amount: int = self.storage_component.storage.get(ResourceConfig.Resources.WOOD, 0)
+    var wood_amount: int = self.storage_component.storage.get(ResourceConfig.Resources.TREES, 0)
     if closest_trees != []:
-      if wood_amount < self.storage_component.max_capacity.get(ResourceConfig.Resources.WOOD, 0):
+      if wood_amount < self.storage_component.max_capacity.get(ResourceConfig.Resources.TREES, 0):
         return
     await self.get_tree().create_timer(1).timeout
     if self.parent_building.paused:

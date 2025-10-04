@@ -4,7 +4,11 @@ class_name GameStatsResource
 
 const save_path = "user://progress.tres"
 
-var resources: Dictionary[StringName, int] = {} # resource_name to count
+var resources: Dictionary[StringName, int] = {
+  ResourceConfig.Resources.GOLD: 100000,
+  ResourceConfig.Resources.TOOLS: 1000,
+  ResourceConfig.Resources.BOARDS: 100,
+} # resource_name to count
 
 signal resources_changed
 
@@ -18,6 +22,8 @@ func set_resource(resource: StringName, amount: int):
 
 func _init():
   for resource in ResourceConfig.Resources.values():
+    if resources.has(resource):
+      continue
     resources[resource] = 0
 
 func save_game():
