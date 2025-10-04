@@ -62,10 +62,9 @@ custom_minimum_size = Vector2(40, 46)
 layout_mode = 2
 
 [node name="TabContainer" parent="." index="1"]
-current_tab = 2
+current_tab = 0
 
 [node name="Settlement" type="VBoxContainer" parent="TabContainer" index="1"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -107,11 +106,9 @@ layout_mode = 2
 
 [node name="BuildLookoutButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="2" instance=ExtResource("19")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildSignalFireButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="3" instance=ExtResource("16")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Settlement/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
@@ -128,7 +125,6 @@ layout_mode = 2
 
 [node name="BuildResidenceButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer2/BuildMenuContainer" index="0" instance=ExtResource("13")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Settlement/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
@@ -145,15 +141,12 @@ layout_mode = 2
 
 [node name="BuildMainSquareButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="0" instance=ExtResource("11")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildChapelButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="1" instance=ExtResource("18")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildSchoolButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="2" instance=ExtResource("14")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="TabContainer/Settlement/MarginContainer/VBoxContainer" index="3"]
 layout_mode = 2
@@ -170,7 +163,6 @@ layout_mode = 2
 
 [node name="BuildFireStationButton" parent="TabContainer/Settlement/MarginContainer/VBoxContainer/VBoxContainer4/BuildMenuContainer" index="0" instance=ExtResource("10")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="Fields" type="VBoxContainer" parent="TabContainer" index="2"]
 visible = false
@@ -211,15 +203,12 @@ layout_mode = 2
 
 [node name="BuildPastureButton" parent="TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="1" instance=ExtResource("24")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildPotatoFieldButton" parent="TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="2" instance=ExtResource("22")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildSugarFieldButton" parent="TabContainer/Fields/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="3" instance=ExtResource("21")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Fields/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
@@ -261,6 +250,7 @@ font_style = 1
 layout_mode = 2
 
 [node name="Agriculture" type="VBoxContainer" parent="TabContainer" index="3"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -295,7 +285,6 @@ layout_mode = 2
 
 [node name="BuildFishermanButton" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer/BuildMenuContainer" index="0" instance=ExtResource("30")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
@@ -312,7 +301,6 @@ layout_mode = 2
 
 [node name="BuildHunterButton" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer2/BuildMenuContainer" index="0" instance=ExtResource("31")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
@@ -329,11 +317,9 @@ layout_mode = 2
 
 [node name="BuildWeaverButton" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="0" instance=ExtResource("20")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildDistilleryButton" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="1" instance=ExtResource("26")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="BuildBakeryButton" parent="TabContainer/Agriculture/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="2" instance=ExtResource("29_uewla")]
 layout_mode = 2
@@ -398,7 +384,6 @@ layout_mode = 2
 
 [node name="BuildClayPitButton" parent="TabContainer/Companies/MarginContainer/VBoxContainer/VBoxContainer2/BuildMenuContainer" index="0" instance=ExtResource("28")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Companies/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
@@ -415,7 +400,6 @@ layout_mode = 2
 
 [node name="BuildBrickyardButton" parent="TabContainer/Companies/MarginContainer/VBoxContainer/VBoxContainer3/BuildMenuContainer" index="0" instance=ExtResource("29")]
 layout_mode = 2
-input_action_name = ""
 
 [node name="Military" type="VBoxContainer" parent="TabContainer" index="5"]
 visible = false
@@ -492,4 +476,3 @@ layout_mode = 2
 
 [node name="BuildBoatBuilderButton" parent="TabContainer/Military/MarginContainer/VBoxContainer/VBoxContainer4/BuildMenuContainer" index="0" instance=ExtResource("25")]
 layout_mode = 2
-input_action_name = ""
