@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://bk6n0qnrrdt75"]
+
+[ext_resource type="StyleBox" uid="uid://c7w7oybbe2suc" path="res://Assets/UI/Images/TabWidget/TabWidgetPanel.tres" id="1_d4nqi"]
+[ext_resource type="Script" uid="uid://b2aovat7v4dbb" path="res://Assets/UI/TabWidgets/ProductionTab.gd" id="2_d1jl1"]
+[ext_resource type="PackedScene" uid="uid://bqqtcv3vc2v16" path="res://Assets/UI/TabWidgets/Switches/SwitchTabWidget.tscn" id="2_y0l4y"]
+[ext_resource type="Texture2D" uid="uid://2pyc2ektprmg" path="res://Assets/UI/Icons/TabWidget/Common/building_overview_u.png" id="3_dmpj3"]
+[ext_resource type="Texture2D" uid="uid://5nfvte07ogwq" path="res://Assets/UI/Icons/TabWidget/Common/building_overview_d.png" id="4_m1has"]
+[ext_resource type="Texture2D" uid="uid://d1himtfjpllte" path="res://Assets/UI/Icons/TabWidget/Common/building_overview_h.png" id="5_3a0in"]
+[ext_resource type="Texture2D" uid="uid://b7ud7nsjtuli7" path="res://Assets/UI/Icons/TabWidget/Common/building_overview_a.png" id="6_iv6t6"]
+[ext_resource type="PackedScene" uid="uid://bamt0see7lbpb" path="res://Assets/UI/BasicControls/CaptionBlock.tscn" id="7_m1has"]
+[ext_resource type="PackedScene" uid="uid://dkhdvvwy61h7t" path="res://Assets/UI/TabWidgets/ViewComponents/ProductionBasicInfo.tscn" id="8_3a0in"]
+[ext_resource type="PackedScene" uid="uid://dg6whk6ygbtpi" path="res://Assets/UI/TabWidgets/ViewComponents/ProductionChain.tscn" id="9_iv6t6"]
+
+[node name="ProductionTab" type="PanelContainer"]
+custom_minimum_size = Vector2(217, 200)
+offset_right = 217.0
+offset_bottom = 215.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_d4nqi")
+script = ExtResource("2_d1jl1")
+
+[node name="TabMenu" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = -55
+
+[node name="TabSwitches" type="VBoxContainer" parent="TabMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="ProductionSwitch" parent="TabMenu/TabSwitches" instance=ExtResource("2_y0l4y")]
+layout_mode = 2
+size_flags_vertical = 1
+texture_normal = ExtResource("3_dmpj3")
+texture_pressed = ExtResource("4_m1has")
+texture_hover = ExtResource("5_3a0in")
+texture_active = ExtResource("6_iv6t6")
+
+[node name="Overviews" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+tabs_visible = false
+
+[node name="ProductionOverview" type="VBoxContainer" parent="Overviews"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Name" parent="Overviews/ProductionOverview" instance=ExtResource("7_m1has")]
+layout_mode = 2
+text = "Building"
+
+[node name="ProductionBasicInfo" parent="Overviews/ProductionOverview" instance=ExtResource("8_3a0in")]
+layout_mode = 2
+
+[node name="ProductionChain" parent="Overviews/ProductionOverview" instance=ExtResource("9_iv6t6")]
+layout_mode = 2
+
+[connection signal="building_selected_changed" from="." to="Overviews/ProductionOverview/Name" method="new_building_selected"]
+[connection signal="building_selected_changed" from="." to="Overviews/ProductionOverview/ProductionChain" method="new_building_selected"]

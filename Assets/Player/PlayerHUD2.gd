@@ -31,7 +31,7 @@ func _input(event: InputEvent) -> void:
     var target_tab_widget_name = event.get_meta("tab_widget_name")
     var selected_objects: Array = event.get_meta("selected_objects")
     for tab_widget in tab_container.get_children():
-      var building_menu_tab_widget = tab_widget as BuildingMenuTabWidget
+      var building_menu_tab_widget = tab_widget as ProductionTab
       var ship_menu_tab_widget = tab_widget as ShipMenuTabWidget
       if tab_widget.name == target_tab_widget_name:
         if building_menu_tab_widget:

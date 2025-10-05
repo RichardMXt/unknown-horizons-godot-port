@@ -22,14 +22,18 @@ func set_tab_widget():
     # get the info tab widget
     var object = selected_objects[0].get_parent()
     var info_tab_widget: Resource
-    if object is Building2D:
-      info_tab_widget = BuildingConfig.building_to_info_tab_widget.get(object.building_type)
+    var building: Building2D = object as Building2D
+    if building:
+      if BuildingConfig.building_to_info_tab_widget.has(building.id): # if has an unique info tab then set it
+        info_tab_widget = BuildingConfig.building_to_info_tab_widget[building.id]
+      else: # else, use common production tab
+        tab_widget_name = "ProductionTab"
     if object is Unit2D:
       info_tab_widget = object.unit_data.info_tab_widget
     # get the tab widget name
     if info_tab_widget:
       tab_widget_name = info_tab_widget.resource_path.get_file().get_basename()
-    else:
+    elif tab_widget_name == "":
       tab_widget_name = empty_tab_widget_name
 
   else:
