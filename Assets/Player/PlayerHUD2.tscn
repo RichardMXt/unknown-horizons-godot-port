@@ -48,8 +48,8 @@
 [ext_resource type="PackedScene" uid="uid://ddbmm12mfoqkm" path="res://Assets/UI/TabWidgets/ShipForeignMenuTabWidget.tscn" id="50"]
 [ext_resource type="PackedScene" uid="uid://defcfm8emxvqm" path="res://Assets/UI/TabWidgets/ShipMenuTabWidget.tscn" id="51"]
 [ext_resource type="PackedScene" uid="uid://ckqqrpy8t18a6" path="res://Assets/UI/TabWidgets/TownTabWidget.tscn" id="52"]
-[ext_resource type="PackedScene" uid="uid://bk6n0qnrrdt75" path="res://Assets/UI/TabWidgets/ProuductionTab.tscn" id="52_mnc3c"]
 [ext_resource type="PackedScene" uid="uid://1jrftdm3ck1n" path="res://Assets/UI/TabWidgets/MainSquareTabWidget.tscn" id="53"]
+[ext_resource type="PackedScene" uid="uid://db0jyegu5eki5" path="res://Assets/UI/TabWidgets/AllTabs.tscn" id="53_lmqcj"]
 [ext_resource type="PackedScene" uid="uid://3tfrvngmx6xl" path="res://Assets/UI/TabWidgets/StorageTabWidget.tscn" id="54"]
 [ext_resource type="PackedScene" uid="uid://c4guhesfdudwl" path="res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn" id="55"]
 [ext_resource type="PackedScene" uid="uid://bkup5mqdwgxlj" path="res://Assets/UI/TabWidgets/TroopMenuTabWidget.tscn" id="56"]
@@ -392,7 +392,8 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 46
 
-[node name="ProductionTab" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("52_mnc3c")]
+[node name="AllTabs" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("53_lmqcj")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 metadata/_tab_index = 47

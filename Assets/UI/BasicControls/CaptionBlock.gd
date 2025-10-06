@@ -31,5 +31,12 @@ func _update_top_margin() -> void:
   else:
     %HSeparator.remove_theme_constant_override("separation")
 
-func new_building_selected():
-  caption.text = self.owner.selected_objects[0].id
+func new_node_selected(node: WorldThing2D) -> void:
+  if node == null:
+    self.caption.text = "Building"
+    return
+  var building: Building2D = node as Building2D
+  if building:
+    self.caption.text = building.id
+  else:
+    self.caption.text = node.name

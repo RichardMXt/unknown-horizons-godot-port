@@ -192,10 +192,10 @@ static var building_to_cost: Dictionary[StringName, Dictionary] = {
 # }
 
 ## building enum to info tab widget scene
-static var building_to_info_tab_widget: Dictionary[StringName, Resource] = {
-  Buildings.NONE:       preload("res://Assets/UI/TabWidgets/ProductionTab.gd"),
-  # Buildings.BAKERY:     preload("res://Assets/UI/TabWidgets/BakeryTabWidget.tscn"),
-  # Buildings.LUMBERJACK: preload("res://Assets/UI/TabWidgets/LumberjackTabWidget.tscn"),
-  # Buildings.FARM:       preload("res://Assets/UI/TabWidgets/FarmTabWidget.tscn"),
-  Buildings.WAREHOUSE:  preload("res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn")
-}
+# static var building_to_info_tab_widget: Dictionary[StringName, Resource] = {
+#   Buildings.NONE:       preload("res://Assets/UI/TabWidgets/ProductionOverviewTab.gd"),
+#   # Buildings.BAKERY:     preload("res://Assets/UI/TabWidgets/BakeryTabWidget.tscn"),
+#   # Buildings.LUMBERJACK: preload("res://Assets/UI/TabWidgets/LumberjackTabWidget.tscn"),
+#   # Buildings.FARM:       preload("res://Assets/UI/TabWidgets/FarmTabWidget.tscn"),
+#   Buildings.WAREHOUSE:  preload("res://Assets/UI/TabWidgets/WarehouseTabWidget.tscn")
+# }
