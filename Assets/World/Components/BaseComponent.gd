@@ -6,8 +6,6 @@ class_name BaseComponent
 
 signal unpaused
 
-@export var type: String
-
 func _ready() -> void:
   var child_components: Array[BaseComponent] = []
   for component in child_components:
