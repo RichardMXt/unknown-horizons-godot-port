@@ -3,7 +3,8 @@ class_name MainMenuUI
 
 var _scenes = {
 	sp_game = preload("res://Assets/UI/Pages/NewGameUI/NewGameUI.tscn"),
-	load_game = preload("res://Assets/World/WorldDev.tscn"),
+	# load_game = preload("res://Assets/World/WorldDev.tscn"),
+	load_game = preload("res://Assets/World/WorldDev2D.tscn"),
 	help = preload("res://Assets/UI/Pages/HelpUI/HelpUI.tscn"),
 	options = preload("res://Assets/UI/Pages/OptionsUI/OptionsUI.tscn"),
 	exit = preload("res://Assets/UI/Pages/QuitGameUI/ExitScene.tscn")
