@@ -9,6 +9,9 @@ class_name BuildingCollectorComponent
 @export var built_tilemap: BuiltTileMap = null
 # @export var load_or_unload_time: float = 2
 
+@export var baseclass: String  # TODO: not used yet
+@export var radius: int        # TODO: not used yet
+@export var velocity: float    # TODO: not used yet
 
 @onready var move_by_cell: MoveByCellComponent = self.get_node("MoveByCellComponent")
 #@onready var action_set: CollectorActionSet = self.get_node("CollectorActionSet")
