@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dyqwsks6v6puj" path="res://Assets/World/Components/Collectors/BuildingCollector/BuildingCollectorComponent.tscn" id="7_building_collector_component"]
 [ext_resource type="PackedScene" uid="uid://culumberjacts" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector.tscn" id="9_wgx1b"]
 
-[node name="{\'TIER_SAILORS\'_ \'_ Lumberjack Tent\', \'TIER_PIONEERS\'_ \'_ Lumberjack Hut\'}" type="Node2D"]
+[node name="Lumberjack" type="Node2D"]
 script = ExtResource("1_Building2D_gd")
 
 [node name="Selectable" parent="." instance=ExtResource("2_selectable_component")]
