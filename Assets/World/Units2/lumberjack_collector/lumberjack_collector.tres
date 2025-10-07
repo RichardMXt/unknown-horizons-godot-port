@@ -1,0 +1,826 @@
+[gd_resource type="SpriteFrames" load_steps=94 format=3 uid="uid://culumberjactr"]
+
+[ext_resource type="Texture2D" uid="uid://ckqlhbgsrowqx" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle"]
+[ext_resource type="Texture2D" uid="uid://c2lwjyoobowe5" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle_full"]
+[ext_resource type="Texture2D" uid="uid://cdli6sr3cyo4t" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move"]
+[ext_resource type="Texture2D" uid="uid://dutncsfc7iixc" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move_full"]
+[ext_resource type="Texture2D" uid="uid://bmaxq12m5oans" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_work.png" id="lumberjack_collector_sailors_as_lumberjackunit0_work"]
+
+[sub_resource type="AtlasTexture" id="xi2ih"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="u6e36"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="im4fg"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="475aw"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="gbu72"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="jla7c"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="r54td"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="xorwm"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
+region = Rect2(0, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="wccwj"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="fjx24"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="alrgg"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ncq0f"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="mgtuh"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="kkfj5"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="0xlt1"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="opkqs"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle_full")
+region = Rect2(0, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="g2vnx"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ii4q5"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="kistv"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="puwpm"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="bl4e4"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="kpwhv"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="nva71"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="o6lho"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="b3udn"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="bb32u"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ijbef"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="8nv8l"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="keone"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="e30h7"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="pql3a"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="qac7c"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="cvab7"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="uu3ta"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="bqmbr"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="01dpc"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ce0ah"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="pbekw"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="jvh3s"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="q7tgs"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="gtxik"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="bhngr"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="at7fm"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ljmg1"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="4k53d"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(0, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="jxisw"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(32, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="0enq0"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(64, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="la7id"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move")
+region = Rect2(96, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="s6ytq"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="2u8qt"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="xiyqi"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="1s15r"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="iyj51"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="i37ou"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="2rid4"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="a6spt"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="t5u5y"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="6ah0f"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="2nrj0"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="udd5m"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ac1l5"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="elhm2"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="gp1s7"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="0kla6"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ofnv5"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="w0web"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ftobn"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="xyof2"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="o7bgx"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="qpr55"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="ovjau"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="7j5ms"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="t1arj"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="dhmxx"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="legh6"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="q3oen"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="41rlx"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(0, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="4q5bp"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(32, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="p6v6r"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(64, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="2006o"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_move_full")
+region = Rect2(96, 294, 32, 42)
+
+[sub_resource type="AtlasTexture" id="iwlys"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="mt2co"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="irg05"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 84, 32, 42)
+
+[sub_resource type="AtlasTexture" id="lc2h7"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 126, 32, 42)
+
+[sub_resource type="AtlasTexture" id="1tf4t"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 168, 32, 42)
+
+[sub_resource type="AtlasTexture" id="o7y43"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 210, 32, 42)
+
+[sub_resource type="AtlasTexture" id="o4ikg"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 252, 32, 42)
+
+[sub_resource type="AtlasTexture" id="7vr41"]
+atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_work")
+region = Rect2(0, 294, 32, 42)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("xi2ih")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.000",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("u6e36")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("im4fg")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.090",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("475aw")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("gbu72")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.180",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("jla7c")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("r54td")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.270",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("xorwm")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle.315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("wccwj")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.000",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("fjx24")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("alrgg")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.090",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("ncq0f")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("mgtuh")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.180",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("kkfj5")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("0xlt1")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.270",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("opkqs")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.idle_full.315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("g2vnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("ii4q5")
+}, {
+"duration": 1.0,
+"texture": SubResource("kistv")
+}, {
+"duration": 1.0,
+"texture": SubResource("puwpm")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.000",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("bl4e4")
+}, {
+"duration": 1.0,
+"texture": SubResource("kpwhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("nva71")
+}, {
+"duration": 1.0,
+"texture": SubResource("o6lho")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("b3udn")
+}, {
+"duration": 1.0,
+"texture": SubResource("bb32u")
+}, {
+"duration": 1.0,
+"texture": SubResource("ijbef")
+}, {
+"duration": 1.0,
+"texture": SubResource("8nv8l")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.090",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("keone")
+}, {
+"duration": 1.0,
+"texture": SubResource("e30h7")
+}, {
+"duration": 1.0,
+"texture": SubResource("pql3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("qac7c")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("cvab7")
+}, {
+"duration": 1.0,
+"texture": SubResource("uu3ta")
+}, {
+"duration": 1.0,
+"texture": SubResource("bqmbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("01dpc")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.180",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("ce0ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("pbekw")
+}, {
+"duration": 1.0,
+"texture": SubResource("jvh3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("q7tgs")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("gtxik")
+}, {
+"duration": 1.0,
+"texture": SubResource("bhngr")
+}, {
+"duration": 1.0,
+"texture": SubResource("at7fm")
+}, {
+"duration": 1.0,
+"texture": SubResource("ljmg1")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.270",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("4k53d")
+}, {
+"duration": 1.0,
+"texture": SubResource("jxisw")
+}, {
+"duration": 1.0,
+"texture": SubResource("0enq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("la7id")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move.315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("s6ytq")
+}, {
+"duration": 1.0,
+"texture": SubResource("2u8qt")
+}, {
+"duration": 1.0,
+"texture": SubResource("xiyqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("1s15r")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.000",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("iyj51")
+}, {
+"duration": 1.0,
+"texture": SubResource("i37ou")
+}, {
+"duration": 1.0,
+"texture": SubResource("2rid4")
+}, {
+"duration": 1.0,
+"texture": SubResource("a6spt")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("t5u5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("6ah0f")
+}, {
+"duration": 1.0,
+"texture": SubResource("2nrj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("udd5m")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.090",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("ac1l5")
+}, {
+"duration": 1.0,
+"texture": SubResource("elhm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("gp1s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("0kla6")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("ofnv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("w0web")
+}, {
+"duration": 1.0,
+"texture": SubResource("ftobn")
+}, {
+"duration": 1.0,
+"texture": SubResource("xyof2")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.180",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("o7bgx")
+}, {
+"duration": 1.0,
+"texture": SubResource("qpr55")
+}, {
+"duration": 1.0,
+"texture": SubResource("ovjau")
+}, {
+"duration": 1.0,
+"texture": SubResource("7j5ms")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("t1arj")
+}, {
+"duration": 1.0,
+"texture": SubResource("dhmxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("legh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("q3oen")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.270",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("41rlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("4q5bp")
+}, {
+"duration": 1.0,
+"texture": SubResource("p6v6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("2006o")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.move_full.315",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("iwlys")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.000",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("mt2co")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.045",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("irg05")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.090",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("lc2h7")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.135",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1tf4t")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.180",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("o7y43")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.225",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("o4ikg")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.270",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("7vr41")
+}],
+"loop": true,
+"name": &"lumberjackunit0.sailors.work.315",
+"speed": 5.0
+}]
