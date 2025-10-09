@@ -8,7 +8,19 @@ class_name MoveByCellComponent
 ## The speed of the object in tiles per second
 @export var tile_per_sec: float = 2
 ## The type of allowed movement
-@export var allowed_movement: AllowedMovementTypes = AllowedMovementTypes.MOVE_ON_ROAD
+@export var allowed_movement: AllowedMovementTypes = AllowedMovementTypes.MOVE_ON_ROAD:
+  set(value):
+    allowed_movement = value
+    if pathfinding_node == null:
+      push_warning("Pathfinding node is not found")
+    else:
+      match allowed_movement:
+        AllowedMovementTypes.MOVE_ON_WATER:
+          pathfinding = pathfinding_node.ship_pathfinding
+        AllowedMovementTypes.MOVE_ON_ROAD:
+          pathfinding = pathfinding_node.road_pathfinding
+        AllowedMovementTypes.MOVE_ON_LAND:
+          pathfinding = pathfinding_node.land_pathfinding
 
 ## The object this component is moving[br]
 ## Default: ".."
@@ -23,6 +35,8 @@ enum AllowedMovementTypes {
   MOVE_ON_WATER,
   ## The value representing movement allowed only on road
   MOVE_ON_ROAD,
+  ## The value representing movement allowed on all land tiles
+  MOVE_ON_LAND,
 }
 
 ## The possible movement states for the unit.
@@ -60,6 +74,8 @@ func _ready():
         pathfinding = pathfinding_node.ship_pathfinding
       AllowedMovementTypes.MOVE_ON_ROAD:
         pathfinding = pathfinding_node.road_pathfinding
+      AllowedMovementTypes.MOVE_ON_LAND:
+        pathfinding = pathfinding_node.land_pathfinding
 
 func set_components(components: Array[BaseComponent]):
   for component in components:

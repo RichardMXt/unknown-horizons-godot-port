@@ -6,4 +6,4 @@ class_name SizedStorageComponent
 
 func set_storage_item_amount(resource: StringName, new_amount: int):
   self.storage[resource] = clamp(new_amount, 0, limit)
-  self.storage_changed.emit()
+  GameStats.game_stats_resource.resources_changed.emit()

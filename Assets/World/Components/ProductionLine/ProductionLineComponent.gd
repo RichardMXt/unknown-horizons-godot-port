@@ -130,7 +130,7 @@ func production_loop():
 func wait_for_resources():
   production_stage = ProductionStages.WAITING_FOR_RESOURCES
   while has_enough_resources() == false:
-    await storage_component.storage_changed
+    await GameStats.game_stats_resource.resources_changed
     if self.paused:
       await self.unpaused
 

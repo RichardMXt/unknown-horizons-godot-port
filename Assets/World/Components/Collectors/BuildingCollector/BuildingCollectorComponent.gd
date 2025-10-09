@@ -23,8 +23,6 @@ var sized_storage: SizedStorageComponent = null
 var building_storage: SlotStorageComponent = null
 var production_line_components: Array[ProductionLineComponent] = []
 
-signal storage_changed
-
 class Job:
   static var NONE: Job = Job.new(ResourceConfig.Resources.NONE, 0, null, null)
 
@@ -60,10 +58,8 @@ func set_components(components: Array[BaseComponent]):
   for component in components:
     if component is SlotStorageComponent:
       self.building_storage = component
-      self.building_storage.storage_changed.connect(self.call_storage_changed)
     if component is ProductionLineComponent:
       production_line_components.append(component)
-  GameStats.game_stats_resource.resources_changed.connect(self.call_storage_changed)
   bring_resources_loop()
 
 func set_closest_warehouse(new_buildings: Array[Building2D]):
@@ -94,12 +90,10 @@ func get_building_to_collect_from(needed_resource: StringName) -> Building2D:
         distance_to_building = len(path_to_building) # and set the new distance to the building to collect from
   return closest_building
 
-## merge multiple signals for await either
-func call_storage_changed():
-  storage_changed.emit() 
-
 ## Returns the best possible job at the moment
 func get_best_job() -> Job:
+  if self.building_storage == null:
+    return null
   var best_job: Job = null
   var job_score: int = -1000000
   for resource in self.building_storage.storage.keys():
@@ -170,7 +164,7 @@ func bring_resources_loop():
 func wait_for_job() -> Job:
   var best_job: Job = get_best_job()
   while best_job == null:
-    await self.storage_changed
+    await GameStats.game_stats_resource.resources_changed
     if self.paused:
       await self.unpaused
     best_job = get_best_job()

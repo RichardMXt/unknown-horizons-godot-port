@@ -23,4 +23,4 @@ func set_storage_item_amount(resource: StringName, new_amount: int):
   else:
     self.storage[resource] = new_amount
     push_warning("The resource %s does not have a max capacity" % resource)
-  self.storage_changed.emit()
+  GameStats.game_stats_resource.resources_changed.emit()

@@ -155,8 +155,8 @@ func update_animation() -> void:
       if working_state_animations.size() > 0: # if working state animation present - choose only from the animations corresponding to the working state
         tier_animations = working_state_animations
       
-      if tier_animations.size() > 1:
-        push_error("Multiple animations found for tier %s, state %s, orientation %s: %s" % [tier_name_lc, state_str, orientation_str, tier_animations])
+      # if tier_animations.size() > 1:
+        # push_error("Multiple animations found for tier %s, state %s, orientation %s: %s" % [tier_name_lc, state_str, orientation_str, tier_animations])
 
       animation_name = tier_animations[0]
       break
