@@ -5,25 +5,29 @@ extends BaseComponent
 class_name Collector
 
 class Job:
-  static var NONE: Job = Job.new(ResourceConfig.Resources.NONE, 0, null, null)
-
+  var path_to_start: Array[Vector2i]
+  var path_from_start_to_end: Array[Vector2i]
   var resource: StringName
-  var amount: int
-  var building_from: Building2D
-  var building_to: Building2D
 
-  func _init(resource: StringName, amount: int, building_from: Building2D, building_to: Building2D):
+  func _init(path_to_start: Array[Vector2i] = [], path_from_start_to_end: Array[Vector2i] = [], resource: StringName = ResourceConfig.Resources.NONE) -> void: #, building_from: Building2D, building_to: Building2D):
+    self.path_to_start = path_to_start
+    self.path_from_start_to_end = path_from_start_to_end
     self.resource = resource
-    self.amount = amount
-    self.building_from = building_from
-    self.building_to = building_to
+  
+  func _to_string() -> String:
+    if self.path_to_start == [] or self.path_from_start_to_end == []:
+      return "Resource: %s" % self.resource
+    return "Resource: %s, From: %s, To: %s" % [self.resource, self.path_to_start[-1], self.path_from_start_to_end[-1]]
 
 const CollectorTypes: Dictionary[StringName, StringName] = {
-  BUILDING_COLLECTOR   = &"BuildingCollector",
-  NATURE_COLLECTOR     = &"NatureCollector",
+  BUILDING_COLLECTOR   = &"BUILDING_COLLECTOR",
+  LUMBERJACK_COLLECTOR = &"LUMBERJACK_COLLECTOR",
 }
 
+
+@export var baseclass: String  # TODO: not used yet
 @export var radius: int = 10
+@export var velocity: float    # TODO: not used yet
 
 @onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap")
 @onready var parent_building: Building2D = self.get_parent()
@@ -33,6 +37,8 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 
 # var resource: StringName = ResourceConfig.Resources.NONE
 # var amount: int = 0
+
+var load_or_unload_time: float = 2
 
 var building_storage: SlotStorageComponent
 var production_line_components: Array[ProductionLineComponent]
@@ -49,12 +55,24 @@ var collector_type: String = self.CollectorTypes.BUILDING_COLLECTOR:
       match self.collector_type:
         self.CollectorTypes.BUILDING_COLLECTOR:
           self.move_by_cell.allowed_movement = self.MoveByCellComponent.AllowedMovementTypes.MOVE_ON_ROAD
-        self.CollectorTypes.NATURE_COLLECTOR:
+        self.CollectorTypes.LUMBERJACK_COLLECTOR:
           self.move_by_cell.allowed_movement = self.MoveByCellComponent.AllowedMovementTypes.MOVE_ON_LAND 
+
+var collector_type_to_get_jobs_function: Dictionary[StringName, Callable] = {
+  self.CollectorTypes.BUILDING_COLLECTOR: self.get_jobs_for_building_collector,
+  self.CollectorTypes.LUMBERJACK_COLLECTOR: self.get_jobs_for_lumberjack_collector
+}
+
+var collector_type_to_load_function: Dictionary[StringName, Callable] = {
+  self.CollectorTypes.BUILDING_COLLECTOR: self.load_resources_for_building_collector,
+  self.CollectorTypes.LUMBERJACK_COLLECTOR: self.chop_tree
+}
+
+
 
 #region Editor: dynamic values for dropdown for `collector_type`
 func _get_property_list() -> Array:
-  return [
+  var ret: Array[Dictionary] = [
     {
       "name": "Collecter Type",
       "default": self.CollectorTypes.BUILDING_COLLECTOR,
@@ -62,18 +80,30 @@ func _get_property_list() -> Array:
       "hint": PROPERTY_HINT_ENUM,
       "hint_string": ",".join(self.CollectorTypes.keys()),
       "usage": PROPERTY_USAGE_DEFAULT,
-    }
-  ]
+    }]
+  if self.collector_type == self.CollectorTypes.LUMBERJACK_COLLECTOR:
+    ret.append({
+      "name": "Load or Unload Time",
+      "default": 2,
+      "type": TYPE_FLOAT,
+      # "hint": PROPERTY_HINT_FLOAT,
+      "usage": PROPERTY_USAGE_DEFAULT
+    }) # add unload time if lumberjack
+  return ret
 
 func _get(property_name):
   match property_name:
     "Collecter Type":
       return self.collector_type
+    "Load or Unload Time":
+      return self.load_or_unload_time
 
 func _set(property_name, val):
   match property_name:
     "Collecter Type":
       self.collector_type = val
+    "Load or Unload Time":
+      self.load_or_unload_time = val
 #endregion
 
 
@@ -112,26 +142,36 @@ func set_components(new_components: Array[BaseComponent]) -> void:
 
 
 
-## Finds the closest building that produces the needed resource, Note: For now, we will only collect from production buildings and not warehouses
-func get_building_to_collect_from(needed_resource: StringName) -> Building2D:
-  if built_tilemap == null: # if the built tilemap is null, then return null
-    return null
-  var closest_building: Building2D = null # declare the closest building var to null
-  var distance_to_building: int = 0 # declare the distance to the building
-  for building in built_tilemap.building_position_to_building.values(): # loop through the buildings
-    if building.is_resource_available(needed_resource): # if the building has the needed resource and it is its output,
-      var path_to_building = move_by_cell.pathfinding.get_path_to_dest(self.global_position, building.global_position) # get the path to the building.
-      if path_to_building != null and (closest_building == null or len(path_to_building) < distance_to_building): # if the building is closer than the last closest building,
-        closest_building = building # set the closest building to the current building,
-        distance_to_building = len(path_to_building) # and set the new distance to the building to collect from
-  return closest_building
+## returns the shortest path the unit can take from -> to
+func get_cell_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+  if self.move_by_cell == null or self.move_by_cell.pathfinding == null:
+    push_error("move_by_cell or move_by_cell.pathfinding is null")
+    return []
+  var path = self.move_by_cell.pathfinding.get_path_to_dest(from, to, true, true)
+  if path == null:
+    return []
+  # make array typed
+  var typed_path: Array[Vector2i] = []
+  for point in path:
+    typed_path.append(point as Vector2i)
+  return typed_path
+
+## Returns a dictionary of all the cells and paths to them in radius
+func get_cells_in_radius(cell: Vector2i) -> Dictionary[Vector2i, Array]:
+  var cells_in_radius: Dictionary[Vector2i, Array] = {}
+  for dx in range(-self.radius, self.radius + 1):
+    for dy in range(-self.radius, self.radius + 1):
+      var path: Array[Vector2i] = self.get_cell_path(cell, cell + Vector2i(dx, dy))
+      if path != [] and len(path) <= self.radius:
+        cells_in_radius[cell + Vector2i(dx, dy)] = path
+  return cells_in_radius
 
 func get_path_to_closest_warehouse() -> Array[Vector2]:
   if built_tilemap == null: # if the built tilemap is null, then return null
     return []
   var path_to_warehouse: Array[Vector2] = []
-  for building_position in built_tilemap.building_name_to_building_poses.get("Warehouse", []): # loop through the buildings
-    var warehouse: Warehouse2D = self.built_tilemap.building_position_to_building.get(building_position, null) as Warehouse2D
+  for building_cell in built_tilemap.building_name_to_cell_coords.get("Warehouse", []): # loop through the buildings
+    var warehouse: Warehouse2D = self.built_tilemap.building_position_to_building.get(building_cell, null) as Warehouse2D
     if warehouse: # if the building is a warehouse,
       var path_to_current_warehouse = move_by_cell.pathfinding.get_path_to_dest(self.global_position, warehouse.global_position) # get the path to the warehouse.
       if path_to_current_warehouse == null:
@@ -146,77 +186,40 @@ func get_path_to_closest_warehouse() -> Array[Vector2]:
 func get_best_job() -> Job:
   if self.building_storage == null:
     return null
+  var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
+  var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
   var best_job: Job = null
-  var job_score: int = 0
-  for resource in self.building_storage.storage.keys():
-    var carry_in: bool = true
-    for production_line in self.production_line_components:
-      if production_line.produces.has(resource):
-        carry_in = false
-        break
-    
-    if self.collector_type == self.CollectorTypes.NATURE_COLLECTOR and carry_in == false: # Nature Collector only collects
-      continue
+  var best_job_score: float = -1
+  var jobs: Array[Job] = self.collector_type_to_get_jobs_function.get(self.collector_type, func(): return []).call()
 
-    var new_job: Job = Job.new(resource, 0, null, null)
-    var amount_to_load: int = 0
-    if carry_in:
-      amount_to_load = self.building_storage.max_capacity[resource] - self.building_storage.storage[resource]
-      new_job.building_to = self.parent_building
-      var building_to_collect_from: WorldThing2D = self.get_building_to_collect_from(resource)
-      if building_to_collect_from != null:
-        new_job.building_from = building_to_collect_from
-    else:
-      var path_to_warehouse: Array[Vector2] = self.get_path_to_closest_warehouse()
-      if path_to_warehouse == []:
-        continue
-      amount_to_load = self.building_storage.storage[resource]
-      new_job.building_from = self.parent_building
-      new_job.building_to = self.built_tilemap.building_position_to_building.get(path_to_warehouse[-1])
-
-    new_job.amount = clamp(amount_to_load, 0, self.storage.limit)
-    self.storage.set_storage_item_amount(resource, new_job.amount)
-    if new_job.building_from == null or new_job.building_to == null or self.storage.storage.get(new_job.resource) == 0 or new_job.resource == ResourceConfig.Resources.NONE:
+  for job in jobs:
+    if job == null:
       continue
-    var path_to_start = move_by_cell.pathfinding.get_path_to_dest(self.global_position, new_job.building_from.global_position)
-    var path_to_end = move_by_cell.pathfinding.get_path_to_dest(new_job.building_from.global_position, new_job.building_to.global_position)
-    if path_to_end == null or path_to_start == null or len(path_to_end) > self.radius:
-      continue
-    
-    var storages: Array = new_job.building_to.get_components(StorageComponent)
-    var amount_available = 0
-    if new_job.building_to is Warehouse2D:
-      amount_available = GameStats.game_stats_resource.resources.get(new_job.resource, 0)
-    elif storages == []:
-      continue
-    else:
-      amount_available = storages[0].storage.get(new_job.resource)
-    var new_job_score: int = min(new_job.amount, amount_available + 2) - (len(path_to_start) + len(path_to_end) / 2) /2 
-    if new_job_score > job_score or new_job == null:
-      best_job = new_job
-      job_score = new_job_score
+    var score: float = 1 - (len(job.path_to_start) + len(job.path_from_start_to_end)) / float(self.radius) / 2 # 0-1
+    if score >= best_job_score:
+      best_job = job
+      best_job_score = score
 
-  if best_job == null and self.built_tilemap.building_position_to_building.get(self.global_position) != self.parent_building:
-    return Job.new(ResourceConfig.Resources.NONE, 0, self.parent_building, self.parent_building) # go home
-
+  if best_job == null and collector_map_position != parent_building_map_position: # if there is no job, go home if not home
+    best_job = Job.new([collector_map_position], self.get_cell_path(collector_map_position, parent_building_map_position), ResourceConfig.Resources.NONE)
   return best_job
-
 
 
 ## the loop for the collecting logic, called at start
 func collecting_loop() -> void:
   while true:
+    if self.paused:
+      await self.unpaused
     var job: Job = await self.wait_for_job()
-    self.visible = true
-    await self.move_by_cell.move(job.building_from.global_position)
-    self.visible = false
+    if self.collector_type == self.CollectorTypes.LUMBERJACK_COLLECTOR:
+      self.built_tilemap.trees_getting_choped[job.path_from_start_to_end[0]] = null
+    await self.move_by_cell.move(job.path_to_start)
     await self.load_resources(job)
-    self.visible = true
-    await self.move_by_cell.move(job.building_to.global_position)
-    self.visible = false
+    await self.move_by_cell.move(job.path_from_start_to_end)
     await self.unload_resources(job)
 
 func wait_for_job() -> Job:
+  self.visible = false
   var best_job: Job = self.get_best_job()
   while best_job == null:
     await GameStats.game_stats_resource.resources_changed
@@ -226,25 +229,141 @@ func wait_for_job() -> Job:
   return best_job
 
 func load_resources(job: Job) -> void:
-  if job.building_from == null or job.building_from.is_queued_for_deletion():
-    return
-  if self.collector_type == self.CollectorTypes.NATURE_COLLECTOR:
-    action_set.building_state = action_set.BuildingStates.WORK
-    self.visible = true
-  var amount_given: int = await job.building_from.load_resource(job.resource, self.storage.storage.get(job.resource, 0))
-  if self.paused:
-    await self.unpaused
-  self.storage.set_storage_item_amount(job.resource, amount_given)
-  var amount_taken: int = self.storage.storage.get(job.resource, 0)
-  job.amount = amount_taken
+  await self.collector_type_to_load_function.get(self.collector_type, func(_job): return).call(job) # call correct load function
 
+## Unloads resources, one for all types right now
 func unload_resources(job: Job) -> void:
-  if job.building_to == null or job.building_to.is_queued_for_deletion():
+  # await self.collector_type_to_unload_function.get(self.collector_type, func(): return).call(self, job) # call correct unload function
+  self.visible = false
+  if self.storage == null or self.built_tilemap == null:
+    push_error("Mising nodes in Collector.gd, unload_resources")
     return
-  if self.collector_type == self.CollectorTypes.NATURE_COLLECTOR:
-    action_set.building_state = action_set.BuildingStates.WORK
-    self.visible = true
-  await job.building_to.unload_resource(job.resource, self.storage.storage.get(job.resource, 0))
+  var building: Building2D = self.built_tilemap.building_position_to_building.get(job.path_from_start_to_end[-1])
+  if building == null:
+    return
+  await building.unload_resource(job.resource, self.storage.get_storage_item_amount(job.resource))
+  self.storage.set_storage_item_amount(job.resource, 0, StorageComponent.StorageStates.EMPTY)
+
+
+## returns all possible jobs for a building collector
+func get_jobs_for_building_collector() -> Array[Job]:
+  if self.collector_type != self.CollectorTypes.BUILDING_COLLECTOR:
+    push_error("Wrong function called for this collector. Collector: %s, get_jobs_for_building_collector" % self.collector_type)
+    return []
+  if self.building_storage == null or self.built_tilemap == null or self.parent_building == null:
+    push_error("Mising nodes in Collector.gd, get_jobs_for_building_collector")
+    return []
+
+  var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
+  var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
+  var cells_in_radius: Dictionary[Vector2i, Array] = self.get_cells_in_radius(parent_building_map_position)
+  var jobs: Array[Job] = []
+  # create jobs for each resource
+  for cell in cells_in_radius.keys():
+    var building: Building2D = self.built_tilemap.building_position_to_building.get(cell)
+    if building == null:
+      continue
+    # ckeck for any jobs possible with the building
+    for resource in self.building_storage.storage.keys():
+      # get if consumed and/or produced
+      var consumed: bool = false
+      var produced: bool = false
+      for production_line in self.production_line_components:
+        consumed = production_line.consumes.has(resource) or consumed
+        produced = production_line.produces.has(resource) or produced
+
+      if consumed and produced: # do nothing
+        continue
+      # create a job to carry in if only consumed
+      if consumed:
+        if building.is_resource_available(resource) == false:
+          continue
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
+        var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from cell to building
+        path_from_start_to_end.reverse()
+        var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
+        jobs.append(new_job)
+      # create a job to carry out if only produced
+      if produced:
+        if self.building_storage.get_storage_item_amount(resource) <= 0:
+          continue
+        if building.id.to_lower() != BuildingConfig.Buildings.WAREHOUSE.to_lower():
+          continue
+
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, parent_building_map_position) # to building
+        var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from building to warehouse
+        var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
+        jobs.append(new_job)
+  return jobs
+
+## loads resources for a building collector
+func load_resources_for_building_collector(job: Job) -> void:
+  self.visible = false
+  var building: Building2D = self.built_tilemap.building_position_to_building.get(job.path_from_start_to_end[0])
+  if building == null:
+    return
+  self.storage.state = StorageComponent.StorageStates.EMPTY
+  var needed_resource_amount: int = 0
+  if building == self.parent_building:
+    needed_resource_amount = self.building_storage.get_storage_item_amount(job.resource)
+  else:
+    needed_resource_amount = self.building_storage.max_capacity.get(job.resource) - self.building_storage.get_storage_item_amount(job.resource)
+  var resource_amount: int = await building.load_resource(job.resource, needed_resource_amount)
   if self.paused:
     await self.unpaused
-  self.storage.storage = {}
+  var storage_state: StorageComponent.StorageStates = StorageComponent.StorageStates.FULL if resource_amount > 0 else StorageComponent.StorageStates.EMPTY
+  self.storage.set_storage_item_amount(job.resource, resource_amount, storage_state)
+
+
+
+## returns all possible jobs for a lumberjack collector
+func get_jobs_for_lumberjack_collector() -> Array[Job]:
+  if self.collector_type != self.CollectorTypes.LUMBERJACK_COLLECTOR:
+    push_error("Wrong function called for this collector. Collector: %s, get_jobs_for_lumberjack_collector" % self.collector_type)
+    return []
+  if self.built_tilemap == null or self.parent_building == null or self.building_storage == null:
+    push_error("Mising nodes in get_jobs_for_lumberjack_collector, Collector.gd")
+  if self.building_storage.storage.has(ResourceConfig.Resources.TREES) == false:
+    push_error("Building can not store wood but has a lumberjack collector")
+    return []
+  if self.building_storage.get_storage_item_amount(ResourceConfig.Resources.TREES) >= self.building_storage.max_capacity.get(ResourceConfig.Resources.TREES):
+    return []
+  var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
+  var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
+  var cells_in_radius: Dictionary[Vector2i, Array] = self.get_cells_in_radius(parent_building_map_position)
+  var jobs: Array[Job] = []
+  # find all trees and create a job for each
+  for cell in cells_in_radius.keys():
+    var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
+    if cell_data == null:
+      continue
+    if cell_data.get_custom_data(self.built_tilemap.is_tree) == true:
+      if cell in self.built_tilemap.trees_getting_choped:
+        continue
+      var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
+      var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from cell to building
+      path_from_start_to_end.reverse()
+      var new_job: Job = Job.new(path_to_start, path_from_start_to_end, ResourceConfig.Resources.TREES)
+      jobs.append(new_job)
+
+  return jobs
+
+
+# loads resources for a lumberjack collector
+func chop_tree(job: Job) -> void:
+  if self.built_tilemap == null or self.action_set == null or self.storage == null:
+    push_error("Mising nodes in chop_tree, Collector.gd")
+    return
+  var cell: Vector2i = job.path_from_start_to_end[0]
+  var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
+  if cell_data == null or cell_data.get_custom_data(self.built_tilemap.is_tree) == false:
+    return
+  self.visible = true
+  self.action_set.building_state = BuildingActionSet.BuildingStates.WORK
+  await self.sleep(self.load_or_unload_time)
+  if self.paused:
+    await self.unpaused
+  self.built_tilemap.set_cell(cell)
+  self.built_tilemap.trees_getting_choped.erase(cell)
+  self.action_set.building_state = BuildingActionSet.BuildingStates.IDLE
+  self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1, StorageComponent.StorageStates.FULL)

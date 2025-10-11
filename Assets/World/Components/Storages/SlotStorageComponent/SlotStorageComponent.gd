@@ -1,3 +1,5 @@
+@tool
+
 extends StorageComponent
 ## The slot storage component is used in buildings to store resources
 ##
@@ -16,11 +18,12 @@ func _ready():
 
 ## Used to set the storage amount of a specific resource.[br]
 ## The resource key will be created if it does not exist in the storage.[br]
-func set_storage_item_amount(resource: StringName, new_amount: int):
+func set_storage_item_amount(resource: StringName, new_amount: int, state: StorageStates = StorageStates.KEEP):
   var max_amount = max_capacity.get(resource)
   if max_amount != null:
     self.storage[resource] = clamp(new_amount, 0, max_amount)
   else:
     self.storage[resource] = new_amount
     push_warning("The resource %s does not have a max capacity" % resource)
+  self.state = state
   GameStats.game_stats_resource.resources_changed.emit()

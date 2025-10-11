@@ -20,9 +20,13 @@ class_name BuildingActionSet
     update_animation()
 
 enum Orientations {
+  _000 = 0,
   _045 = 45,
+  _090 = 90,
   _135 = 135,
+  _180 = 180,
   _225 = 225,
+  _270 = 270,
   _315 = 315
 }
 
@@ -60,7 +64,8 @@ enum BuildingStates {
   IDLE,
   IDLE_FULL,
   WORK,
-  MOVE
+  MOVE,
+  MOVE_FULL,
 }
 
 func get_action_set_names():
@@ -133,7 +138,7 @@ func update_animation() -> void:
   if animated_sprite == null or sprite_frames == null:
     return
   
-  var orientation_str: String = str(snappedi(self.orientation+45, 90)-45).pad_zeros(3) # get the rotation as string
+  var orientation_str: String = str(snappedi(self.orientation, 45)).pad_zeros(3) # get the rotation as string
   # get the state as string
   var state_str: String = BuildingStates.find_key(building_state).to_lower()
 

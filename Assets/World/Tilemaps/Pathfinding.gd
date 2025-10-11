@@ -17,7 +17,7 @@ class_name Pathfinding
 @onready var road_pathfinding = PathFindingManagement2D.new(%BuiltTileMap)
 
 ## pathfinding for going on all land
-@onready var land_pathfinding = PathFindingManagement2D.new(%TerrainTileMap)
+@onready var land_pathfinding = PathFindingManagement2D.new(%TerrainTileMap, true, AStarGrid2D.DIAGONAL_MODE_ALWAYS, AStarGrid2D.HEURISTIC_EUCLIDEAN)
 
 func _ready():
   var terrain_points = terrain_tilemap.get_terrain_points()

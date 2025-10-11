@@ -1,10 +1,10 @@
 [gd_resource type="SpriteFrames" load_steps=39 format=3 uid="uid://culumberjactr"]
 
-[ext_resource type="Texture2D" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle"]
-[ext_resource type="Texture2D" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle_full"]
-[ext_resource type="Texture2D" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move"]
-[ext_resource type="Texture2D" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move_full"]
-[ext_resource type="Texture2D" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_work.png" id="lumberjack_collector_sailors_as_lumberjackunit0_work"]
+[ext_resource type="Texture2D" uid="uid://ckqlhbgsrowqx" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle"]
+[ext_resource type="Texture2D" uid="uid://c2lwjyoobowe5" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_idle_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_idle_full"]
+[ext_resource type="Texture2D" uid="uid://cdli6sr3cyo4t" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move"]
+[ext_resource type="Texture2D" uid="uid://dutncsfc7iixc" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_move_full.png" id="lumberjack_collector_sailors_as_lumberjackunit0_move_full"]
+[ext_resource type="Texture2D" uid="uid://bmaxq12m5oans" path="res://Assets/World/Units2/lumberjack_collector/lumberjack_collector_sailors_as_lumberjackunit0_work.png" id="lumberjack_collector_sailors_as_lumberjackunit0_work"]
 
 [sub_resource type="AtlasTexture" id="lumberjackunit0_sailors_idle_000_0_0"]
 atlas = ExtResource("lumberjack_collector_sailors_as_lumberjackunit0_idle")
