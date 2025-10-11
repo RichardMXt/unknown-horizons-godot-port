@@ -307,7 +307,7 @@ func load_resources_for_building_collector(job: Job) -> void:
   if building == self.parent_building:
     needed_resource_amount = self.building_storage.get_storage_item_amount(job.resource)
   else:
-    needed_resource_amount = self.building_storage.max_capacity.get(job.resource) - self.building_storage.get_storage_item_amount(job.resource)
+    needed_resource_amount = self.building_storage.max_capacity.get(job.resource, 0) - self.building_storage.get_storage_item_amount(job.resource)
   var resource_amount: int = await building.load_resource(job.resource, needed_resource_amount)
   if self.paused:
     await self.unpaused

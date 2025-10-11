@@ -15,6 +15,7 @@ baseclass = "production.ProductionBuilding"
 radius = 8
 cost = 20
 cost_inactive = 5
+size = Vector2i(2, 2)
 inhabitants = 2
 tooltip_text = "_ Consumes flour. Produces food."
 tier = "TIER.CITIZENS"
