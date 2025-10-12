@@ -1,7 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cubuildingcts"]
 
 [ext_resource type="Script" uid="uid://dryewpxj1qix4" path="res://Assets/World/Components/Collectors/Collector.gd" id="1_script_gd"]
-[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Components/Selectable/Selectable.tscn" id="2_selectable_component"]
 [ext_resource type="PackedScene" uid="uid://c7w3xnajww1kq" path="res://Assets/World/Components/BuildingActionSet/BuildingActionSet.tscn" id="3_building_action_set_component"]
 [ext_resource type="SpriteFrames" uid="uid://cubuildingctr" path="res://Assets/World/Units2/building_collector/building_collector.tres" id="4_sprite_frames"]
 [ext_resource type="PackedScene" uid="uid://b3hix4pdlnumi" path="res://Assets/World/Components/Storages/SizedStorageComponent/SizedStorageComponent.tscn" id="5_sized_storage_component"]
@@ -9,6 +8,7 @@
 
 [node name="BuildingCollector" type="Node2D"]
 visible = false
+z_index = 5
 script = ExtResource("1_script_gd")
 baseclass = "collectors.BuildingCollector"
 velocity = 12.0
@@ -22,3 +22,4 @@ object_to_be_moved = NodePath("..")
 
 [node name="BuildingActionSet" parent="." instance=ExtResource("3_building_action_set_component")]
 sprite_frames = ExtResource("4_sprite_frames")
+current_as_name = "carrier0"

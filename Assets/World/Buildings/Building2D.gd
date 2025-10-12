@@ -34,14 +34,6 @@ func _ready():
   setup_components()
   CamUtils.center_if_no_camera(self)
 
-## returns all the components of the certain type
-func get_components(component_type: Variant = BaseComponent) -> Array:
-  var components: Array = []
-  for component in self.get_children():
-    if is_instance_of(component, component_type):
-      components.append(component)
-  return components
-
 func setup_components() -> void:
   # get a list of all the child components
   var components: Array[BaseComponent]
@@ -59,8 +51,9 @@ func is_resource_available(resource: StringName) -> bool:
     if production_line != null:
       if production_line.consumes.has(resource) == true:
         return false # if the building consumes the resource, do not take that resource from the building
-    if component is StorageComponent: 
-      storage_component = component as StorageComponent
+    var current_storage_component := component as StorageComponent
+    if current_storage_component: 
+      storage_component = current_storage_component
   if storage_component != null:
     if storage_component.get_storage_item_amount(resource) > 0:
       return true # found in at least one of the storages
@@ -70,10 +63,9 @@ func is_resource_available(resource: StringName) -> bool:
 func unload_resource(resource: StringName, amount: int) -> void:
   if resource == ResourceConfig.Resources.NONE:
     return
-  var storage_components: Array = self.get_components(StorageComponent)
-  if storage_components == []:
+  var storage_component: StorageComponent = self.get_first_node_of_type(StorageComponent)
+  if storage_component == null:
     return
-  var storage_component: StorageComponent = storage_components[0] as StorageComponent
   
   await self.sleep(storage_component.load_or_unload_time)
   var amount_in_storage: int = storage_component.get_storage_item_amount(resource)
@@ -82,10 +74,9 @@ func unload_resource(resource: StringName, amount: int) -> void:
 func load_resource(resource: StringName, amount: int) -> int:
   if resource == ResourceConfig.Resources.NONE:
     return 0
-  var storage_components: Array = self.get_components(StorageComponent)
-  if storage_components == []:
+  var storage_component: StorageComponent = self.get_first_node_of_type(StorageComponent)
+  if storage_component == null:
     return 0
-  var storage_component: StorageComponent = storage_components[0] as StorageComponent
 
   await self.sleep(storage_component.load_or_unload_time)
   var available_amount: int = storage_component.get_storage_item_amount(resource)
@@ -96,6 +87,6 @@ func load_resource(resource: StringName, amount: int) -> int:
 
 func set_can_build_highlight(can_build: bool) -> void:
   for node: Node in self.get_children():
-    var action_set: BuildingActionSet = node as BuildingActionSet
+    var action_set := node as BuildingActionSet
     if action_set != null:
       action_set.set_can_build_shader(can_build)

@@ -242,7 +242,7 @@ func unload_resources(job: Job) -> void:
   if building == null:
     return
   await building.unload_resource(job.resource, self.storage.get_storage_item_amount(job.resource))
-  self.storage.set_storage_item_amount(job.resource, 0, StorageComponent.StorageStates.EMPTY)
+  self.storage.set_storage_item_amount(job.resource, 0)
 
 
 ## returns all possible jobs for a building collector
@@ -302,7 +302,6 @@ func load_resources_for_building_collector(job: Job) -> void:
   var building: Building2D = self.built_tilemap.building_position_to_building.get(job.path_from_start_to_end[0])
   if building == null:
     return
-  self.storage.state = StorageComponent.StorageStates.EMPTY
   var needed_resource_amount: int = 0
   if building == self.parent_building:
     needed_resource_amount = self.building_storage.get_storage_item_amount(job.resource)
@@ -311,8 +310,7 @@ func load_resources_for_building_collector(job: Job) -> void:
   var resource_amount: int = await building.load_resource(job.resource, needed_resource_amount)
   if self.paused:
     await self.unpaused
-  var storage_state: StorageComponent.StorageStates = StorageComponent.StorageStates.FULL if resource_amount > 0 else StorageComponent.StorageStates.EMPTY
-  self.storage.set_storage_item_amount(job.resource, resource_amount, storage_state)
+  self.storage.set_storage_item_amount(job.resource, resource_amount)
 
 
 
@@ -359,11 +357,10 @@ func chop_tree(job: Job) -> void:
   if cell_data == null or cell_data.get_custom_data(self.built_tilemap.is_tree) == false:
     return
   self.visible = true
-  self.action_set.building_state = BuildingActionSet.BuildingStates.WORK
+  self.action_set.action_state = self.action_set.ActionStates.WORK
   await self.sleep(self.load_or_unload_time)
   if self.paused:
     await self.unpaused
   self.built_tilemap.set_cell(cell)
   self.built_tilemap.trees_getting_choped.erase(cell)
-  self.action_set.building_state = BuildingActionSet.BuildingStates.IDLE
-  self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1, StorageComponent.StorageStates.FULL)
+  self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1)

@@ -45,6 +45,11 @@ var action_set: BuildingActionSet = null
 
 var pathfinding: PathFindingManagement2D = null
 
+## emited when the action state changes(MOVE/IDLE)
+signal action_state_changed(action_state: BuildingActionSet.ActionStates)
+## emited when the orientation changes
+signal orientation_changed(orientation: BuildingActionSet.Orientations)
+
 func _ready():
   if object_to_be_moved == null:
     object_to_be_moved = self.get_node("..")
@@ -66,26 +71,12 @@ func set_components(components: Array[BaseComponent]):
     if component is BuildingActionSet:
       action_set = component
 
-func update_action_set(direction: int, state: BuildingActionSet.BuildingStates = BuildingActionSet.BuildingStates.IDLE) -> void:
-  if self.action_set:
-    var orientation = BuildingActionSet.Orientations.find_key(direction)
-    if orientation == null:
-      orientation = BuildingActionSet.Orientations._045
-    self.action_set.orientation = orientation as BuildingActionSet.Orientations
-    var current_action_set_state_parts: PackedStringArray = BuildingActionSet.BuildingStates.find_key(self.action_set.building_state).split("_")
-    var move_state: String = BuildingActionSet.BuildingStates.find_key(state) # prefix, MOVE/IDLE
-    
-    var new_action_set_state_parts: PackedStringArray = current_action_set_state_parts
-    if current_action_set_state_parts[0] in ["MOVE", "IDLE"]:
-      # if already has a part in the animation name, change it
-      new_action_set_state_parts[0] = move_state
-    else: # else: add it
-      new_action_set_state_parts.insert(0, move_state)
-    var new_action_set_state: StringName = "_".join(new_action_set_state_parts)
-    if BuildingActionSet.BuildingStates.has(new_action_set_state):
-      self.action_set.building_state = BuildingActionSet.BuildingStates[new_action_set_state]
-    else:
-      push_warning("Action set state not found: " + new_action_set_state)
+func update_action_set(direction: int, state: BuildingActionSet.ActionStates) -> void:
+  var orientation = BuildingActionSet.Orientations.find_key(direction)
+  if orientation == null:
+    orientation = BuildingActionSet.Orientations._045
+  self.orientation_changed.emit(orientation as BuildingActionSet.Orientations)
+  self.action_state_changed.emit(state)
 
 func move(path: Array[Vector2i]) -> void:
   if pathfinding == null:
@@ -102,7 +93,7 @@ func move(path: Array[Vector2i]) -> void:
 
       direction = snappedi(rad_to_deg(move_vec.angle_to(Vector2.RIGHT)), 45)
       direction = posmod(direction, 360) # make in range of 0-359
-      self.update_action_set(direction, BuildingActionSet.BuildingStates.MOVE)
+      self.update_action_set(direction, BuildingActionSet.ActionStates.MOVE)
 
       
       var move_tween: Tween = self.get_tree().create_tween().bind_node(self)
@@ -110,4 +101,4 @@ func move(path: Array[Vector2i]) -> void:
       await move_tween.finished
       if paused:
         await self.unpaused
-    self.update_action_set(direction, BuildingActionSet.BuildingStates.IDLE)
+    self.update_action_set(direction, BuildingActionSet.ActionStates.IDLE)

@@ -2,6 +2,22 @@ extends Node2D
 
 class_name WorldThing2D
 
+
+## Returns all the components of the certain type
+func get_all_nodes_of_type(component_type: Variant) -> Array[WorldThing2D]:
+  var components: Array[WorldThing2D] = []
+  for component in self.get_children():
+    if is_instance_of(component, component_type):
+      components.append(component)
+  return components
+
+## Returns the first component of the certain type
+func get_first_node_of_type(component_type: Variant) -> WorldThing2D:
+  for component in self.get_children():
+    if is_instance_of(component, component_type):
+      return component
+  return null
+
 ## To be overridden for functionality on inputs when the building is selected
 func handle_context_input(_event: InputEvent):
   pass
