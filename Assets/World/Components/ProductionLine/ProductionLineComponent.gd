@@ -61,7 +61,7 @@ var storage_component: SlotStorageComponent
 
 var action_set: BuildingActionSet = null
 
-signal action_state_changed(action_state: BuildingActionSet.ActionStates)
+signal action_state_changed(action_state: ActionStates)
 
 func set_components(components: Array[BaseComponent]):
   for component in components:
@@ -78,11 +78,11 @@ func update_action_set():
   if action_set != null:
     match production_stage:
       ProductionStages.IDLE:
-        self.action_state_changed.emit(BuildingActionSet.ActionStates.IDLE)
+        self.action_state_changed.emit(ActionStates.IDLE)
       ProductionStages.WAITING_FOR_RESOURCES:
-        self.action_state_changed.emit(BuildingActionSet.ActionStates.IDLE)
+        self.action_state_changed.emit(ActionStates.IDLE)
       ProductionStages.PRODUCING:
-        self.action_state_changed.emit(BuildingActionSet.ActionStates.WORK)
+        self.action_state_changed.emit(ActionStates.WORK)
 
 func notify_resource_produced():
   if len(produces.keys()) <= 0: # check that there is an output product

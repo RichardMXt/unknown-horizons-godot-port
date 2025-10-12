@@ -121,15 +121,15 @@ func set_components(new_components: Array[BaseComponent]) -> void:
     var storage_component = component as StorageComponent
     var production_line_component = component as ProductionLineComponent
     var move_by_cell_component = component as MoveByCellComponent
-    if storage_component:
-      storage_component.storage_changed.connect(set_storge_state)
-    if production_line_component:
+    if storage_component != null:
+      storage_component.storage_changed.connect(set_storage_state)
+    if production_line_component != null:
       production_line_component.action_state_changed.connect(func(action_state): self.action_state = action_state)
-    if move_by_cell_component:
+    if move_by_cell_component != null:
       move_by_cell_component.action_state_changed.connect(func(action_state): self.action_state = action_state)
       move_by_cell_component.orientation_changed.connect(func(orientation): self.orientation = orientation)
 
-func set_storge_state(new_storage_state: StorageComponent.StorageComponentStates) -> void:
+func set_storage_state(new_storage_state: StorageComponent.StorageComponentStates) -> void:
   match new_storage_state:
     StorageComponent.StorageComponentStates.EMPTY:
       self.storage_state = StorageStates.EMPTY
