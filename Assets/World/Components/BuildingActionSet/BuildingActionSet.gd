@@ -22,10 +22,16 @@ class_name BuildingActionSet
 @export var action_state: ActionStates = ActionStates.IDLE:
   set(value): 
     action_state = value
+    if self.action_state == ActionStates.WORK: # no animations of work...
+      self.storage_state = StorageStates.EMPTY
     update_animation()
 
 @export var storage_state: StorageStates = StorageStates.EMPTY:
   set(value):
+    if self.action_state == ActionStates.WORK: # no animations of work...
+      storage_state = StorageStates.EMPTY
+      push_error("storage_state should not be set when action_state is WORK")
+      return
     storage_state = value
     update_animation()
 
