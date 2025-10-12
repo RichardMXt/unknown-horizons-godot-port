@@ -122,9 +122,9 @@ func _ready() -> void:
       components.append(component)
   
   for component in components:
-    if component is SizedStorageComponent != null:
+    if component is SizedStorageComponent:
       self.storage = component
-    if component is MoveByCellComponent != null:
+    if component is MoveByCellComponent:
       self.move_by_cell = component
     if component is BuildingActionSet:
       self.action_set = component
