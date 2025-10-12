@@ -118,13 +118,13 @@ func _ready() -> void:
   var components: Array[BaseComponent] = []
   for node: Node in self.get_children():
     var component := node as BaseComponent
-    if component:
+    if component != null:
       components.append(component)
   
   for component in components:
-    if component is SizedStorageComponent:
+    if component is SizedStorageComponent != null:
       self.storage = component
-    if component is MoveByCellComponent:
+    if component is MoveByCellComponent != null:
       self.move_by_cell = component
     if component is BuildingActionSet:
       self.action_set = component

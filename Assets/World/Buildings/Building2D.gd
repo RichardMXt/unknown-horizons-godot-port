@@ -52,7 +52,7 @@ func is_resource_available(resource: StringName) -> bool:
       if production_line.consumes.has(resource) == true:
         return false # if the building consumes the resource, do not take that resource from the building
     var current_storage_component := component as StorageComponent
-    if current_storage_component: 
+    if current_storage_component != null: 
       storage_component = current_storage_component
   if storage_component != null:
     if storage_component.get_storage_item_amount(resource) > 0:
