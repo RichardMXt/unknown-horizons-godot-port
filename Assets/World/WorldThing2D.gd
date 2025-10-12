@@ -2,6 +2,27 @@ extends Node2D
 
 class_name WorldThing2D
 
+enum StorageStates {
+  EMPTY = 0,
+  FULL  = 1,
+}
+
+enum ActionStates {
+  IDLE = 0,
+  MOVE = 1,
+  WORK = 2
+}
+
+enum Orientations {
+  _000 = 0,
+  _045 = 45,
+  _090 = 90,
+  _135 = 135,
+  _180 = 180,
+  _225 = 225,
+  _270 = 270,
+  _315 = 315
+}
 
 ## Returns all the components of the certain type
 func get_all_nodes_of_type(component_type: Variant) -> Array[WorldThing2D]:

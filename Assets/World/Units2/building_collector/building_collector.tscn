@@ -12,7 +12,7 @@ z_index = 5
 script = ExtResource("1_script_gd")
 baseclass = "collectors.BuildingCollector"
 velocity = 12.0
-"Collecter Type" = "BUILDING_COLLECTOR"
+"Collector Type" = "BUILDING_COLLECTOR"
 
 [node name="SizedStorageComponent" parent="." instance=ExtResource("5_sized_storage_component")]
 limit = 8

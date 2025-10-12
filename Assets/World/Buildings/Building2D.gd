@@ -22,7 +22,7 @@ var paused: bool = true:
   set(value):
     paused = value
     for node: Node in self.get_children():
-      var component: BaseComponent = node as BaseComponent
+      var component := node as BaseComponent
       if component != null:
         component.paused = self.paused
     if self.paused == false:

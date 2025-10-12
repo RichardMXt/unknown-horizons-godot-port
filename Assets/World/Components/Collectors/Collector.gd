@@ -74,7 +74,7 @@ var collector_type_to_load_function: Dictionary[StringName, Callable] = {
 func _get_property_list() -> Array:
   var ret: Array[Dictionary] = [
     {
-      "name": "Collecter Type",
+      "name": "Collector Type",
       "default": self.CollectorTypes.BUILDING_COLLECTOR,
       "type": TYPE_STRING,
       "hint": PROPERTY_HINT_ENUM,
@@ -93,14 +93,14 @@ func _get_property_list() -> Array:
 
 func _get(property_name):
   match property_name:
-    "Collecter Type":
+    "Collector Type":
       return self.collector_type
     "Load or Unload Time":
       return self.load_or_unload_time
 
 func _set(property_name, val):
   match property_name:
-    "Collecter Type":
+    "Collector Type":
       self.collector_type = val
     "Load or Unload Time":
       self.load_or_unload_time = val
@@ -117,7 +117,7 @@ func _set(property_name, val):
 func _ready() -> void:
   var components: Array[BaseComponent] = []
   for node: Node in self.get_children():
-    var component: BaseComponent = node as BaseComponent
+    var component := node as BaseComponent
     if component:
       components.append(component)
   
@@ -171,7 +171,7 @@ func get_path_to_closest_warehouse() -> Array[Vector2]:
     return []
   var path_to_warehouse: Array[Vector2] = []
   for building_cell in built_tilemap.building_name_to_cell_coords.get("Warehouse", []): # loop through the buildings
-    var warehouse: Warehouse2D = self.built_tilemap.building_position_to_building.get(building_cell, null) as Warehouse2D
+    var warehouse := self.built_tilemap.building_position_to_building.get(building_cell, null) as Warehouse2D
     if warehouse: # if the building is a warehouse,
       var path_to_current_warehouse = move_by_cell.pathfinding.get_path_to_dest(self.global_position, warehouse.global_position) # get the path to the warehouse.
       if path_to_current_warehouse == null:

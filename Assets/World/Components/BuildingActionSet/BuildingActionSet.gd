@@ -19,35 +19,21 @@ class_name BuildingActionSet
       push_warning("No sprite frames assigned")
     update_animation()
 
-enum Orientations {
-  _000 = 0,
-  _045 = 45,
-  _090 = 90,
-  _135 = 135,
-  _180 = 180,
-  _225 = 225,
-  _270 = 270,
-  _315 = 315
-}
+@export var action_state: ActionStates = ActionStates.IDLE:
+  set(value): 
+    action_state = value
+    update_animation()
 
-enum ActionStates {
-  IDLE = 0,
-  MOVE = 1,
-  WORK = 2
-}
-
-@export var action_state: ActionStates = ActionStates.IDLE: set = set_action_state
-
-
-enum StorageStates {
-  EMPTY = 0,
-  FULL  = 1,
-}
-
-@export var storage_state: StorageStates = StorageStates.EMPTY: set = set_storage_state
+@export var storage_state: StorageStates = StorageStates.EMPTY:
+  set(value):
+    storage_state = value
+    update_animation()
 
 ## The rotation of the building, used to determine the animation
-@export var orientation: Orientations = Orientations._045: set = set_orientation
+@export var orientation: Orientations = Orientations._045:
+  set(value):
+    orientation = value
+    update_animation()
 
 ## The current world's tier
 @export var current_world_tier: ActionSetEnum.Tiers = ActionSetEnum.Tiers.MAX:
@@ -64,22 +50,6 @@ var current_as_name: String = "":
     self.update_animation()
 
 @onready var animated_sprite: AnimatedSprite2D = self.get_node("AnimatedSprite2D")
-
-# ## The current state of the building, used to determine the animation
-# @export var building_state: BuildingStates = BuildingStates.IDLE:
-#   set(value):
-#     if building_state != value:
-#       building_state = value
-#       update_animation()
-
-# ## The possible states of the building
-# enum BuildingStates {
-#   IDLE,
-#   IDLE_FULL,
-#   WORK,
-#   MOVE,
-#   MOVE_FULL,
-# }
 
 func get_action_set_names():
   var animation_names := self.sprite_frames.get_animation_names()
@@ -152,31 +122,33 @@ func set_components(new_components: Array[BaseComponent]) -> void:
     var production_line_component = component as ProductionLineComponent
     var move_by_cell_component = component as MoveByCellComponent
     if storage_component:
-      storage_component.storage_changed.connect(self.set_storage_state)
+      storage_component.storage_changed.connect(set_storge_state)
     if production_line_component:
-      production_line_component.action_state_changed.connect(self.set_action_state)
+      production_line_component.action_state_changed.connect(func(action_state): self.action_state = action_state)
     if move_by_cell_component:
-      move_by_cell_component.action_state_changed.connect(self.set_action_state)
-      move_by_cell_component.orientation_changed.connect(self.set_orientation)
+      move_by_cell_component.action_state_changed.connect(func(action_state): self.action_state = action_state)
+      move_by_cell_component.orientation_changed.connect(func(orientation): self.orientation = orientation)
 
-func set_action_state(new_state: BuildingActionSet.ActionStates) -> void:
-  action_state = new_state
-  self.update_animation()
-
-func set_storage_state(new_state: BuildingActionSet.StorageStates) -> void:
-  storage_state = new_state
-  self.update_animation()
-
-func set_orientation(new_orientation: BuildingActionSet.Orientations) -> void:
-  orientation = new_orientation
-  self.update_animation()
+func set_storge_state(new_storage_state: StorageComponent.StorageComponentStates) -> void:
+  match new_storage_state:
+    StorageComponent.StorageComponentStates.EMPTY:
+      self.storage_state = StorageStates.EMPTY
+    StorageComponent.StorageComponentStates.PARTIALLY_FULL:
+      if self.has_node(".."):
+        var parent := self.get_parent()
+        if parent is Building2D:
+          self.storage_state = StorageStates.EMPTY
+        elif parent is Collector:
+          self.storage_state = StorageStates.FULL
+    StorageComponent.StorageComponentStates.FULL:
+      self.storage_state = StorageStates.FULL
 
 func update_animation() -> void:
   # if the sprite frames or the animated sprite is null then return because there is nothing to update
   if animated_sprite == null or sprite_frames == null:
     return
   
-  var orientation_str: String = str(snappedi(self.orientation, 45)).pad_zeros(3) # get the rotation as string
+  var orientation_str := str(snappedi(self.orientation, 45)).pad_zeros(3) # get the rotation as string
   # get the state as string
   var storage_state_str := str(StorageStates.find_key(self.storage_state)).to_lower()
   var action_state_str := str(ActionStates.find_key(self.action_state)).to_lower()
@@ -202,8 +174,8 @@ func update_animation() -> void:
       if working_state_animations.size() > 0: # if working state animation present - choose only from the animations corresponding to the working state
         tier_animations = working_state_animations
       
-      # if tier_animations.size() > 1:
-        # push_error("Multiple animations found for tier %s, state %s, orientation %s: %s" % [tier_name_lc, state_str, orientation_str, tier_animations])
+      if tier_animations.size() > 1:
+        push_error("Multiple animations found for tier %s, state %s, orientation %s: %s" % [tier_name_lc, state_str, orientation_str, tier_animations])
 
       animation_name = tier_animations[0]
       break
