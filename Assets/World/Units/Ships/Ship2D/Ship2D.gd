@@ -58,7 +58,7 @@ func add_visit_point():
   var buoy_inst: StaticBody2D = buoy.instantiate()
   buoys.add_child(buoy_inst)
   buoy_inst.global_position = terrain_tilemap.map_to_local(click_cell_position)
-  self.move_by_cell.path = [] # stop action
+  self.move_by_cell.cancel_move() # stop move
   buoy_added.emit()
 
 func movement_loop():
