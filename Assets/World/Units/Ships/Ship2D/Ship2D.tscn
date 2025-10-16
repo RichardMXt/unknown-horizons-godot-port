@@ -1,33 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfln186sfga2v"]
+[gd_scene load_steps=2 format=3 uid="uid://bfln186sfga2v"]
 
-[ext_resource type="PackedScene" uid="uid://dcpsi3ppfn0ga" path="res://Assets/World/Units/Unit2D.tscn" id="1_cudua"]
-[ext_resource type="Script" uid="uid://cvolo0h5pml4r" path="res://Assets/World/Units/Ships/Ship2D/Ship2D.gd" id="2_f8ujq"]
-[ext_resource type="PackedScene" uid="uid://ioihkggkhi5q" path="res://Assets/World/Buoy/Buoy2D.tscn" id="3_tp4jj"]
-[ext_resource type="PackedScene" uid="uid://c7w3xnajww1kq" path="res://Assets/World/Components/BuildingActionSet/BuildingActionSet.tscn" id="4_4iqwv"]
-[ext_resource type="SpriteFrames" uid="uid://cufrigatetres" path="res://Assets/World/Units2/frigate/frigate.tres" id="5_6i7ka"]
-[ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Components/Selectable/Selectable.tscn" id="5_vdlap"]
-[ext_resource type="PackedScene" uid="uid://unr7kegy5cn4" path="res://Assets/World/Components/MoveByCell/MoveByCellComponent.tscn" id="7_6i7ka"]
-[ext_resource type="PackedScene" uid="uid://b3hix4pdlnumi" path="res://Assets/World/Components/Storages/SizedStorageComponent/SizedStorageComponent.tscn" id="8_wuuts"]
+[ext_resource type="PackedScene" uid="uid://cufrigatetscn" path="res://Assets/World/Units2/frigate/frigate.tscn" id="1_wv1dl"]
 
 [node name="ShipWithBuoys" type="Node2D"]
 z_index = 15
 
-[node name="Ship" parent="." instance=ExtResource("1_cudua")]
-script = ExtResource("2_f8ujq")
-buoy = ExtResource("3_tp4jj")
-ship_inventory = Dictionary[StringName, int]({})
-valid_distance_for_building_harbor = 3
-
-[node name="BuildingActionSet" parent="Ship" instance=ExtResource("4_4iqwv")]
-sprite_frames = ExtResource("5_6i7ka")
-current_as_name = ""
-
-[node name="Selectable" parent="Ship" instance=ExtResource("5_vdlap")]
-
-[node name="MoveByCellComponent" parent="Ship" node_paths=PackedStringArray("object_to_be_moved") instance=ExtResource("7_6i7ka")]
-allowed_movement = 0
-object_to_be_moved = NodePath("..")
-
-[node name="SizedStorageComponent" parent="Ship" instance=ExtResource("8_wuuts")]
+[node name="Frigate" parent="." instance=ExtResource("1_wv1dl")]
 
 [node name="Buoys" type="StaticBody2D" parent="."]
