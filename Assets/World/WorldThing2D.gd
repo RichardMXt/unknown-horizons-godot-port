@@ -24,6 +24,21 @@ enum Orientations {
   _315 = 315
 }
 
+
+func binary_insert(sorted_list: Array, value, key: Callable = func(a, b): return a < b):
+  var low := 0
+  var high := sorted_list.size()
+
+  while low < high:
+    var mid := int((low + high) / 2)
+    if key.call(sorted_list[mid], value):
+      low = mid + 1
+    else:
+      high = mid
+
+  # Insert the value at the correct index
+  sorted_list.insert(low, value)
+
 ## Returns all the components of the certain type
 func get_all_nodes_of_type(component_type: Variant) -> Array[WorldThing2D]:
   var components: Array[WorldThing2D] = []

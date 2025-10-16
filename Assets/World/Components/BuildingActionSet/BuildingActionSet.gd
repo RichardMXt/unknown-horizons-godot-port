@@ -22,16 +22,10 @@ class_name BuildingActionSet
 @export var action_state: ActionStates = ActionStates.IDLE:
   set(value): 
     action_state = value
-    if self.action_state == ActionStates.WORK: # no animations of work...
-      self.storage_state = StorageStates.EMPTY
     update_animation()
 
 @export var storage_state: StorageStates = StorageStates.EMPTY:
   set(value):
-    if self.action_state == ActionStates.WORK: # no animations of work...
-      storage_state = StorageStates.EMPTY
-      push_error("storage_state should not be set when action_state is WORK")
-      return
     storage_state = value
     update_animation()
 
@@ -158,8 +152,10 @@ func update_animation() -> void:
   # get the state as string
   var storage_state_str := str(StorageStates.find_key(self.storage_state)).to_lower()
   var action_state_str := str(ActionStates.find_key(self.action_state)).to_lower()
+  if self.action_state == ActionStates.WORK:
+    storage_state_str = "empty"
   var state_str = action_state_str
-  if self.storage_state != StorageStates.EMPTY:
+  if storage_state_str != "empty":
     state_str += "_" + storage_state_str
 
   # get the last tier before the current at which we have an animation, as string

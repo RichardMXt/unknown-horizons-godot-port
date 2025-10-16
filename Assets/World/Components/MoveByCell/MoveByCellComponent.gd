@@ -41,6 +41,8 @@ enum AllowedMovementTypes {
   MOVE_ON_LAND,
 }
 
+var path: Array[Vector2i] = []
+
 var action_set: BuildingActionSet = null
 
 var pathfinding: PathFindingManagement2D = null
@@ -78,18 +80,22 @@ func update_action_set(direction: int, state: BuildingActionSet.ActionStates) ->
   self.orientation_changed.emit(orientation as BuildingActionSet.Orientations)
   self.action_state_changed.emit(state)
 
-func move(path: Array[Vector2i]) -> void:
+func move(path: Array[Vector2i] = []) -> void:
   if pathfinding == null:
     push_error("Pathfinding is not set and the object is wanted to be moved")
     return
   
-  if path != null:
+  self.path = path.duplicate()
+  
+  if self.path != []:
     var direction: int = 90
     self.object_to_be_moved.visible = true
-    if self.pathfinding.tile_map_layer.local_to_map(object_to_be_moved.global_position) != path.pop_front(): # remove the starting position because the object is already there
+    if self.pathfinding.tile_map_layer.local_to_map(object_to_be_moved.global_position) != self.path.pop_front(): # remove the starting position because the object is already there
       push_error("The path does not start from the current position")
-    for new_position in path:
-      var move_vec: Vector2 = self.pathfinding.tile_map_layer.map_to_local(new_position) - object_to_be_moved.global_position
+    while self.path != []:
+      var new_position: Vector2i = self.path.pop_front()
+      var new_local_position: Vector2 = self.pathfinding.tile_map_layer.map_to_local(new_position)
+      var move_vec: Vector2 = new_local_position - object_to_be_moved.global_position
 
       direction = snappedi(rad_to_deg(move_vec.angle_to(Vector2.RIGHT)), 45)
       direction = posmod(direction, 360) # make in range of 0-359
@@ -97,8 +103,9 @@ func move(path: Array[Vector2i]) -> void:
 
       
       var move_tween: Tween = self.get_tree().create_tween().bind_node(self)
-      move_tween.tween_property(object_to_be_moved, "global_position", self.pathfinding.tile_map_layer.map_to_local(new_position), 1/tile_per_sec)
+      move_tween.tween_property(object_to_be_moved, "global_position", new_local_position, 1/tile_per_sec)
       await move_tween.finished
+      self.object_to_be_moved.global_position = new_local_position
       if paused:
         await self.unpaused
     self.update_action_set(direction, BuildingActionSet.ActionStates.IDLE)

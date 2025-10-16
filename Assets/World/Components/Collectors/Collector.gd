@@ -156,14 +156,16 @@ func get_cell_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
     typed_path.append(point as Vector2i)
   return typed_path
 
-## Returns a dictionary of all the cells and paths to them in radius
-func get_cells_in_radius(cell: Vector2i) -> Dictionary[Vector2i, Array]:
-  var cells_in_radius: Dictionary[Vector2i, Array] = {}
+## Returns a list of cells that are within the radius sorted by cell distance
+func get_cells_in_radius(cell: Vector2i) -> Array[Vector2i]:
+  var cells_in_radius: Array[Vector2i] = []
   for dx in range(-self.radius, self.radius + 1):
     for dy in range(-self.radius, self.radius + 1):
-      var path: Array[Vector2i] = self.get_cell_path(cell, cell + Vector2i(dx, dy))
-      if path != [] and len(path) <= self.radius:
-        cells_in_radius[cell + Vector2i(dx, dy)] = path
+      if dx + dy <= self.radius:
+        cells_in_radius.append(cell + Vector2i(dx, dy))
+        # self.binary_insert(cells_in_radius, cell + Vector2i(dx, dy), func(a, b): return abs(a-cell).x + abs(a-cell).y < abs(b-cell).x + abs(b-cell).y)
+
+  cells_in_radius.sort_custom(func(a, b): return abs(a-cell).x + abs(a-cell).y < abs(b-cell).x + abs(b-cell).y)
   return cells_in_radius
 
 func get_path_to_closest_warehouse() -> Array[Vector2]:
@@ -256,10 +258,10 @@ func get_jobs_for_building_collector() -> Array[Job]:
 
   var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
   var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
-  var cells_in_radius: Dictionary[Vector2i, Array] = self.get_cells_in_radius(parent_building_map_position)
+  var cells_in_radius: Array[Vector2i] = self.get_cells_in_radius(parent_building_map_position)
   var jobs: Array[Job] = []
   # create jobs for each resource
-  for cell in cells_in_radius.keys():
+  for cell in cells_in_radius:
     var building: Building2D = self.built_tilemap.building_position_to_building.get(cell)
     if building == null:
       continue
@@ -279,8 +281,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
         if building.is_resource_available(resource) == false:
           continue
         var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
-        var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from cell to building
-        path_from_start_to_end.reverse()
+        var path_from_start_to_end: Array[Vector2i] = self.get_cell_path(cell, parent_building_map_position) # from cell to building
         var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
         jobs.append(new_job)
       # create a job to carry out if only produced
@@ -289,10 +290,9 @@ func get_jobs_for_building_collector() -> Array[Job]:
           continue
         if building.id.to_lower() != BuildingConfig.Buildings.WAREHOUSE.to_lower():
           continue
-
         var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, parent_building_map_position) # to building
-        var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from building to warehouse
-        var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
+        var path_from_home_to_job: Array[Vector2i] = self.get_cell_path(parent_building_map_position, cell) # from cell to building
+        var new_job: Job = Job.new(path_to_start, path_from_home_to_job, resource)
         jobs.append(new_job)
   return jobs
 
@@ -328,10 +328,10 @@ func get_jobs_for_lumberjack_collector() -> Array[Job]:
     return []
   var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
   var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
-  var cells_in_radius: Dictionary[Vector2i, Array] = self.get_cells_in_radius(parent_building_map_position)
+  var cells_in_radius: Array[Vector2i] = self.get_cells_in_radius(parent_building_map_position)
   var jobs: Array[Job] = []
   # find all trees and create a job for each
-  for cell in cells_in_radius.keys():
+  for cell in cells_in_radius:
     var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
     if cell_data == null:
       continue
@@ -339,10 +339,10 @@ func get_jobs_for_lumberjack_collector() -> Array[Job]:
       if cell in self.built_tilemap.trees_getting_choped:
         continue
       var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
-      var path_from_start_to_end: Array[Vector2i] = cells_in_radius.get(cell).duplicate() # from cell to building
-      path_from_start_to_end.reverse()
+      var path_from_start_to_end: Array[Vector2i] = self.get_cell_path(cell, parent_building_map_position) # from cell to building
       var new_job: Job = Job.new(path_to_start, path_from_start_to_end, ResourceConfig.Resources.TREES)
       jobs.append(new_job)
+      break # terminate if tree found, get closest tree by distance not path
 
   return jobs
 
@@ -363,4 +363,5 @@ func chop_tree(job: Job) -> void:
     await self.unpaused
   self.built_tilemap.set_cell(cell)
   self.built_tilemap.trees_getting_choped.erase(cell)
+  self.action_set.action_state = self.action_set.ActionStates.IDLE
   self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1)
