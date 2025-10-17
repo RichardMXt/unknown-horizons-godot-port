@@ -49,7 +49,7 @@ var action_set: BuildingActionSet = null
 
 var pathfinding: PathFindingManagement2D = null
 
-var cancel_move_requseted: bool = false
+var cancel_move_requested: bool = false
 
 # signal move_canceled
 ## emited when the action state changes(MOVE/IDLE)
@@ -91,7 +91,7 @@ func update_action_set(direction: int, state: BuildingActionSet.ActionStates) ->
 
 ## cancels the move, doesn't wait until move canceled
 func cancel_move() -> void:
-  self.cancel_move_requseted = true
+  self.cancel_move_requested = true
   # await self.move_canceled
 
 func move(path: Array[Vector2i]) -> void:
@@ -104,7 +104,7 @@ func move(path: Array[Vector2i]) -> void:
     self.object_to_be_moved.visible = true
     if self.pathfinding.tile_map_layer.local_to_map(object_to_be_moved.global_position) != path[0]: # remove the starting position because the object is already there
       push_error("The path does not start from the current position")
-    self.cancel_move_requseted = false
+    self.cancel_move_requested = false
     if self.paused:
       await self.unpaused
     for cell in path.slice(1):
@@ -120,7 +120,7 @@ func move(path: Array[Vector2i]) -> void:
       move_tween.tween_property(object_to_be_moved, "global_position", new_local_position, 1/tile_per_sec)
       await move_tween.finished
       self.object_to_be_moved.global_position = new_local_position
-      if self.cancel_move_requseted:
+      if self.cancel_move_requested:
         # self.move_canceled.emit()
         break
       if self.paused:
