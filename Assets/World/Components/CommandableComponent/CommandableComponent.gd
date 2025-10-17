@@ -33,17 +33,17 @@ func handle_context_input(event: InputEvent):
 func add_checkpoint():
   var click_cell_position := self.terrain_tilemap.local_to_map(terrain_tilemap.to_local(self.get_global_mouse_position()))
   var path_to_checkpoint = self.move_by_cell.pathfinding.get_path_to_dest(terrain_tilemap.local_to_map(self.global_position), click_cell_position, true, true)
-  if self.move_by_cell.pathfinding.is_point_solid(click_cell_position) or path_to_checkpoint == null:
-    return
   # if the shift key is not pressed, delete all buoys
   if not Input.is_key_pressed(KEY_SHIFT):
     for checkpoints in self.checkpoints.get_children():
       checkpoints.queue_free()
+  self.move_by_cell.cancel_move() # stop move
+  if self.move_by_cell.pathfinding.is_point_solid(click_cell_position) or path_to_checkpoint == null:
+    return
   # add a new checkpoint
   var checkpoint: StaticBody2D = self.checkpoint_scene.instantiate()
   self.checkpoints.add_child(checkpoint)
   checkpoint.global_position = terrain_tilemap.map_to_local(click_cell_position)
-  self.move_by_cell.cancel_move() # stop move
   self.checkpoint_added.emit()
 
 func movement_loop() -> void:
