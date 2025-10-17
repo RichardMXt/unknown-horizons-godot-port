@@ -33,4 +33,4 @@ sprite_frames = ExtResource("4_sprite_frames")
 allowed_movement = 0
 object_to_be_moved = NodePath("..")
 
-[node name="CommandableComponent" parent="." instance=ExtResource("7_vx6b3")]
+[node name="CommendableComponent" parent="." instance=ExtResource("7_vx6b3")]
