@@ -439,21 +439,24 @@ texture_active = SubResource("boatbuilder_war2_a")
 visible = false
 layout_mode = 2
 
-[node name="barracks_swordman" parent="LeftFloatingPanel/TabSwitches/DoNotExistInGame" index="0" instance=ExtResource("2_ig0oa")]
+[node name="barracks_swordman" parent="LeftFloatingPanel/TabSwitches" index="17" instance=ExtResource("2_ig0oa")]
+visible = false
 layout_mode = 2
 texture_normal = SubResource("barracks_swordman_u")
 texture_pressed = SubResource("barracks_swordman_d")
 texture_hover = SubResource("barracks_swordman_h")
 texture_active = SubResource("barracks_swordman_a")
 
-[node name="warehouse_buysell" parent="LeftFloatingPanel/TabSwitches/DoNotExistInGame" index="1" instance=ExtResource("2_ig0oa")]
+[node name="warehouse_buysell" parent="LeftFloatingPanel/TabSwitches" index="18" instance=ExtResource("2_ig0oa")]
+visible = false
 layout_mode = 2
 texture_normal = SubResource("warehouse_buysell_u")
 texture_pressed = SubResource("warehouse_buysell_d")
 texture_hover = SubResource("warehouse_buysell_h")
 texture_active = SubResource("warehouse_buysell_a")
 
-[node name="mainsquare_inhabitants5" parent="LeftFloatingPanel/TabSwitches/DoNotExistInGame" index="2" instance=ExtResource("2_ig0oa")]
+[node name="mainsquare_inhabitants5" parent="LeftFloatingPanel/TabSwitches" index="19" instance=ExtResource("2_ig0oa")]
+visible = false
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants5_u")
 texture_pressed = SubResource("mainsquare_inhabitants5_d")
