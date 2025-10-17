@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://db0jyegu5eki5"]
+[gd_scene load_steps=105 format=3 uid="uid://db0jyegu5eki5"]
 
 [ext_resource type="PackedScene" uid="uid://bvbuafk7d6fdt" path="res://Assets/UI/TabWidgets/TabWidget.tscn" id="1_012xi"]
 [ext_resource type="PackedScene" uid="uid://bqqtcv3vc2v16" path="res://Assets/UI/TabWidgets/Switches/SwitchTabWidget.tscn" id="2_ig0oa"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://dmowgnr3yck1o" path="res://Assets/UI/Icons/Templates/Happiness/happy.png" id="29_a6rkx"]
 [ext_resource type="Texture2D" uid="uid://o3aikxwqsv82" path="res://Assets/UI/Icons/Widgets/CityInfo/inhabitants_small.png" id="30_03vdw"]
 [ext_resource type="PackedScene" uid="uid://y3joqgx1438n" path="res://Assets/UI/TabWidgets/Views/TaxesControl.tscn" id="32_a25dw"]
+[ext_resource type="PackedScene" uid="uid://clre4f1e4md30" path="res://Assets/UI/TabWidgets/Buttons/ActionButton/ActionButtons/BuildButtons/BuildTreeAreaButton.tscn" id="32_t8603"]
 [ext_resource type="PackedScene" uid="uid://qndk0ulsg1jc" path="res://Assets/UI/BasicControls/ResourceItem.tscn" id="33_443ux"]
 [ext_resource type="Texture2D" uid="uid://bfps6rk8vnmq0" path="res://Assets/UI/Icons/Resources/32/009.png" id="34_8csgm"]
 [ext_resource type="FontFile" uid="uid://b132ikq6ayfyj" path="res://External/Fonts/LinLibertineC.ttf" id="37_k4f0b"]
@@ -346,100 +347,107 @@ texture_active = SubResource("common_building_overview_a")
 
 [node name="ProductionOverviewTab" parent="LeftFloatingPanel/TabSwitches" index="3" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
-texture_normal = SubResource("common_inventory_u")
-texture_pressed = SubResource("common_inventory_d")
-texture_hover = SubResource("common_inventory_h")
-texture_active = SubResource("common_inventory_a")
+texture_normal = SubResource("common_building_overview_u")
+texture_pressed = SubResource("common_building_overview_d")
+texture_hover = SubResource("common_building_overview_h")
+texture_active = SubResource("common_building_overview_a")
 
-[node name="MainSquareSailorsTab" parent="LeftFloatingPanel/TabSwitches" index="4" instance=ExtResource("2_ig0oa")]
+[node name="LumberjackOverviewTab" parent="LeftFloatingPanel/TabSwitches" index="4" instance=ExtResource("2_ig0oa")]
+layout_mode = 2
+texture_normal = SubResource("common_building_overview_u")
+texture_pressed = SubResource("common_building_overview_d")
+texture_hover = SubResource("common_building_overview_h")
+texture_active = SubResource("common_building_overview_a")
+
+[node name="MainSquareSailorsTab" parent="LeftFloatingPanel/TabSwitches" index="5" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants0_u")
 texture_pressed = SubResource("mainsquare_inhabitants0_d")
 texture_hover = SubResource("mainsquare_inhabitants0_h")
 texture_active = SubResource("mainsquare_inhabitants0_a")
 
-[node name="MainSquarePioneersTab" parent="LeftFloatingPanel/TabSwitches" index="5" instance=ExtResource("2_ig0oa")]
+[node name="MainSquarePioneersTab" parent="LeftFloatingPanel/TabSwitches" index="6" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants1_u")
 texture_pressed = SubResource("mainsquare_inhabitants1_d")
 texture_hover = SubResource("mainsquare_inhabitants1_h")
 texture_active = SubResource("mainsquare_inhabitants1_a")
 
-[node name="MainSquareSettlersTab" parent="LeftFloatingPanel/TabSwitches" index="6" instance=ExtResource("2_ig0oa")]
+[node name="MainSquareSettlersTab" parent="LeftFloatingPanel/TabSwitches" index="7" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants2_u")
 texture_pressed = SubResource("mainsquare_inhabitants2_d")
 texture_hover = SubResource("mainsquare_inhabitants2_h")
 texture_active = SubResource("mainsquare_inhabitants2_a")
 
-[node name="MainSquareCitizensTab" parent="LeftFloatingPanel/TabSwitches" index="7" instance=ExtResource("2_ig0oa")]
+[node name="MainSquareCitizensTab" parent="LeftFloatingPanel/TabSwitches" index="8" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants3_u")
 texture_pressed = SubResource("mainsquare_inhabitants3_d")
 texture_hover = SubResource("mainsquare_inhabitants3_h")
 texture_active = SubResource("mainsquare_inhabitants3_a")
 
-[node name="MainSquareMerchantsTab" parent="LeftFloatingPanel/TabSwitches" index="8" instance=ExtResource("2_ig0oa")]
+[node name="MainSquareMerchantsTab" parent="LeftFloatingPanel/TabSwitches" index="9" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants4_u")
 texture_pressed = SubResource("mainsquare_inhabitants4_d")
 texture_hover = SubResource("mainsquare_inhabitants4_h")
 texture_active = SubResource("mainsquare_inhabitants4_a")
 
-[node name="production_related" parent="LeftFloatingPanel/TabSwitches" index="9" instance=ExtResource("2_ig0oa")]
+[node name="production_related" parent="LeftFloatingPanel/TabSwitches" index="10" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("production_related_u")
 texture_pressed = SubResource("production_related_d")
 texture_hover = SubResource("production_related_h")
 texture_active = SubResource("production_related_a")
 
-[node name="production_work" parent="LeftFloatingPanel/TabSwitches" index="10" instance=ExtResource("2_ig0oa")]
+[node name="production_work" parent="LeftFloatingPanel/TabSwitches" index="11" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("production_work_u")
 texture_pressed = SubResource("production_work_d")
 texture_hover = SubResource("production_work_h")
 texture_active = SubResource("production_work_a")
 
-[node name="ship_ship_inv" parent="LeftFloatingPanel/TabSwitches" index="11" instance=ExtResource("2_ig0oa")]
+[node name="ship_ship_inv" parent="LeftFloatingPanel/TabSwitches" index="12" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("ship_ship_inv_u")
 texture_pressed = SubResource("ship_ship_inv_d")
 texture_hover = SubResource("ship_ship_inv_h")
 texture_active = SubResource("ship_ship_inv_a")
 
-[node name="boatbuilder_fisher" parent="LeftFloatingPanel/TabSwitches" index="12" instance=ExtResource("2_ig0oa")]
+[node name="boatbuilder_fisher" parent="LeftFloatingPanel/TabSwitches" index="13" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("boatbuilder_fisher_u")
 texture_pressed = SubResource("boatbuilder_fisher_d")
 texture_hover = SubResource("boatbuilder_fisher_h")
 texture_active = SubResource("boatbuilder_fisher_a")
 
-[node name="boatbuilder_trade" parent="LeftFloatingPanel/TabSwitches" index="13" instance=ExtResource("2_ig0oa")]
+[node name="boatbuilder_trade" parent="LeftFloatingPanel/TabSwitches" index="14" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("boatbuilder_trade_u")
 texture_pressed = SubResource("boatbuilder_trade_d")
 texture_hover = SubResource("boatbuilder_trade_h")
 texture_active = SubResource("boatbuilder_trade_a")
 
-[node name="boatbuilder_war1" parent="LeftFloatingPanel/TabSwitches" index="14" instance=ExtResource("2_ig0oa")]
+[node name="boatbuilder_war1" parent="LeftFloatingPanel/TabSwitches" index="15" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("boatbuilder_war1_u")
 texture_pressed = SubResource("boatbuilder_war1_d")
 texture_hover = SubResource("boatbuilder_war1_h")
 texture_active = SubResource("boatbuilder_war1_a")
 
-[node name="boatbuilder_war2" parent="LeftFloatingPanel/TabSwitches" index="15" instance=ExtResource("2_ig0oa")]
+[node name="boatbuilder_war2" parent="LeftFloatingPanel/TabSwitches" index="16" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("boatbuilder_war2_u")
 texture_pressed = SubResource("boatbuilder_war2_d")
 texture_hover = SubResource("boatbuilder_war2_h")
 texture_active = SubResource("boatbuilder_war2_a")
 
-[node name="DoNotExistInGame" type="VBoxContainer" parent="LeftFloatingPanel/TabSwitches" index="16"]
+[node name="DoNotExistInGame" type="VBoxContainer" parent="LeftFloatingPanel/TabSwitches" index="17"]
 visible = false
 layout_mode = 2
 
-[node name="barracks_swordman" parent="LeftFloatingPanel/TabSwitches" index="17" instance=ExtResource("2_ig0oa")]
+[node name="barracks_swordman" parent="LeftFloatingPanel/TabSwitches" index="18" instance=ExtResource("2_ig0oa")]
 visible = false
 layout_mode = 2
 texture_normal = SubResource("barracks_swordman_u")
@@ -447,7 +455,7 @@ texture_pressed = SubResource("barracks_swordman_d")
 texture_hover = SubResource("barracks_swordman_h")
 texture_active = SubResource("barracks_swordman_a")
 
-[node name="warehouse_buysell" parent="LeftFloatingPanel/TabSwitches" index="18" instance=ExtResource("2_ig0oa")]
+[node name="warehouse_buysell" parent="LeftFloatingPanel/TabSwitches" index="19" instance=ExtResource("2_ig0oa")]
 visible = false
 layout_mode = 2
 texture_normal = SubResource("warehouse_buysell_u")
@@ -455,7 +463,7 @@ texture_pressed = SubResource("warehouse_buysell_d")
 texture_hover = SubResource("warehouse_buysell_h")
 texture_active = SubResource("warehouse_buysell_a")
 
-[node name="mainsquare_inhabitants5" parent="LeftFloatingPanel/TabSwitches" index="19" instance=ExtResource("2_ig0oa")]
+[node name="mainsquare_inhabitants5" parent="LeftFloatingPanel/TabSwitches" index="20" instance=ExtResource("2_ig0oa")]
 visible = false
 layout_mode = 2
 texture_normal = SubResource("mainsquare_inhabitants5_u")
@@ -464,10 +472,10 @@ texture_hover = SubResource("mainsquare_inhabitants5_h")
 texture_active = SubResource("mainsquare_inhabitants5_a")
 
 [node name="ScrollContainer" parent="." index="1"]
-custom_minimum_size = Vector2(0, 712)
+custom_minimum_size = Vector2(0, 189)
 
 [node name="TabContainer" parent="ScrollContainer" index="0"]
-current_tab = 1
+current_tab = 12
 
 [node name="AccountTab" parent="ScrollContainer/TabContainer" index="1" instance=ExtResource("21_go27e")]
 visible = false
@@ -475,6 +483,7 @@ layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="InventoryTab" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="2"]
+visible = false
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 script = ExtResource("12_frflk")
@@ -1153,6 +1162,38 @@ theme_override_fonts/font = ExtResource("15_vcl1p")
 theme_override_font_sizes/font_size = 16
 text = "-4"
 font_style = 9
+
+[node name="Empty" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="12"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 11
+
+[node name="LumberjackOverviewTab" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="13"]
+layout_mode = 2
+metadata/_tab_index = 12
+
+[node name="CaptionBlock" parent="ScrollContainer/TabContainer/LumberjackOverviewTab" index="0" instance=ExtResource("3_j476x")]
+layout_mode = 2
+
+[node name="ProductionBasicInfo" parent="ScrollContainer/TabContainer/LumberjackOverviewTab" index="1" instance=ExtResource("4_ir4j5")]
+layout_mode = 2
+
+[node name="ProductionChain" parent="ScrollContainer/TabContainer/LumberjackOverviewTab" index="2" instance=ExtResource("5_p3q1l")]
+layout_mode = 2
+input_two_type = &"RES.TREES"
+output_type = &"RES.BOARDS"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/TabContainer/LumberjackOverviewTab" index="3"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/TabContainer/LumberjackOverviewTab/MarginContainer" index="0"]
+layout_mode = 2
+columns = 4
+
+[node name="BuildTreeAreaButton" parent="ScrollContainer/TabContainer/LumberjackOverviewTab/MarginContainer/GridContainer" index="0" instance=ExtResource("32_t8603")]
+layout_mode = 2
 
 [connection signal="new_node_selected" from="." to="ScrollContainer/TabContainer/ProductionOverviewTab" method="on_new_node_selected"]
 [connection signal="new_node_selected" from="." to="ScrollContainer/TabContainer/ProductionOverviewTab/BuildingName" method="new_node_selected"]

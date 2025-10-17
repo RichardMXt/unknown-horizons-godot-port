@@ -1,3 +1,5 @@
+@tool
+
 extends StorageComponent
 
 class_name SettlementStorageComponent
