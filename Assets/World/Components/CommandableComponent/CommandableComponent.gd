@@ -7,9 +7,9 @@ class_name CommandableComponent
 @export var checkpoint_scene: PackedScene = preload("res://Assets/World/Buoy/Buoy2D.tscn")
 
 @onready var checkpoints: Node = self.get_node("Checkpoints")
-@onready var terrain_tilemap: TerrainTileMap = self.get_node("../..") as TerrainTileMap
-@onready var building_context: BuildingContext = self.get_node("/root/Main/GameContextManager/BuildingContext")
-@onready var commandable_object: WorldThing2D = self.get_parent() as WorldThing2D
+@onready var terrain_tilemap: TerrainTileMap = self.get_node("/root/Main/TerrainTileMap") if not Engine.is_editor_hint() else null
+@onready var building_context: BuildingContext = self.get_node("/root/Main/GameContextManager/BuildingContext") if not Engine.is_editor_hint() else null
+@onready var commandable_object: WorldThing2D = self.get_parent() as WorldThing2D if not Engine.is_editor_hint() else null
 
 var move_by_cell: MoveByCellComponent
 

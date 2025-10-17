@@ -105,6 +105,8 @@ func move(path: Array[Vector2i]) -> void:
     if self.pathfinding.tile_map_layer.local_to_map(object_to_be_moved.global_position) != path[0]: # remove the starting position because the object is already there
       push_error("The path does not start from the current position")
     self.cancel_move_requseted = false
+    if self.paused:
+      await self.unpaused
     for cell in path.slice(1):
       var new_local_position: Vector2 = self.pathfinding.tile_map_layer.map_to_local(cell)
       var move_vec: Vector2 = new_local_position - object_to_be_moved.global_position
@@ -118,7 +120,7 @@ func move(path: Array[Vector2i]) -> void:
       move_tween.tween_property(object_to_be_moved, "global_position", new_local_position, 1/tile_per_sec)
       await move_tween.finished
       self.object_to_be_moved.global_position = new_local_position
-      if cancel_move_requseted:
+      if self.cancel_move_requseted:
         # self.move_canceled.emit()
         break
       if self.paused:
