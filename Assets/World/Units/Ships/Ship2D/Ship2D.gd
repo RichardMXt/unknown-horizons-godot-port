@@ -8,7 +8,7 @@ class_name Ship2D
 
 @onready var buoys: StaticBody2D = self.get_node("../Buoys")
 @onready var terrain_tilemap: TerrainTileMap = self.get_node("../..") as TerrainTileMap
-@onready var building_context: BuildingContext = self.get_node("/root/Main/GameContextManager/BuildingContext")
+@onready var building_context: BuildingContext = self.get_node("/root/Main/GameContextManager/BuildingContext") if not Engine.is_editor_hint() else null
 
 var move_by_cell: MoveByCellComponent = null
 
