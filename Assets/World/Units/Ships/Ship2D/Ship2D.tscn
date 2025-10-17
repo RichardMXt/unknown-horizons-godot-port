@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://bfln186sfga2v"]
 
-[ext_resource type="PackedScene" uid="uid://cufrigatetscn" path="res://Assets/World/Units2/frigate/frigate.tscn" id="1_wv1dl"]
+; [ext_resource type="PackedScene" uid="uid://cufrigatetscn" path="res://Assets/World/Units2/frigate/frigate.tscn" id="1_wv1dl"]
 
 [node name="ShipWithBuoys" type="Node2D"]
 z_index = 15
 
-[node name="Frigate" parent="." instance=ExtResource("1_wv1dl")]
+; [node name="Frigate" parent="." instance=ExtResource("1_wv1dl")]
 
 [node name="Buoys" type="StaticBody2D" parent="."]
