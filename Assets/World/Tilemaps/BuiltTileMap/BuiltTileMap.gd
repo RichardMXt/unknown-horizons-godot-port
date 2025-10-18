@@ -47,6 +47,7 @@ func register_building(building: Building2D) -> void:
   building.paused = false
   # handle notifications
   buildings_built.emit(building, new_building_cells)
+  GameStats.game_stats_resource.resources_changed.emit() # trigger other buildings to look for resources again (including this building)
 
 func _on_child_entered_tree(node: Node):
   if node is Building2D:

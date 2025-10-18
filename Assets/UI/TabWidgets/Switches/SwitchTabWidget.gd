@@ -4,6 +4,8 @@ class_name SwitchTabWidget
 
 ## Base class for all widget switch handles.
 
+@export var texture_active: Texture2D
+
 var tab_container: TabContainer
 
 func _ready() -> void:
