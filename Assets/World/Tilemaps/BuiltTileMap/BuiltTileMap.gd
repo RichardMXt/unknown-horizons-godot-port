@@ -13,6 +13,13 @@ var trees_getting_choped: Dictionary = {}
 signal buildings_built(building: Building2D, cells: Array[Vector2i])
 
 
+## test tiers
+# func _ready() -> void:
+#   while true:
+#     await self.get_tree().create_timer(5).timeout
+#     var world_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(GameStats.game_stats_resource.world_tier, WorldTiers.TierEnum.SAILORS)
+#     world_enum_tier = (world_enum_tier + 3) % WorldTiers.TierEnum.MAX - 2
+#     GameStats.game_stats_resource.world_tier = WorldTiers.TierEnum.find_key(world_enum_tier)
 
 func is_movable_on(cell: Vector2i) -> bool:
   var tile_data: TileData = self.get_cell_tile_data(cell)
