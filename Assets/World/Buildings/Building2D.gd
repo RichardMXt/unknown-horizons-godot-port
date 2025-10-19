@@ -11,7 +11,7 @@ class_name Building2D
 @export var cost: int               # TODO: not used yet
 @export var cost_inactive: int      # TODO: not used yet
 @export var size: Vector2i = Vector2i(1, 1)
-@export var inhabitants: int        # TODO: not used yet
+# @export var inhabitants: int        # TODO: not used yet
 @export var tooltip_text: String    # TODO: not used yet
 @export var tier: String            # TODO: not used yet
 @export var current_tier: StringName = WorldTiers.Tiers.MAX: set = set_tier
@@ -46,16 +46,16 @@ func set_tier(new_tier: StringName) -> void:
   if world_enum_tier < enum_tier:
     GameStats.game_stats_resource.world_tier = self.current_tier
 
-## Change current_tier if needed
+## Changes current_tier if needed
 func update_tier() -> void:
   self.current_tier = GameStats.game_stats_resource.world_tier
 
 func _ready():
   self.paused = self.paused # call pause setter
   # handle world tier
-  self.current_tier = GameStats.game_stats_resource.world_tier
-  GameStats.game_stats_resource.world_tier_changed.connect(update_tier)
   setup_components()
+  self.update_tier()
+  GameStats.game_stats_resource.world_tier_changed.connect(self.update_tier)
   CamUtils.center_if_no_camera(self)
 
 func setup_components() -> void:
