@@ -112,6 +112,32 @@ z_index = 100
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
+[node name="DebugCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="DebugCanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="BuiltTileMapLayerInfo" type="Label" parent="DebugCanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = 48.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8143436, 0.9336464, 0.89049816, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Hello!!!"
+
 [connection signal="child_entered_tree" from="BuiltTileMap" to="BuiltTileMap" method="_on_child_entered_tree"]
 [connection signal="child_entered_tree" from="RoadAndBuildingHighlighter" to="RoadAndBuildingHighlighter" method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="RoadAndBuildingHighlighter" to="RoadAndBuildingHighlighter" method="_on_child_exiting_tree"]

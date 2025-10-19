@@ -54,7 +54,7 @@ func is_resource_available(resource: StringName) -> bool:
   for component in self.get_children():
     var storage_component := component as StorageComponent
     if storage_component != null:
-      prints("Looking for %s in %s" % [resource, self.name])
+      # prints("      Looking for %s in %s" % [resource, self.name])
       if storage_component.get_storage_item_amount(resource) > 0:
         return true # found in at least one of the storages
 
