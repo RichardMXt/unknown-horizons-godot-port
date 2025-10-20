@@ -54,9 +54,14 @@ func _ready():
   self.paused = self.paused # call pause setter
   # handle world tier
   setup_components()
+  self.current_tier = GameStats.game_stats_resource.world_tier
   self.update_tier()
-  GameStats.game_stats_resource.world_tier_changed.connect(self.update_tier)
+  self.connect_set_tier()
   CamUtils.center_if_no_camera(self)
+
+## Called when to connect set_tier connections
+func connect_set_tier() -> void:
+  GameStats.game_stats_resource.world_tier_changed.connect(self.update_tier)
 
 func setup_components() -> void:
   # get a list of all the child components
