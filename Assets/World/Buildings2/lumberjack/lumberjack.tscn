@@ -15,7 +15,6 @@ script = ExtResource("1_script_gd")
 baseclass = "production.ProductionBuilding"
 radius = 3
 cost = 5
-cost_inactive = 0
 size = Vector2i(2, 2)
 inhabitants = 1
 tooltip_text = "_ Chops down trees and turns them into boards."
@@ -40,8 +39,12 @@ produces = Dictionary[StringName, int]({
 
 [node name="SlotStorageComponent" parent="." instance=ExtResource("5_slot_storage_component")]
 max_capacity = Dictionary[StringName, int]({
-&"BOARDS": 10, 
+&"BOARDS": 10,
 &"TREES": 10
+})
+storage = Dictionary[StringName, int]({
+&"BOARDS": 0,
+&"TREES": 0
 })
 
 [node name="lumberjack_collector_0" parent="." instance=ExtResource("7_lumberjack_collector")]

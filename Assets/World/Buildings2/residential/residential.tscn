@@ -197,3 +197,18 @@ storage = Dictionary[StringName, int]({
 [node name="BuildingActionSet" parent="." instance=ExtResource("3_building_action_set_component")]
 sprite_frames = ExtResource("4_sprite_frames")
 current_as_name = "estate0"
+
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_30" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_72" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_21" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_71" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_19" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_43" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_26" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_44" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_20" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_41" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_69" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_70" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="ProductionLineComponent_HYGIENE" method="set_consumes_multiplier"]
+; [connection signal="residence_changed" from="." to="HappinessComsumer" method="set_consumes_multiplier"]
