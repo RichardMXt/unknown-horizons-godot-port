@@ -11,7 +11,7 @@ class_name Building2D
 @export var cost: int               # TODO: not used yet
 @export var cost_inactive: int      # TODO: not used yet
 @export var size: Vector2i = Vector2i(1, 1)
-# @export var inhabitants: int        # TODO: not used yet
+@export var inhabitants: int        # TODO: not used yet
 @export var tooltip_text: String    # TODO: not used yet
 @export var tier: String            # TODO: not used yet
 @export var current_tier: StringName = WorldTiers.Tiers.MAX: set = set_tier
