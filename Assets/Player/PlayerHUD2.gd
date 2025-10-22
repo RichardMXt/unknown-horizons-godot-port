@@ -38,7 +38,7 @@ func _input(event: InputEvent) -> void:
         var all_tabs: AllTabs = %AllTabs
         if all_tabs:
           toggle_tab_widget(all_tabs)
-          all_tabs.node_selected = selected_objects[0]
+          all_tabs.selected_node = selected_objects[0]
         else:
           tab_container.current_tab = 0
       _:

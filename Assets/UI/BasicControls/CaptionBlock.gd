@@ -2,14 +2,14 @@
 extends VBoxContainer
 class_name CaptionBlock
 
-@export var text: String = "This is a Book Title":
-  set(new_text):
-    if not is_inside_tree():
-      await self.ready
+@onready var caption_label: LabelEx = $Caption
 
-    text = new_text
-
-    caption.text = text
+@export var caption_text: String:
+  get():
+    return self.caption_label.text if self.caption_label != null else ""
+  set(value):
+    if self.caption_label != null:
+      self.caption_label.text = value
 
 ## How far the top margin should be when the control is appended below a
 ## sibling control.
@@ -17,8 +17,6 @@ class_name CaptionBlock
   set(new_margin):
     margin_top_as_sub = new_margin
     _update_top_margin()
-
-@onready var caption := $Caption
 
 func _notification(what: int) -> void:
   match what:
@@ -30,13 +28,3 @@ func _update_top_margin() -> void:
     %HSeparator.add_theme_constant_override("separation", margin_top_as_sub)
   else:
     %HSeparator.remove_theme_constant_override("separation")
-
-func new_node_selected(node: WorldThing2D) -> void:
-  if node == null:
-    self.caption.text = "Building"
-    return
-  var building: Building2D = node as Building2D
-  if building:
-    self.caption.text = building.id
-  else:
-    self.caption.text = node.name
