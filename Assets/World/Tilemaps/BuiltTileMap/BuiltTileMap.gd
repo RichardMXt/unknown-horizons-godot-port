@@ -46,7 +46,7 @@ func register_building(building: Building2D) -> void:
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
   var road_pathfinding = %Pathfinding.road_pathfinding
 
-  var size = building.get_oriented_size()
+  var size = building.building_oriented_size()
   for dy in range(size.y):
     for dx in range(size.x):
       var building_cell_tile_coords = building_tile_coords - Vector2i(dx, dy) # build up and left
@@ -58,7 +58,7 @@ func register_building(building: Building2D) -> void:
   building.paused = false
 
   await get_tree().process_frame # wait for one frame, otherwise erase cells doesn't refresh the drawing if called from _on_child_entered_tree callstack
-  for cell in building_all_cell_coords:
+  for cell in new_building_cells:
     if cell != building_tile_coords: # erase all other cells which the building covers
       self.set_cell(cell, -1)
 

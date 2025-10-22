@@ -155,8 +155,8 @@ func update_building_highlight(building_cell_coords: Vector2i) -> void:
   # now that the building instance is not null, highlight is updated, and the shader is set, set the shader to correct color
   var building_instance_2D := building_instance as Building2D
   if building_instance_2D != null:
-    self.building_size = building_instance_2D.size # cache the size
-    var can_build := can_build_building(building_cell_coords, building_instance_2D.get_oriented_size(), self.building_to_build)
+    self.building_size = building_instance_2D.building_oriented_size() # cache the size
+    var can_build := can_build_building(building_cell_coords, building_instance_2D.building_oriented_size(), self.building_to_build)
     building_instance_2D.set_can_build_highlight(can_build)
 
 func has_resources_for_building(building_name: StringName) -> bool:
@@ -178,9 +178,8 @@ func spend_resources_for_building(building_name: StringName) -> void:
     print("the amount of %s is now %s" % [str(resource).capitalize(), GameStats.game_stats_resource.resources[resource]])
 
 func build(building_cell_coords: Vector2i, building_size: Vector2i, building_to_build: StringName, orientation: BuildingActionSet.Orientations) -> void:
-  # TODO: the can_build_building check is not full: the size here is not available, since there is no instance of the building. Does it need to be checked there again after highlight?
-  if building_to_build != BuildingConfig.Buildings.NONE and can_build_building(building_cell_coords, building_size, building_to_build): # If there is a building to build and it can be built
-    spend_resources_for_building(self.building_to_build)
+  if building_to_build != BuildingConfig.Buildings.NONE and self.can_build_building(building_cell_coords, building_size, building_to_build): # If there is a building to build and it can be built
+    self.spend_resources_for_building(self.building_to_build)
     built_tilemap.set_cell(building_cell_coords, 0, Vector2i.ZERO, BuildingConfig.building_to_tileset_id.get(self.building_to_build, -1))
     highlighter.clear()
     var res = await built_tilemap.buildings_built

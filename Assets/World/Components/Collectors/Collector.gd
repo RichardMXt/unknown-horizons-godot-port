@@ -58,16 +58,6 @@ var collector_type: String = self.CollectorTypes.BUILDING_COLLECTOR:
         self.CollectorTypes.LUMBERJACK_COLLECTOR:
           self.move_by_cell.allowed_movement = self.MoveByCellComponent.AllowedMovementTypes.MOVE_ON_LAND 
 
-var collector_type_to_get_jobs_function: Dictionary[StringName, Callable] = {
-  self.CollectorTypes.BUILDING_COLLECTOR: self.get_jobs_for_building_collector,
-  self.CollectorTypes.LUMBERJACK_COLLECTOR: self.get_jobs_for_lumberjack_collector
-}
-
-var collector_type_to_load_function: Dictionary[StringName, Callable] = {
-  self.CollectorTypes.BUILDING_COLLECTOR: self.load_resources_for_building_collector,
-  self.CollectorTypes.LUMBERJACK_COLLECTOR: self.chop_tree
-}
-
 
 
 #region Editor: dynamic values for dropdown for `collector_type`
@@ -191,7 +181,12 @@ func get_best_job() -> Job:
   var parent_building_map_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
   var best_job: Job = null
   var best_job_score: float = -1
-  var jobs: Array[Job] = self.collector_type_to_get_jobs_function.get(self.collector_type, func(): return []).call()
+  var jobs: Array[Job] = []
+  match self.collector_type:
+    self.CollectorTypes.LUMBERJACK_COLLECTOR:
+      jobs = self.get_jobs_for_lumberjack_collector()
+    self.CollectorTypes.BUILDING_COLLECTOR:
+      jobs = self.get_jobs_for_building_collector()
 
   for job in jobs:
     if job == null:
@@ -230,7 +225,11 @@ func wait_for_job() -> Job:
   return best_job
 
 func load_resources(job: Job) -> void:
-  await self.collector_type_to_load_function.get(self.collector_type, func(_job): return).call(job) # call correct load function
+  match self.collector_type:
+    self.CollectorTypes.LUMBERJACK_COLLECTOR:
+      await self.chop_tree(job)
+    self.CollectorTypes.BUILDING_COLLECTOR:
+      await self.load_resources_for_building_collector(job)
 
 ## Unloads resources, one for all types right now
 func unload_resources(job: Job) -> void:
