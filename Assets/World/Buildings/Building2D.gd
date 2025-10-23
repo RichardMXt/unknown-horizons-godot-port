@@ -119,7 +119,7 @@ func set_can_build_highlight(can_build: bool) -> void:
     if action_set != null:
       action_set.set_can_build_shader(can_build)
 
-func building_oriented_size() -> Vector2i:
+func get_oriented_size() -> Vector2i:
   var size_x = self.size.x
   var size_y = self.size.y
   if size_x != size_y: # for rectangular building, swap size_x and size_y if at particular orientation

@@ -324,9 +324,6 @@ func get_jobs_for_lumberjack_collector() -> Array[Job]:
     return []
   if self.built_tilemap == null or self.parent_building == null or self.building_storage == null:
     push_error("Mising nodes in get_jobs_for_lumberjack_collector, Collector.gd")
-  if self.building_storage.storage.has(ResourceConfig.Resources.TREES) == false:
-    push_error("Building can not store wood but has a lumberjack collector")
-    return []
   if self.building_storage.get_storage_item_amount(ResourceConfig.Resources.TREES) >= self.building_storage.max_capacity.get(ResourceConfig.Resources.TREES):
     return []
   var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)

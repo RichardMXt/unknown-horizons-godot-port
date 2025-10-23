@@ -46,7 +46,7 @@ func register_building(building: Building2D) -> void:
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
   var road_pathfinding = %Pathfinding.road_pathfinding
 
-  var size = building.building_oriented_size()
+  var size = building.get_oriented_size()
   for dy in range(size.y):
     for dx in range(size.x):
       var building_cell_tile_coords = building_tile_coords - Vector2i(dx, dy) # build up and left
