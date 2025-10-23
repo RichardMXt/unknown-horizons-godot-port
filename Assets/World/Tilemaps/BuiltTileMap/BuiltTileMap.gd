@@ -48,7 +48,7 @@ func build(building_cell_coords: Vector2i, building_to_build: StringName, orient
   await self.buildings_built
   # self.set_cell_orientation_workaround = WorldThings.Orientations._045
 
-var set_cell_orientation_workaround: BuildingActionSet.Orientations
+var set_cell_orientation_workaround := BuildingActionSet.Orientations._045
 
 func register_building(building: Building2D) -> void:
   # register building to building poses
