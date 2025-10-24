@@ -3,7 +3,6 @@ extends VBoxContainer
 class_name ProductionOverviewTab
 
 @onready var production_chains: VBoxContainer = self.get_node("ProductionChains")
-@onready var caption_block: CaptionBlock = $CaptionBlock
 
 var selected_node: WorldThing2D = null:
   set(value):
@@ -22,7 +21,6 @@ func on_new_selected_node(node: WorldThing2D) -> void:
   
   var building_selected: Building2D = node as Building2D
   if building_selected != null:
-    self.caption_block.caption_text = building_selected.game_name
     # turn on the needed ones
     var production_chain_index: int = 0
     for production_line: ProductionLineComponent in building_selected.get_all_nodes_of_type(ProductionLineComponent):

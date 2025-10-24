@@ -8,6 +8,6 @@ var selected_node: WorldThing2D = null:
     on_new_selected_node(value)
 
 func on_new_selected_node(node: WorldThing2D) -> void:
-  var building_selected: Building2D = node as Building2D
-  if building_selected != null:
-    self.caption_block.caption_text = building_selected.game_name
+  for child in self.get_children():
+    if "selected_node" in child:
+      child.selected_node = node
