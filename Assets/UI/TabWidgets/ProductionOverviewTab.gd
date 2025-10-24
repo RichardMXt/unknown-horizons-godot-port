@@ -3,7 +3,7 @@ extends VBoxContainer
 class_name ProductionOverviewTab
 
 @onready var production_chains: VBoxContainer = self.get_node("ProductionChains")
-@onready var caption_block := $CaptionBlock as CaptionBlock
+@onready var caption_block: CaptionBlock = $CaptionBlock
 
 var selected_node: WorldThing2D = null:
   set(value):
@@ -11,6 +11,10 @@ var selected_node: WorldThing2D = null:
     on_new_selected_node(value)
 
 func on_new_selected_node(node: WorldThing2D) -> void:
+  for child in self.get_children():
+    if "selected_node" in child:
+      child.selected_node = node
+  
   # hide all production chains
   for child in production_chains.get_children():
     if child is ProductionChain:
