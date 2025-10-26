@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbresidentits"]
+[gd_scene load_steps=9 format=3 uid="uid://cbresidentits"]
 
-[ext_resource type="Script" uid="uid://4liotsbcpcls" path="res://Assets/World/Buildings/Building2D.gd" id="1_script_gd"]
+[ext_resource type="Script" uid="uid://c6udx706kqrfr" path="res://Assets/World/Buildings2/residential/residential.gd" id="1_script_gd"]
 [ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Components/Selectable/Selectable.tscn" id="2_selectable_component"]
 [ext_resource type="PackedScene" uid="uid://c7w3xnajww1kq" path="res://Assets/World/Components/BuildingActionSet/BuildingActionSet.tscn" id="3_building_action_set_component"]
 [ext_resource type="SpriteFrames" uid="uid://cbresidentitr" path="res://Assets/World/Buildings2/residential/residential.tres" id="4_sprite_frames"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bo27kwd5m1jmc" path="res://Assets/World/Components/ProductionLine/ProductionLineComponent.tscn" id="6_production_line_component"]
 [ext_resource type="PackedScene" uid="uid://cusettlercots" path="res://Assets/World/Units2/settler_collector/settler_collector.tscn" id="7_settler_collector"]
 
-[node name="residential" type="Node2D"]
+[node name="residential" type="Node2D" groups=["Residence"]]
 script = ExtResource("1_script_gd")
 id = "BUILDINGS.RESIDENTIAL"
 baseclass = "settler.Settler"

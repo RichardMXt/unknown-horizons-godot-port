@@ -28,7 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://qndk0ulsg1jc" path="res://Assets/UI/BasicControls/ResourceItem.tscn" id="33_443ux"]
 [ext_resource type="Texture2D" uid="uid://bfps6rk8vnmq0" path="res://Assets/UI/Icons/Resources/32/009.png" id="34_8csgm"]
 [ext_resource type="FontFile" uid="uid://b132ikq6ayfyj" path="res://External/Fonts/LinLibertineC.ttf" id="37_k4f0b"]
-[ext_resource type="PackedScene" uid="uid://dtee0xbn3mwpi" path="res://Assets/UI/TabWidgets/Views/InhabitantsView.tscn" id="37_t8gxx"]
+[ext_resource type="PackedScene" uid="uid://dtee0xbn3mwpi" path="res://Assets/UI/TabWidgets/Views/MainSquareTierTab.tscn" id="37_t8gxx"]
 [ext_resource type="Texture2D" uid="uid://iujmcgp5x37l" path="res://Assets/UI/Icons/Thumbnails/1000001.png" id="38_anfog"]
 [ext_resource type="Texture2D" uid="uid://bhmhs27fjux2p" path="res://Assets/UI/Images/ResbarStats/gold_icon.png" id="39_2g5qe"]
 [ext_resource type="Texture2D" uid="uid://brmfkn8sfum3n" path="res://Assets/UI/Icons/Resources/32/005.png" id="40_go27e"]
@@ -486,10 +486,10 @@ texture_hover = SubResource("mainsquare_inhabitants5_h")
 texture_active = SubResource("mainsquare_inhabitants5_a")
 
 [node name="ScrollContainer" parent="." index="1"]
-custom_minimum_size = Vector2(0, 134)
+custom_minimum_size = Vector2(0, 383)
 
 [node name="TabContainer" parent="ScrollContainer" index="0"]
-current_tab = 4
+current_tab = 5
 
 [node name="AccountTab" parent="ScrollContainer/TabContainer" index="1" instance=ExtResource("21_go27e")]
 visible = false
@@ -1013,6 +1013,7 @@ texture = ExtResource("34_8csgm")
 resource_type = 9
 
 [node name="ProductionOverviewTab" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="5"]
+visible = false
 layout_mode = 2
 script = ExtResource("8_024wi")
 metadata/_tab_index = 4
@@ -1087,28 +1088,32 @@ visible = false
 layout_mode = 2
 
 [node name="MainSquareSailorsTab" parent="ScrollContainer/TabContainer" index="6" instance=ExtResource("37_t8gxx")]
-visible = false
 layout_mode = 2
+tab_tier = &"SAILORS"
 metadata/_tab_index = 5
 
 [node name="MainSquarePioneersTab" parent="ScrollContainer/TabContainer" index="7" instance=ExtResource("37_t8gxx")]
 visible = false
 layout_mode = 2
+tab_tier = &"PIONEERS"
 metadata/_tab_index = 6
 
 [node name="MainSquareSettlersTab" parent="ScrollContainer/TabContainer" index="8" instance=ExtResource("37_t8gxx")]
 visible = false
 layout_mode = 2
+tab_tier = &"SETTLERS"
 metadata/_tab_index = 7
 
 [node name="MainSquareCitizensTab" parent="ScrollContainer/TabContainer" index="9" instance=ExtResource("37_t8gxx")]
 visible = false
 layout_mode = 2
+tab_tier = &"CITIZENS"
 metadata/_tab_index = 8
 
 [node name="MainSquareMerchantsTab" parent="ScrollContainer/TabContainer" index="10" instance=ExtResource("37_t8gxx")]
 visible = false
 layout_mode = 2
+tab_tier = &"MERCHANTS"
 metadata/_tab_index = 9
 
 [node name="FightingShipOverviewTab" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="11"]

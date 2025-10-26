@@ -1,0 +1,77 @@
+extends VBoxContainer
+
+@export var tab_tier: StringName # WorldTiers.Tiers
+
+@onready var caption_block: CaptionBlock = $CaptionBlock
+
+@onready var taxes_control = %TaxesControl
+
+@onready var sad_houses_count_label = %SadHousesCount
+@onready var satisfied_houses_count_label = %SatisfiedHousesCount
+@onready var happy_houses_count_label = %HappyHousesCount
+
+@onready var houses_count_label = %HousesCount
+@onready var residents_count_label = %ResidentsCount
+
+var timer: Timer
+
+func _ready():
+  self.timer = Timer.new()
+  self.add_child(self.timer)
+  self.timer.wait_time = 1 # 1s
+  self.timer.one_shot = false
+  self.timer.timeout.connect(self.refresh_timeout)
+  self.caption_block.caption_text = str(self.tab_tier)
+  # self.visibility_changed.connect(func(): print("MainSquareTierTab Visibility changed %s" % [self.visible]))
+
+var selected_node: WorldThing2D = null:
+  set(value):
+    selected_node = value
+    if value != null:
+      refresh() # force first refresh
+      self.timer.start()
+    else:
+      self.timer.stop()
+
+func refresh_timeout():
+  if !self.is_visible_in_tree():
+    self.timer.stop()
+    return
+  self.refresh()
+
+func refresh():
+  var residence_nodes = self.get_tree().get_nodes_in_group("Residence")
+
+  var houses_count = 0
+  var residents_count = 0
+
+  var sad_count = 0
+  var satisfied_count = 0
+  var happy_count = 0
+
+  for residential_node in residence_nodes:
+    var residence: Residential = residential_node as Residential
+    if residence == null:
+      continue
+    if residence.current_tier != self.tab_tier: # filter by tier to account for
+      continue
+      
+    houses_count += 1
+    residents_count += residence.residence
+    for storage in residence.get_all_nodes_of_type(StorageComponent):
+      var happiness = storage.get_storage_item_amount(ResourceConfig.Resources.HAPPINESS)
+      if happiness < 30:
+        sad_count += 1
+      elif happiness < 70:
+        satisfied_count += 1
+      else:
+        happy_count += 1
+
+  self.taxes_control.paid_taxes = str(123)
+
+  self.sad_houses_count_label.text = str(sad_count)
+  self.satisfied_houses_count_label.text = str(satisfied_count)
+  self.happy_houses_count_label.text = str(happy_count)  
+
+  self.houses_count_label.text = str(houses_count)
+  self.residents_count_label.text = str(residents_count)

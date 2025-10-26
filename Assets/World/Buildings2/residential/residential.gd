@@ -24,9 +24,8 @@ var residence: int = 1:
     
     self.residence_changed.emit(self.residence)
 
-func set_tier(new_tier: StringName) -> void:
+func _on_tier_changed() -> void:
   var previous_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
-  current_tier = new_tier
   var current_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
   # notify children
   for node: Node in self.get_children():
