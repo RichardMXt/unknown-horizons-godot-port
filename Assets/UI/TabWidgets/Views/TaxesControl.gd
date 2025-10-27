@@ -1,5 +1,7 @@
 extends VBoxContainer
 
+class_name TaxesControl
+
 @onready var paid_taxes_label:Label = $HBoxContainer/PaidTaxesLabel
 @onready var tax_rate_label:Label = $HBoxContainer/TaxRateLabel
 @onready var tax_rate_slider: HSlider = $TaxRateSlider

@@ -4,7 +4,7 @@ class_name CaptionBlock
 
 @onready var caption_label: LabelEx = $Caption
 
-var caption_text: String:
+@export var caption_text: String:
   set(value):
     caption_text = value
     if caption_label != null:

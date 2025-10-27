@@ -19,6 +19,9 @@ class_name Building2D
   set(value):
     current_tier = value
     _on_tier_changed() # to be overloaded
+var current_tier_val: WorldTiers.TierEnum:
+  get():
+    return WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
 
 # buildingcosts - in BuildingConfig.gd
 @export var show_status_icons: bool # TODO: not used yet

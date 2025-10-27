@@ -7,7 +7,7 @@ var tab_tier_val: WorldTiers.TierEnum:
 
 @onready var caption_block: CaptionBlock = $CaptionBlock
 
-@onready var taxes_control = %TaxesControl
+@onready var taxes_control: TaxesControl = %TaxesControl
 
 @onready var sad_houses_count_label = %SadHousesCount
 @onready var satisfied_houses_count_label = %SatisfiedHousesCount
@@ -72,7 +72,7 @@ func refresh():
       else:
         happy_count += 1
 
-  self.taxes_control.paid_taxes = str(123)
+  self.taxes_control.paid_taxes = 12345
   self.taxes_control.tax_rate = GameStats.treasury.tax_rate_per_tier.get(self.tab_tier_val, 1.0)
 
   self.sad_houses_count_label.text = str(sad_count)
