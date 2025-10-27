@@ -1,3 +1,5 @@
+@tool
+
 extends VBoxContainer
 
 @export var tab_tier: StringName # WorldTiers.Tiers
@@ -16,35 +18,16 @@ var tab_tier_val: WorldTiers.TierEnum:
 @onready var houses_count_label = %HousesCount
 @onready var residents_count_label = %ResidentsCount
 
-var timer: Timer
-
 func _ready():
-  self.timer = Timer.new()
-  self.add_child(self.timer)
-  self.timer.wait_time = 1 # 1s
-  self.timer.one_shot = false
-  self.timer.timeout.connect(self.refresh_timeout)
   self.caption_block.caption_text = str(self.tab_tier)
 
   self.taxes_control.tax_rate_changed.connect(func (tax_rate: float): GameStats.treasury.tax_rate_per_tier[self.tab_tier_val] = tax_rate)
   # self.visibility_changed.connect(func(): print("MainSquareTierTab Visibility changed %s" % [self.visible]))
 
-var selected_node: WorldThing2D = null:
-  set(value):
-    selected_node = value
-    if value != null:
-      refresh() # force first refresh
-      self.timer.start()
-    else:
-      self.timer.stop()
+var selected_node: WorldThing2D = null
 
-func refresh_timeout():
-  if !self.is_visible_in_tree():
-    self.timer.stop()
-    return
-  self.refresh()
-
-func refresh():
+func refresh_tab(): # called by AllTabs.gd
+  print("MainSquareTierTab.refresh_tab (%s)" % [self.tab_tier])
   var residence_nodes = self.get_tree().get_nodes_in_group("Residence")
 
   var houses_count = 0

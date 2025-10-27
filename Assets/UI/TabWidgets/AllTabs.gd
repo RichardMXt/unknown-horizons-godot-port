@@ -4,12 +4,15 @@ class_name AllTabs
 
 @onready var tab_container: TabContainer = self.get_node("ScrollContainer/TabContainer")
 @onready var tab_switches: VBoxContainer = self.get_node("LeftFloatingPanel/TabSwitches")
+@onready var refresh_timer: Timer = $RefreshTimer
+
 
 func _ready() -> void:
   CamUtils.center_if_no_camera(self)
 
   # self.visibility_changed.connect(func(): print("AllTabs Visibility changed %s" % [self.visible]))
   tab_container.tab_changed.connect(self.tab_changed)
+  self.refresh_timer.timeout.connect(self.refresh_timeout)
 
 var selected_node: WorldThing2D = null:
   set(value):
@@ -23,6 +26,10 @@ func tab_changed(_tab_index: int):
   var active_tab_node := tab_container.get_current_tab_control()
   if "selected_node" in active_tab_node:
     active_tab_node.selected_node = self.selected_node
+  if "refresh_tab" in active_tab_node:
+    active_tab_node.refresh_tab()
+
+  self.refresh_timer.start()
 
 func update_switches() -> void:
   var selectable := self.selected_node.get_node("Selectable") as Selectable
@@ -48,3 +55,14 @@ func update_switches() -> void:
         else:
           self.tab_changed(tab_index)
         break
+  
+func refresh_timeout():
+  if !self.is_visible_in_tree():
+    self.refresh_timer.stop()
+    return
+  self.refresh()
+
+func refresh():
+  var active_tab_node := self.tab_container.get_current_tab_control()
+  if active_tab_node.has_method("refresh_tab"):
+    active_tab_node.refresh_tab()
