@@ -23,4 +23,3 @@ func refresh_tab(): # called by AllTabs.gd
   for child in self.get_children():
     if "selected_node" in child:
       child.selected_node = self.selected_node
-
