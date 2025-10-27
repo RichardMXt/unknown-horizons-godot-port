@@ -23,9 +23,9 @@ size = Vector2i(3, 3)
 inhabitants = 1
 tooltip_text = "_ Gets stone from a mountain."
 tier = "TIER.CITIZENS"
-buildable_on = Array[int]([64, 64, 64,
-                           64, 64, 64,
-                           64, 64, 64])
+buildable_on = Array[Array]([[64, 64, 64],
+                             [64, 64, 64],
+                             [64, 64, 64],])
 
 [node name="Selectable" parent="." instance=ExtResource("2_selectable_component")]
 type = "building"

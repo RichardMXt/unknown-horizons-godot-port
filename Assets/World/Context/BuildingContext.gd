@@ -145,9 +145,8 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
       
       # get the bitmask for the buildable tile of a building, inverse because stored left to right, top to bottom
       var buildable_tile_bitmask: int = 0b0000001 # by default the building can only be built on grass
-      var tile_bitmask_index: int = (size.y - dy - 1) * (size.x) + dx
-      if len(building_instance.buildable_on) > tile_bitmask_index:
-        buildable_tile_bitmask = building_instance.buildable_on[tile_bitmask_index]
+      if len(building_instance.buildable_on) > 0:
+        buildable_tile_bitmask = building_instance.buildable_on[size.y - dy - 1][dx]
       # if the tile bitmask in the buildable tile bitmask, then the tile is buildable
       var buildable_on_tile: bool = (buildable_tile_bitmask & tile_bitmask) == tile_bitmask
       if buildable_on_tile == false:
