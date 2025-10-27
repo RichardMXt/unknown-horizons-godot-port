@@ -103,6 +103,7 @@ func _process(_delta):
 func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i, building_name: StringName) -> bool:
   if building_name == BuildingConfig.Buildings.NONE:
     return false
+  var building_instance: Building2D = self.highlighter.highlighted_objects[0]
   for dy in range(size.y):
     for dx in range(size.x):
       var building_cell_coords = building_cell_starting_coords - Vector2i(dx, dy)
@@ -112,22 +113,45 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
         if reference_object.is_tile_valid_for_building(building_cell_coords) == false:
           return false
       
-      # check if the tile is valid on the built_tilemap
+      # check if the tile is valid for road
       var is_road: bool = false
       var built_tile_data: TileData = built_tilemap.get_cell_tile_data(building_cell_coords)
       if built_tile_data != null and built_tile_data.terrain_set != -1: # if the built_tile_data is null, then it is not a road
         var built_terrain_name: String = built_tilemap.tile_set.get_terrain_name(built_tile_data.terrain_set, built_tile_data.terrain)# The terrain name of the tile.
         is_road = built_terrain_name == "DirtRoad" # Is the tile a road?
-      var is_building: bool = built_tilemap.building_position_to_building.has(building_cell_coords) # Is the tile a building?
-      if is_road or is_building: # If it is a road or a building, then the tile not valid
-        return false
+      if is_road:
+        return false # cannot build on road, atleast for now
+
+      # find the tile bitmask for buildings on it
+      var tile_bitmask: int = 0b0000000
+      var building_on_tile: Building2D = built_tilemap.building_position_to_building.get(building_cell_coords) # Is the tile a building?
+      if building_on_tile != null:
+        var building_on_tile_string_name := StringName(building_on_tile.id.trim_prefix("BUILDINGS."))
+        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 4
+        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
+        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
+        if tile_bitmask == 0b0000000:
+          return false # there is a building on tile but any building cannot be built on it
+
       
-      # make sure that the terrain tile is valid
+      # find the tile bitmask for terrain
       var terrain_tile_data: TileData = terrain_tilemap.get_cell_tile_data(building_cell_coords)
-      if terrain_tile_data != null and terrain_tile_data.terrain_set != -1:
+      if terrain_tile_data != null and terrain_tile_data.terrain_set != -1 and tile_bitmask == 0:
         var terrain_name: String = terrain_tilemap.tile_set.get_terrain_name(terrain_tile_data.terrain_set, terrain_tile_data.terrain)
-        if terrain_name == "Shallow" or terrain_name == "Deep":
-          return false
+        tile_bitmask |= int(terrain_name == "Grass")   << 0
+        tile_bitmask |= int(terrain_name == "Beach")   << 1
+        tile_bitmask |= int(terrain_name == "Shallow") << 2
+        tile_bitmask |= int(terrain_name == "Deep")    << 3
+      
+      # get the bitmask for the buildable tile of a building, inverse because stored left to right, top to bottom
+      var buildable_tile_bitmask: int = 0b0000001 # by default the building can only be built on grass
+      var tile_bitmask_index: int = (size.y - dy - 1) * (size.x) + dx
+      if len(building_instance.buildable_on) > tile_bitmask_index:
+        buildable_tile_bitmask = building_instance.buildable_on[tile_bitmask_index]
+      # if the tile bitmask in the buildable tile bitmask, then the tile is buildable
+      var buildable_on_tile: bool = (buildable_tile_bitmask & tile_bitmask) == tile_bitmask
+      if buildable_on_tile == false:
+        return false
 
   var is_enough_resources = self.has_resources_for_building(building_name)
   return is_enough_resources

@@ -25,6 +25,8 @@ size = Vector2i(2, 2)
 inhabitants = 1
 tooltip_text = "_ Fishes the sea, produces food."
 tier = "TIER.SAILORS"
+buildable_on = Array[int]([2, 4,
+                           2, 4])
 
 [node name="Selectable" parent="." instance=ExtResource("2_selectable_component")]
 type = "fisher"

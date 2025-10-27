@@ -16,6 +16,13 @@ class_name Building2D
 @export var tooltip_text: String    # TODO: not used yet
 @export var tier: String            # TODO: not used yet
 @export var current_tier: StringName = WorldTiers.Tiers.MAX: set = set_tier
+## The terrain the building can be built on per tile,[br]
+## encoded as a bitmask of [(mountain)(iron deposit)(clay deposit)(Deep)(Shallow)(Beach)(Grass)] * amount of tiles,
+## 1 if it can be built on, else 0 with tile organization left to right, top to bottom[br]
+## Examples: tile buildable on grass would be 0b000001, buildable on coastline would be 000010 = 2
+## if buildable on coastline or grass, it would be 000011 = 3 and so on[br]
+## empty means the building can be built on Grass
+@export var buildable_on: Array[int] = []
 
 # buildingcosts - in BuildingConfig.gd
 @export var show_status_icons: bool # TODO: not used yet
