@@ -46,14 +46,15 @@ func refresh_tab(): # called by AllTabs.gd
       
     houses_count += 1
     residents_count += residence.residence
+    var happiness = 0
     for storage in residence.get_all_nodes_of_type(StorageComponent):
-      var happiness = storage.get_storage_item_amount(ResourceConfig.Resources.HAPPINESS)
-      if happiness < 30:
-        sad_count += 1
-      elif happiness < 70:
-        satisfied_count += 1
-      else:
-        happy_count += 1
+      happiness += storage.get_storage_item_amount(ResourceConfig.Resources.HAPPINESS)
+    if happiness < 30:
+      sad_count += 1
+    elif happiness < 70:
+      satisfied_count += 1
+    else:
+      happy_count += 1
 
   self.taxes_control.paid_taxes = 12345
   self.taxes_control.tax_rate = GameStats.treasury.tax_rate_per_tier.get(self.tab_tier_val, 1.0)
