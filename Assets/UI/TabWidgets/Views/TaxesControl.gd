@@ -16,6 +16,8 @@ var tax_rate: float = 0.0:
     self.tax_rate_label.text = tax_rate_str
     tax_rate_slider.value = tax_rate
 
+signal tax_rate_changed(tax_rate: float)
 
 func _on_TaxRateSlider_value_changed(value: float) -> void:
   tax_rate = value
+  self.tax_rate_changed.emit(tax_rate)

@@ -1,6 +1,9 @@
 extends VBoxContainer
 
 @export var tab_tier: StringName # WorldTiers.Tiers
+var tab_tier_val: WorldTiers.TierEnum:
+  get():
+    return WorldTiers.TierEnum.get(self.tab_tier, WorldTiers.TierEnum.SAILORS)
 
 @onready var caption_block: CaptionBlock = $CaptionBlock
 
@@ -22,6 +25,8 @@ func _ready():
   self.timer.one_shot = false
   self.timer.timeout.connect(self.refresh_timeout)
   self.caption_block.caption_text = str(self.tab_tier)
+
+  self.taxes_control.tax_rate_changed.connect(func (tax_rate: float): GameStats.treasury.tax_rate_per_tier[self.tab_tier_val] = tax_rate)
   # self.visibility_changed.connect(func(): print("MainSquareTierTab Visibility changed %s" % [self.visible]))
 
 var selected_node: WorldThing2D = null:
@@ -68,6 +73,7 @@ func refresh():
         happy_count += 1
 
   self.taxes_control.paid_taxes = str(123)
+  self.taxes_control.tax_rate = GameStats.treasury.tax_rate_per_tier.get(self.tab_tier_val, 1.0)
 
   self.sad_houses_count_label.text = str(sad_count)
   self.satisfied_houses_count_label.text = str(satisfied_count)
