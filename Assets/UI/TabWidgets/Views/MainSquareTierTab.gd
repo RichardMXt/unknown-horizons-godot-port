@@ -27,7 +27,7 @@ func _ready():
 var selected_node: WorldThing2D = null
 
 func refresh_tab(): # called by AllTabs.gd
-  print("MainSquareTierTab.refresh_tab (%s)" % [self.tab_tier])
+  # print("MainSquareTierTab.refresh_tab (%s)" % [self.tab_tier])
   var residence_nodes = self.get_tree().get_nodes_in_group("Residence")
 
   var houses_count = 0

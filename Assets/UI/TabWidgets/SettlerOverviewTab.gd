@@ -10,7 +10,7 @@ var selected_node: WorldThing2D = null:
     selected_node = value
 
 func refresh_tab(): # called by AllTabs.gd
-  print("SettlerOverviewTab.refresh_tab (%s)" % [self.name])
+  # print("SettlerOverviewTab.refresh_tab (%s)" % [self.name])
   var residential: Residential = self.selected_node as Residential
   if residential != null:
     self.taxes_control.tax_rate = GameStats.treasury.tax_rate_per_tier.get(residential.current_tier_val, 1.0)

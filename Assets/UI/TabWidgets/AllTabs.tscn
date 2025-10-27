@@ -319,6 +319,8 @@ region = Rect2(1, 577, 40, 46)
 [node name="AllTabs" instance=ExtResource("1_012xi")]
 script = ExtResource("2_wox5d")
 
+[node name="RefreshTimer" type="Timer" parent="." index="0"]
+
 [node name="AccountTab" parent="LeftFloatingPanel/TabSwitches" index="0" instance=ExtResource("2_ig0oa")]
 layout_mode = 2
 texture_normal = SubResource("warehouse_account_u")
@@ -479,11 +481,11 @@ texture_pressed = SubResource("mainsquare_inhabitants5_d")
 texture_hover = SubResource("mainsquare_inhabitants5_h")
 texture_active = SubResource("mainsquare_inhabitants5_a")
 
-[node name="ScrollContainer" parent="." index="1"]
-custom_minimum_size = Vector2(0, 238)
+[node name="ScrollContainer" parent="." index="2"]
+custom_minimum_size = Vector2(0, 399)
 
 [node name="TabContainer" parent="ScrollContainer" index="0"]
-current_tab = 2
+current_tab = 6
 
 [node name="AccountTab" parent="ScrollContainer/TabContainer" index="1" instance=ExtResource("21_go27e")]
 visible = false
@@ -823,6 +825,7 @@ text = "Limit: 30t per slot"
 font_style = 9
 
 [node name="BuySellTab" type="VBoxContainer" parent="ScrollContainer/TabContainer" index="3"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -1002,7 +1005,6 @@ tab_tier = &"SAILORS"
 metadata/_tab_index = 5
 
 [node name="MainSquarePioneersTab" parent="ScrollContainer/TabContainer" index="7" instance=ExtResource("37_t8gxx")]
-visible = false
 layout_mode = 2
 tab_tier = &"PIONEERS"
 metadata/_tab_index = 6
