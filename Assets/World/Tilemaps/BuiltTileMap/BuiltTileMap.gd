@@ -126,8 +126,8 @@ func get_cell_building_bitmask(cell: Vector2i) -> int:
   if building_on_tile != null:
     cell_bitmask = 0
     var building_on_tile_string_name := BuildingConfig.id_to_string_name(building_on_tile.id)
-    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 0
-    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 1
-    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 2
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 4
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
 
   return cell_bitmask
