@@ -129,7 +129,7 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
       if len(building_instance.buildable_on) > 0:
         buildable_tile_bitmask = building_instance.buildable_on[size.y - dy - 1][dx]
       # if the cell bitmask in the buildable cell bitmask, then the cell is buildable
-      var buildable_on_tile: bool = (buildable_tile_bitmask & cell_bitmask) == cell_bitmask
+      var buildable_on_tile: bool = (buildable_tile_bitmask & cell_bitmask) != 0
       if buildable_on_tile == false:
         return false
 
@@ -147,7 +147,7 @@ func get_cell_bitmask(cell: Vector2i) -> int:
     cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
     cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
     if cell_bitmask == 0b0000000:
-      return false # there is a building on cell but any building cannot be built on it
+      return 0 # there is a building on cell but any building cannot be built on it
 
   
   # find the cell bitmask for terrain
