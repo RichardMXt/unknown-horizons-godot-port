@@ -123,12 +123,10 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
         return false # cannot build on road, atleast for now
 
       # check if the cell is buildable
-      var cell_building_bitmask: int = self.built_tilemap.get_cell_building_bitmask(building_cell_coords)
-      var cell_bitmask: int = cell_building_bitmask
-      if cell_building_bitmask == -1: # no building on it, check with terrain
-        var cell_terrain_bitmask: int = self.terrain_tilemap.get_cell_terrain_bitmask(building_cell_coords) # get the terrain bitmask
-        cell_bitmask = cell_terrain_bitmask
-      elif cell_building_bitmask == 0: # building on it, but not buildable on
+      var cell_bitmask: int = self.built_tilemap.get_cell_building_bitmask(building_cell_coords)
+      if cell_bitmask == -1: # no building on it, check with terrain
+        cell_bitmask = self.terrain_tilemap.get_cell_terrain_bitmask(building_cell_coords) # use the terrain bitmask
+      elif cell_bitmask == 0: # building on it, but not buildable on
         return false
       # get the bitmask for the buildable cell of a building, inverse because stored left to right, top to bottom
       var buildable_tile_bitmask: int = 0b0000001 # by default the building can only be built on grass
