@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://caaq1eo2tha3s"]
+[gd_scene load_steps=23 format=4 uid="uid://caaq1eo2tha3s"]
 
 [ext_resource type="Script" uid="uid://cd8ykokfidoiu" path="res://Assets/World/Context/GameContextManager.gd" id="1_4ru01"]
 [ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/Pathfinding.gd" id="1_fhei5"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cbbakerytscn0" path="res://Assets/World/Buildings2/bakery/bakery.tscn" id="17_jn5qs"]
 [ext_resource type="PackedScene" uid="uid://cbblendertscn" path="res://Assets/World/Buildings2/blender/blender.tscn" id="18_goqk7"]
 [ext_resource type="PackedScene" uid="uid://cufrigatetscn" path="res://Assets/World/Units2/frigate/frigate.tscn" id="19_a06xh"]
+[ext_resource type="PackedScene" uid="uid://cbclaydeposts" path="res://Assets/World/Buildings2/clay_deposit/clay_deposit.tscn" id="19_jn5qs"]
 
 [node name="Main" type="Node2D"]
 
@@ -65,19 +66,15 @@ script = ExtResource("8_epgui")
 
 [node name="lumberjack1" parent="BuiltTileMap" instance=ExtResource("13_05k45")]
 position = Vector2(-160, 496)
-id = &"BUILDINGS.LUMBERJACK"
 
 [node name="lumberjack2" parent="BuiltTileMap" instance=ExtResource("13_05k45")]
 position = Vector2(256, 640)
-id = &"BUILDINGS.LUMBERJACK"
 
 [node name="lumberjack3" parent="BuiltTileMap" instance=ExtResource("13_05k45")]
 position = Vector2(-1216, 1024)
-id = &"BUILDINGS.LUMBERJACK"
 
 [node name="lumberjack4" parent="BuiltTileMap" instance=ExtResource("13_05k45")]
 position = Vector2(-864, 1264)
-id = &"BUILDINGS.LUMBERJACK"
 
 [node name="main_square2" parent="BuiltTileMap" instance=ExtResource("13_7wrtn")]
 position = Vector2(-224, 720)
@@ -89,22 +86,21 @@ id = &"Building"
 
 [node name="warehouse1" parent="BuiltTileMap" instance=ExtResource("16_nma3x")]
 position = Vector2(-1024, 512)
-id = &"BUILDINGS.WAREHOUSE"
 
 [node name="warehouse2" parent="BuiltTileMap" instance=ExtResource("16_nma3x")]
 position = Vector2(-800, 1008)
-id = &"BUILDINGS.WAREHOUSE"
 
 [node name="bakery" parent="BuiltTileMap" instance=ExtResource("17_jn5qs")]
 position = Vector2(-480, 944)
-id = &"BUILDINGS.BAKERY"
 
 [node name="blender" parent="BuiltTileMap" instance=ExtResource("18_goqk7")]
 position = Vector2(-384, 896)
-id = &"BUILDINGS.BLENDER"
 
 [node name="Frigate" parent="BuiltTileMap" instance=ExtResource("19_a06xh")]
 position = Vector2(448, 1248)
+
+[node name="clay_deposit" parent="BuiltTileMap" instance=ExtResource("19_jn5qs")]
+position = Vector2(32, 1008)
 
 [node name="BuildRoadHighlighter" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
