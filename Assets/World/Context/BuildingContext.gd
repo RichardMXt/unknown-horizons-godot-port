@@ -113,7 +113,7 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
         if reference_object.is_tile_valid_for_building(building_cell_coords) == false:
           return false
       
-      # check if the tile is valid for road
+      # check if the tile is vaild in terms or road or not
       var is_road: bool = false
       var built_tile_data: TileData = built_tilemap.get_cell_tile_data(building_cell_coords)
       if built_tile_data != null and built_tile_data.terrain_set != -1: # if the built_tile_data is null, then it is not a road
@@ -126,7 +126,7 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
       var tile_bitmask: int = 0b0000000
       var building_on_tile: Building2D = built_tilemap.building_position_to_building.get(building_cell_coords) # Is the tile a building?
       if building_on_tile != null:
-        var building_on_tile_string_name := StringName(building_on_tile.id.trim_prefix("BUILDINGS."))
+        var building_on_tile_string_name := BuildingConfig.id_to_string_name(building_on_tile.id)
         tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 4
         tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
         tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
