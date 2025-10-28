@@ -84,33 +84,32 @@ func _unhandled_input(event: InputEvent) -> void:
         self.building_instance.set_can_build_highlight(can_build)
 
     var mouseButtonEvent := event as InputEventMouseButton
-    if mouseButtonEvent != null:
-      if mouseButtonEvent.pressed == true:
-        if mouseButtonEvent.button_index == MOUSE_BUTTON_LEFT:
-          self.build(self.building_to_build, self.building_instance)
-          return
+    if mouseButtonEvent != null and mouseButtonEvent.pressed == true:
+      if mouseButtonEvent.button_index == MOUSE_BUTTON_LEFT:
+        self.build(self.building_to_build, self.building_instance)
+        return
 
-        if mouseButtonEvent.button_index == MOUSE_BUTTON_RIGHT: # cancel the build
-          if reference_object != null: # if reference_object was used, select it on build cancel
-            var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
-            if selectable != null: # if a selectable was found then set it as selected
-              self.game_context_manager.current_context = object_selected_context
-              object_selected_context.set_selected_objects([selectable])
-              return
-          self.building_instance.queue_free() # delete the building from the scene
-          self.building_instance = null
-          self.building_to_build = BuildingConfig.Buildings.NONE
-          self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
+      if mouseButtonEvent.button_index == MOUSE_BUTTON_RIGHT: # cancel the build
+        if reference_object != null: # if reference_object was used, select it on build cancel
+          var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
+          if selectable != null: # if a selectable was found then set it as selected
+            self.game_context_manager.current_context = object_selected_context
+            object_selected_context.set_selected_objects([selectable])
+            return
+        self.building_instance.queue_free() # delete the building from the scene
+        self.building_instance = null
+        self.building_to_build = BuildingConfig.Buildings.NONE
+        self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
 
-      var rotation_angle = 0
-      if event.is_action_pressed("rotate_building_left"):
-        rotation_angle = 90
-      if event.is_action_pressed("rotate_building_right"):
-        rotation_angle = -90
+    var rotation_angle = 0
+    if event.is_action_pressed("rotate_building_left"):
+      rotation_angle = 90
+    if event.is_action_pressed("rotate_building_right"):
+      rotation_angle = -90
 
-      if rotation_angle != 0:
-        var action_set := self.building_instance.get_first_node_of_type(BuildingActionSet) as BuildingActionSet
-        action_set.orientation = posmod(action_set.orientation + rotation_angle, 360) # make in range of 0-359 
+    if rotation_angle != 0:
+      var action_set := self.building_instance.get_first_node_of_type(BuildingActionSet) as BuildingActionSet
+      action_set.orientation = posmod(action_set.orientation + rotation_angle, 360) # make in range of 0-359 
 
 func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i, building_name: StringName) -> bool:
   if building_name == BuildingConfig.Buildings.NONE:

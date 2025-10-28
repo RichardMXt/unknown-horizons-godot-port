@@ -18,7 +18,8 @@ func register_initial_scenes():
     self.register_building(building, false) # keep the cell uncleared to prevent scene deletion
 
 func _ready() -> void:
-  register_initial_scenes.call_deferred()
+  register_initial_scenes()
+
 ## test tiers
 #   for pos in self.get_used_cells():
 #     var source_id = self.get_cell_source_id(pos)
