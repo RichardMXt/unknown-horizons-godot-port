@@ -1,19 +1,7 @@
-[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://g0x5fr7nbdbv"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://g0x5fr7nbdbv"]
 
 [ext_resource type="Texture2D" uid="uid://bpj7a252mpg8h" path="res://Assets/World/Trees/Sprites/Maple1_idle_full.png" id="4_spnop"]
 [ext_resource type="Texture2D" uid="uid://bywpxtmebk3ts" path="res://Roads.png" id="9_m4qb1"]
-
-[sub_resource type="TileMapPattern" id="TileMapPattern_todmm"]
-tile_data = PackedInt32Array(0, 196612, 0, 65536, 196612, 0, 131072, 196612, 0, 196608, 196612, 0, 262144, 196612, 0, 327680, 196612, 0, 1, 1, 0, 65537, 196612, 0, 131073, 196612, 0, 196609, 196612, 0, 262145, 1, 1, 327681, 196612, 0)
-
-[sub_resource type="TileMapPattern" id="TileMapPattern_wb8b0"]
-tile_data = PackedInt32Array(0, 196612, 0, 65536, 1, 0, 131072, 196612, 0, 196608, 1, 0, 262144, 196612, 0, 327680, 1, 1, 393216, 196612, 0, 1, 196612, 0, 65537, 196612, 0, 131073, 196612, 0, 196609, 196612, 0, 262145, 196612, 0, 327681, 196612, 0, 393217, 196612, 0)
-
-[sub_resource type="TileMapPattern" id="TileMapPattern_qttjq"]
-tile_data = PackedInt32Array(1, 1, 0, 65536, 196612, 0, 131073, 1, 0, 196608, 196612, 0, 262145, 1, 1, 327680, 196612, 0, 393217, 196612, 0, 65537, 196612, 0, 196609, 196612, 0, 327681, 196612, 0)
-
-[sub_resource type="TileMapPattern" id="TileMapPattern_upt5q"]
-tile_data = PackedInt32Array(1, 1, 0, 65536, 196612, 0, 131073, 1, 0, 196608, 196612, 0, 262145, 1, 1, 65537, 196612, 0, 196609, 196612, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8x7ew"]
 texture = ExtResource("4_spnop")
@@ -929,7 +917,3 @@ custom_data_layer_1/name = "is_tree"
 custom_data_layer_1/type = 1
 sources/1 = SubResource("TileSetAtlasSource_8x7ew")
 sources/2 = SubResource("TileSetAtlasSource_18atu")
-pattern_0 = SubResource("TileMapPattern_todmm")
-pattern_1 = SubResource("TileMapPattern_wb8b0")
-pattern_2 = SubResource("TileMapPattern_qttjq")
-pattern_3 = SubResource("TileMapPattern_upt5q")
