@@ -108,52 +108,58 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
     for dx in range(size.x):
       var building_cell_coords = building_cell_starting_coords - Vector2i(dx, dy)
 
-      ## check if the reference object says that the tile is valid
+      ## check if the reference object says that the cell is valid
       if reference_object != null and reference_object.has_method("is_tile_valid_for_building"):
         if reference_object.is_tile_valid_for_building(building_cell_coords) == false:
           return false
       
-      # check if the tile is vaild in terms or road or not
+      # check if the cell is vaild in terms or road or not
       var is_road: bool = false
       var built_tile_data: TileData = built_tilemap.get_cell_tile_data(building_cell_coords)
       if built_tile_data != null and built_tile_data.terrain_set != -1: # if the built_tile_data is null, then it is not a road
-        var built_terrain_name: String = built_tilemap.tile_set.get_terrain_name(built_tile_data.terrain_set, built_tile_data.terrain)# The terrain name of the tile.
-        is_road = built_terrain_name == "DirtRoad" # Is the tile a road?
+        var built_terrain_name: String = built_tilemap.tile_set.get_terrain_name(built_tile_data.terrain_set, built_tile_data.terrain)# The terrain name of the cell.
+        is_road = built_terrain_name == "DirtRoad" # Is the cell a road?
       if is_road:
         return false # cannot build on road, atleast for now
 
-      # find the tile bitmask for buildings on it
-      var tile_bitmask: int = 0b0000000
-      var building_on_tile: Building2D = built_tilemap.building_position_to_building.get(building_cell_coords) # Is the tile a building?
-      if building_on_tile != null:
-        var building_on_tile_string_name := BuildingConfig.id_to_string_name(building_on_tile.id)
-        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 4
-        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
-        tile_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
-        if tile_bitmask == 0b0000000:
-          return false # there is a building on tile but any building cannot be built on it
-
-      
-      # find the tile bitmask for terrain
-      var terrain_tile_data: TileData = terrain_tilemap.get_cell_tile_data(building_cell_coords)
-      if terrain_tile_data != null and terrain_tile_data.terrain_set != -1 and tile_bitmask == 0:
-        var terrain_name: String = terrain_tilemap.tile_set.get_terrain_name(terrain_tile_data.terrain_set, terrain_tile_data.terrain)
-        tile_bitmask |= int(terrain_name == "Grass")   << 0
-        tile_bitmask |= int(terrain_name == "Beach")   << 1
-        tile_bitmask |= int(terrain_name == "Shallow") << 2
-        tile_bitmask |= int(terrain_name == "Deep")    << 3
-      
-      # get the bitmask for the buildable tile of a building, inverse because stored left to right, top to bottom
+      # check if the cell is buildable
+      var cell_bitmask: int = self.get_cell_bitmask(building_cell_coords)
+      # get the bitmask for the buildable cell of a building, inverse because stored left to right, top to bottom
       var buildable_tile_bitmask: int = 0b0000001 # by default the building can only be built on grass
       if len(building_instance.buildable_on) > 0:
         buildable_tile_bitmask = building_instance.buildable_on[size.y - dy - 1][dx]
-      # if the tile bitmask in the buildable tile bitmask, then the tile is buildable
-      var buildable_on_tile: bool = (buildable_tile_bitmask & tile_bitmask) == tile_bitmask
+      # if the cell bitmask in the buildable cell bitmask, then the cell is buildable
+      var buildable_on_tile: bool = (buildable_tile_bitmask & cell_bitmask) == cell_bitmask
       if buildable_on_tile == false:
         return false
 
   var is_enough_resources = self.has_resources_for_building(building_name)
   return is_enough_resources
+
+## returns the tile bitmask(uses building only if there is a building on the tile)
+func get_cell_bitmask(cell: Vector2i) -> int:
+  # find the cell bitmask for buildings on it
+  var cell_bitmask: int = 0b0000000
+  var building_on_tile: Building2D = built_tilemap.building_position_to_building.get(cell) # Is the cell a building?
+  if building_on_tile != null:
+    var building_on_tile_string_name := BuildingConfig.id_to_string_name(building_on_tile.id)
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.CLAY_DEPOSIT)  << 4
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.STONE_DEPOSIT) << 5
+    cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
+    if cell_bitmask == 0b0000000:
+      return false # there is a building on cell but any building cannot be built on it
+
+  
+  # find the cell bitmask for terrain
+  var terrain_tile_data: TileData = terrain_tilemap.get_cell_tile_data(cell)
+  if terrain_tile_data != null and terrain_tile_data.terrain_set != -1 and cell_bitmask == 0:
+    var terrain_name: String = terrain_tilemap.tile_set.get_terrain_name(terrain_tile_data.terrain_set, terrain_tile_data.terrain)
+    cell_bitmask |= int(terrain_name == "Grass")   << 0
+    cell_bitmask |= int(terrain_name == "Beach")   << 1
+    cell_bitmask |= int(terrain_name == "Shallow") << 2
+    cell_bitmask |= int(terrain_name == "Deep")    << 3
+  
+  return cell_bitmask
 
 func build(building_cell_coords: Vector2i, building_size: Vector2i, building_to_build: StringName, orientation: BuildingActionSet.Orientations) -> void:
   if building_to_build != BuildingConfig.Buildings.NONE and can_build_building(building_cell_coords, building_size, building_to_build): # If there is a building to build and it can be built
