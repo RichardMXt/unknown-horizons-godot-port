@@ -123,16 +123,16 @@ func can_build_building(building_cell_starting_coords: Vector2i, size: Vector2i,
         return false # cannot build on road, atleast for now
 
       # check if the cell is buildable
-      var cell_bitmask: int = self.built_tilemap.get_cell_building_bitmask(building_cell_coords)
-      if cell_bitmask == 0: # no building on it, check with terrain
-        cell_bitmask = self.terrain_tilemap.get_cell_terrain_bitmask(building_cell_coords) # use the terrain bitmask
+      var terrain_bitmask: int = self.terrain_tilemap.get_cell_terrain_bitmask(building_cell_coords) # use the terrain bitmask
+      var building_bitmask: int = self.built_tilemap.get_cell_building_bitmask(building_cell_coords)
       # get the bitmask for the buildable cell of a building, inverse because stored left to right, top to bottom
-      var buildable_tile_bitmask: int = 0b0000001 # by default the building can only be built on grass
+      var buildable_cell_bitmask: int = 0b0000001 # by default the building can only be built on grass
       if len(building_instance.buildable_on) > 0:
-        buildable_tile_bitmask = building_instance.buildable_on[size.y - dy - 1][dx]
-      # if the cell bitmask in the buildable cell bitmask, then the cell is buildable
-      var buildable_on_tile: bool = (buildable_tile_bitmask & cell_bitmask) != 0
-      if buildable_on_tile == false:
+        buildable_cell_bitmask = building_instance.buildable_on[size.y - dy - 1][dx]
+      # check if the cell is buildable using allowed by terrain and required by building
+      var buildable_on_cell: bool = ((buildable_cell_bitmask & 0b00001111) & terrain_bitmask) != 0 # allowed by terrain(one match)
+      buildable_on_cell = buildable_on_cell and (buildable_cell_bitmask & 0b11110000) == building_bitmask # required by building(all matching)
+      if buildable_on_cell == false:
         return false
 
   var is_enough_resources = self.has_resources_for_building(building_name)
