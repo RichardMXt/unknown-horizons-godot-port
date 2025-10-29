@@ -68,7 +68,7 @@ func register_building(building: Building2D, clear_origin: bool) -> void:
       new_building_cells.append(building_cell_tile_coords)
       self.building_position_to_building[building_cell_tile_coords] = building
       building_all_cell_coords.append(building_cell_tile_coords)
-      road_pathfinding.set_point_solid(building_cell_tile_coords, false)
+      road_pathfinding.set_point_solid(building_cell_tile_coords, true)
       road_building_context.road_building_pathfindng.set_point_solid(building_cell_tile_coords, true)
   building.paused = false
 

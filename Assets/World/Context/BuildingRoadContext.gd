@@ -63,7 +63,7 @@ func highlight_road() -> void:
 func build_road() -> void:
   highlighter.clear()
   # check if there is a building on the start positionition
-  var scene_in_start_point = built_tilemap.building_position_to_building.find_key(built_tilemap.map_to_local(road_start_tile_position))
+  var scene_in_start_point = built_tilemap.building_position_to_building.get(built_tilemap.map_to_local(road_start_tile_position))
   if scene_in_start_point != null:
     return
 

@@ -23,6 +23,7 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
   BUILDING_COLLECTOR   = &"BUILDING_COLLECTOR",
   LUMBERJACK_COLLECTOR = &"LUMBERJACK_COLLECTOR",
   FIELD_COLLECTOR      = &"FIELD_COLLECTOR",
+  FISH_COLLECTOR       = &"FISH_COLLECTOR",
 }
 
 
@@ -40,6 +41,8 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 # var amount: int = 0
 
 var load_or_unload_time: float = 2
+## whether to show while loading
+var show_loading: bool = false
 
 var building_storage: SlotStorageComponent
 var production_line_components: Array[ProductionLineComponent]
@@ -73,6 +76,14 @@ func _get_property_list() -> Array:
       # "hint": PROPERTY_HINT_FLOAT,
       "usage": PROPERTY_USAGE_DEFAULT
     }) # add unload time if lumberjack
+  if self.collector_type in [self.CollectorTypes.BUILDING_COLLECTOR, self.CollectorTypes.FIELD_COLLECTOR, self.CollectorTypes.FISH_COLLECTOR]:
+    ret.append({
+      "name": "Show Loading",
+      "default": false,
+      "type": TYPE_BOOL,
+      # "hint": PROPERTY_HINT_FLOAT,
+      "usage": PROPERTY_USAGE_DEFAULT
+    })
   return ret
 
 func _get(property_name):
@@ -81,6 +92,9 @@ func _get(property_name):
       return self.collector_type
     "Load or Unload Time":
       return self.load_or_unload_time
+    "Show Loading":
+      return self.show_loading
+
 
 func _set(property_name, val):
   match property_name:
@@ -88,6 +102,8 @@ func _set(property_name, val):
       self.collector_type = val
     "Load or Unload Time":
       self.load_or_unload_time = val
+    "Show Loading":
+      self.show_loading = val
 #endregion
 
 
@@ -151,6 +167,21 @@ func get_cells_in_radius(radius: int) -> Array[Vector2i]:
   cells_in_radius.sort_custom(func(a, b): return abs(a.x) + abs(a.y) < abs(b.x) + abs(b.y))
   return cells_in_radius
 
+## Returns the shortest path [code]from[/code] to home including all tiles.
+func get_path_home(from: Vector2i) -> Array[Vector2i]:
+  var building_cell_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
+  var building_oriented_size: Vector2i = self.parent_building.get_oriented_size()
+  var best_path: Array[Vector2i] = []
+  for dy in range(building_oriented_size.y):
+    for dx in range(building_oriented_size.x):
+      var building_cell: Vector2i = building_cell_position - Vector2i(dx, dy)
+      if building_cell == from:
+        return []
+      var path: Array[Vector2i] = self.get_cell_path(from, building_cell)
+      if len(path) < len(best_path) or best_path == []:
+        best_path = path
+  return best_path
+
 ## Returns the best possible job at the moment
 func get_best_job() -> Job:
   if self.building_storage == null:
@@ -167,6 +198,8 @@ func get_best_job() -> Job:
       jobs = self.get_jobs_for_building_collector()
     self.CollectorTypes.FIELD_COLLECTOR:
       jobs = self.get_jobs_for_building_collector()
+    self.CollectorTypes.FISH_COLLECTOR:
+      jobs = self.get_jobs_for_building_collector()
 
   for job in jobs:
     if job == null:
@@ -177,7 +210,10 @@ func get_best_job() -> Job:
       best_job_score = score
 
   if best_job == null and collector_map_position != parent_building_map_position: # if there is no job, go home if not home
-    best_job = Job.new([collector_map_position], self.get_cell_path(collector_map_position, parent_building_map_position), ResourceConfig.Resources.NONE)
+    var path_home: Array[Vector2i] = self.get_path_home(collector_map_position)
+    if path_home == []:
+      return null
+    best_job = Job.new([collector_map_position], path_home, ResourceConfig.Resources.NONE)
   return best_job
 
 
@@ -212,6 +248,8 @@ func load_resources(job: Job) -> void:
       await self.load_resources_for_building_collector(job)
     self.CollectorTypes.FIELD_COLLECTOR:
       await self.load_resources_for_building_collector(job)
+    self.CollectorTypes.FISH_COLLECTOR:
+      await self.load_resources_for_building_collector(job)
 
 ## Unloads resources, one for all types right now
 func unload_resources(job: Job) -> void:
@@ -226,10 +264,19 @@ func unload_resources(job: Job) -> void:
   await building.unload_resource(job.resource, self.storage.get_storage_item_amount(job.resource))
   self.storage.set_storage_item_amount(job.resource, 0)
 
+## sets all cells of a building in pathfinding: pathfinding to the value: passable
+func set_building_cells_passable(building: Building2D, pathfinding: PathFindingManagement2D, passable: bool) -> void:
+  var building_map_position: Vector2i = self.built_tilemap.local_to_map(building.global_position)
+  var building_oriented_size: Vector2i = building.get_oriented_size()
+  for dy in range(building_oriented_size.y):
+    for dx in range(building_oriented_size.x):
+      var building_cell: Vector2i = building_map_position - Vector2i(dx, dy)
+      pathfinding.set_point_solid(building_cell, not passable)
+
 
 ## returns all possible jobs for a building collector
 func get_jobs_for_building_collector() -> Array[Job]:
-  if self.collector_type != self.CollectorTypes.BUILDING_COLLECTOR and self.collector_type != self.CollectorTypes.FIELD_COLLECTOR:
+  if (self.collector_type in [self.CollectorTypes.BUILDING_COLLECTOR, self.CollectorTypes.FIELD_COLLECTOR, self.CollectorTypes.FISH_COLLECTOR]) == false:
     push_error("Wrong function called for this collector. Collector: %s, get_jobs_for_building_collector" % self.collector_type)
     return []
   if self.building_storage == null or self.built_tilemap == null or self.parent_building == null:
@@ -241,6 +288,8 @@ func get_jobs_for_building_collector() -> Array[Job]:
   var cells_in_radius: Array[Vector2i] = self.get_cells_in_radius(self.radius)
   var jobs: Array[Job] = []
   # print("Building: %s" % [self.get_parent().name])
+  # set the parent building cells to passable for job searching
+  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, true)
   # create jobs for each resource
   for delta in cells_in_radius:
     var cell := parent_building_map_position + delta
@@ -253,13 +302,18 @@ func get_jobs_for_building_collector() -> Array[Job]:
     # seperate field/building collectors
     match self.collector_type:
       self.CollectorTypes.BUILDING_COLLECTOR:
-        if other_building.baseclass == "nature.Field":
-          continue # building collectors don't collect from fields
+        if other_building.baseclass == "nature.Field" or other_building.baseclass == "nature.Fish":
+          continue # building collectors don't collect from fields or fish
       self.CollectorTypes.FIELD_COLLECTOR:
         if other_building.baseclass != "nature.Field":
           continue # and field collectors don't collect from buildings
+      self.CollectorTypes.FISH_COLLECTOR:
+        if other_building.baseclass != "nature.Fish":
+          continue # and fish collectors collect only from fish
     # print("  Other building: %s" % [other_building.name])
-    # ckeck for any jobs possible with the other_building
+    # set the other building cells to passable for pathfinding
+    self.set_building_cells_passable(other_building, self.move_by_cell.pathfinding, true)
+    # check for any jobs possible with the other_building
     for resource in self.building_storage.max_capacity.keys():
       # print("    Resource: %s" % [resource])
       # get if consumed and/or produced
@@ -278,28 +332,43 @@ func get_jobs_for_building_collector() -> Array[Job]:
         var max_amount: int = self.building_storage.max_capacity.get(resource, 0)
         if amount_in_storage >= max_amount:
           continue
-        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
-        var path_from_start_to_end: Array[Vector2i] = self.get_cell_path(cell, parent_building_map_position) # from cell to other_building
-        if path_to_start == [] or path_from_start_to_end == []:
+         # find path from other_building back home
+        var path_from_start_to_end: Array[Vector2i] = self.get_path_home(cell)
+        if path_from_start_to_end == []:
+          continue
+        # find path to the starting point
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_start_to_end[0]) # to cell
+        if path_to_start == []:
           continue
         var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
         jobs.append(new_job)
+
       if produced: # the resource is produced by the this building, create job to take it out
         if self.building_storage.get_storage_item_amount(resource) <= 0:
           continue
         if not other_building.id in ["BUILDINGS." + BuildingConfig.Buildings.WAREHOUSE, "BUILDINGS." + BuildingConfig.Buildings.STORAGE]:
           continue
-        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, parent_building_map_position) # to this building
-        var path_from_home_to_job: Array[Vector2i] = self.get_cell_path(parent_building_map_position, cell) # from cell to other_building
-        if path_to_start == [] or path_from_home_to_job == []:
+        # get the path from parent buiding to other building
+        var path_from_home_to_job: Array[Vector2i] = self.get_path_home(cell)
+        path_from_home_to_job.reverse()
+        if path_from_home_to_job == []:
           continue
+        # find path to the starting point
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_home_to_job[0]) # find path to the starting point
+        if path_to_start == []:
+          continue
+        # create job
         var new_job: Job = Job.new(path_to_start, path_from_home_to_job, resource)
         jobs.append(new_job)
+    # reset to not passable
+    self.set_building_cells_passable(other_building, self.move_by_cell.pathfinding, false)
+  # reset to not passable
+  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, false)
   return jobs
 
 ## loads resources for a building collector
 func load_resources_for_building_collector(job: Job) -> void:
-  self.visible = false
+  self.visible = self.show_loading
   var building: Building2D = self.built_tilemap.building_position_to_building.get(job.path_from_start_to_end[0])
   if building == null:
     return
