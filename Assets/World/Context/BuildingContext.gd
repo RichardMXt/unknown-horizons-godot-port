@@ -61,6 +61,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if event.is_action_pressed("toggle_build_building"):
     build_building_data = event.get_meta("button_name").replace("Build", "").replace("Button", "")
+    if build_building_data == "Trail":
+      return # road building is handled in the RoadContext
     build_building_data = pascal_to_upper_snake_case(build_building_data)
     if build_building_data == null:
       push_error("`toggle_build_building` action is pressed, but `building_name` meta is null or empty.")
