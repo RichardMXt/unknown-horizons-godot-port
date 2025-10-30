@@ -335,14 +335,14 @@ func get_jobs_for_building_collector() -> Array[Job]:
         if amount_in_storage >= max_amount:
           continue
          # find path from other_building back home
-        var path_from_start_to_end: Array[Vector2i] = self.get_path_home(cell)
-        if path_from_start_to_end == []:
+        var path_from_provider_to_home: Array[Vector2i] = self.get_path_home(cell)
+        if path_from_provider_to_home == []:
           continue
         # find path to the starting point
-        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_start_to_end[0]) # to cell
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_provider_to_home[0]) # to cell
         if path_to_start == []:
           continue
-        var new_job: Job = Job.new(path_to_start, path_from_start_to_end, resource)
+        var new_job: Job = Job.new(path_to_start, path_from_provider_to_home, resource)
         jobs.append(new_job)
 
       if produced: # the resource is produced by the this building, create job to take it out
@@ -351,16 +351,16 @@ func get_jobs_for_building_collector() -> Array[Job]:
         if not other_building.id in ["BUILDINGS." + BuildingConfig.Buildings.WAREHOUSE, "BUILDINGS." + BuildingConfig.Buildings.STORAGE]:
           continue
         # get the path from parent buiding to other building
-        var path_from_home_to_job: Array[Vector2i] = self.get_path_home(cell)
-        path_from_home_to_job.reverse()
-        if path_from_home_to_job == []:
+        var path_from_home_to_consumer: Array[Vector2i] = self.get_path_home(cell)
+        path_from_home_to_consumer.reverse()
+        if path_from_home_to_consumer == []:
           continue
         # find path to the starting point
-        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_home_to_job[0]) # find path to the starting point
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, path_from_home_to_consumer[0]) # find path to the starting point
         if path_to_start == []:
           continue
         # create job
-        var new_job: Job = Job.new(path_to_start, path_from_home_to_job, resource)
+        var new_job: Job = Job.new(path_to_start, path_from_home_to_consumer, resource)
         jobs.append(new_job)
     # reset to not passable
     self.set_building_cells_passable(other_building, self.move_by_cell.pathfinding, false)
