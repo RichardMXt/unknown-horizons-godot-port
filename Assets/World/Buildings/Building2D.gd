@@ -165,22 +165,21 @@ func get_oriented_size() -> Vector2i:
 
 ## Returns an array of array of Vector2i (cell offsets) based on current orientation from _045 orientation
 func get_oriented_cells() -> Array[Array]:
-  var oriented_cells: Array[Array] = []
-  oriented_cells.resize(self.size.y)
   # get action set
   var action_set := self.get_first_node_of_type(BuildingActionSet) as BuildingActionSet
   if action_set == null:
     push_error("Building %s has no BuildingActionSet to get orientation from" % self.name)
     return []
+  var orientation := action_set.orientation
 
+  var oriented_cells: Array[Array] = []
+  oriented_cells.resize(self.size.y)
   for dy in range(self.size.y):
-    var row: Array = []
+    var row := oriented_cells[dy]
     row.resize(self.size.x)
     for dx in range(self.size.x):
-      var cell := Vector2i(dx, dy)
-      
-      # Rotate the cell according to orientation (around origin), minus for map transform
-      match action_set.orientation:
+      var cell: Vector2i
+      match orientation: # Calculate the cell position acording to orientation
         BuildingActionSet.Orientations._045:
           cell = -Vector2i(dy, dx) # axis switched
         BuildingActionSet.Orientations._135:
@@ -192,9 +191,7 @@ func get_oriented_cells() -> Array[Array]:
         BuildingActionSet.Orientations._315:
           # 270° from original, axis stay same, dx inverted(from end)
           cell = -Vector2i(size.x - 1 - dx, dy)
-      
       row[dx] = cell
-    oriented_cells[dy] = row
 
   return oriented_cells
 
