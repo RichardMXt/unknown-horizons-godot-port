@@ -167,24 +167,50 @@ func get_cells_in_radius(radius: int) -> Array[Vector2i]:
   cells_in_radius.sort_custom(func(a, b): return abs(a.x) + abs(a.y) < abs(b.x) + abs(b.y))
   return cells_in_radius
 
+
+## sets all cells of a building in pathfinding: pathfinding to the value: passable
+## and returns original state: were passable
+func set_building_cells_passable(building: Building2D, pathfinding: PathFindingManagement2D, passable: bool) -> bool:
+  var building_map_position: Vector2i = self.built_tilemap.local_to_map(building.global_position)
+  var building_oriented_cells: Array[Array] = building.get_oriented_cells()
+  var were_passable: bool = false
+  for row in building_oriented_cells:
+    for dv: Vector2i in row:
+      var building_cell: Vector2i = building_map_position + dv
+      were_passable = were_passable or (pathfinding.is_point_solid(building_cell) == false)
+      pathfinding.set_point_solid(building_cell, not passable)
+  return were_passable
+
 ## Returns the shortest path [code]from[/code] to home including all tiles.
 func get_path_home(from: Vector2i) -> Array[Vector2i]:
-  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, true)
-  var was_point_solid: bool = self.move_by_cell.pathfinding.is_point_solid(from)
-  self.move_by_cell.pathfinding.set_point_solid(from, false)
+  # set passable for pathfinding
+  var building_from: Building2D = self.built_tilemap.building_position_to_building.get(from, null)
+  var were_points_solid: bool = self.move_by_cell.pathfinding.is_point_solid(from)
+  if building_from == null: # if not a building cell, set only it to passable
+    were_points_solid = self.move_by_cell.pathfinding.is_point_solid(from) == false
+    self.move_by_cell.pathfinding.set_point_solid(from, false)
+  else: # else set the whole building to passable
+    were_points_solid = self.set_building_cells_passable(building_from, self.move_by_cell.pathfinding, true)
+
   var building_cell_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
   var building_oriented_cells: Array[Array] = self.parent_building.get_oriented_cells()
   var best_path: Array[Vector2i] = []
-  for row in building_oriented_cells:
-    for dv: Vector2i in row:
+  for row_idx in range(len(building_oriented_cells)):
+    for col_idx in range(len(building_oriented_cells[row_idx])):
+      if (row_idx in [0, len(building_oriented_cells)]) == false and (col_idx in [0, len(building_oriented_cells[row_idx]) - 1]) == false:
+        continue
+      var dv: Vector2i = building_oriented_cells[row_idx][col_idx]
       var building_cell: Vector2i = building_cell_position + dv
       if building_cell == from:
         return []
       var path: Array[Vector2i] = self.get_cell_path(from, building_cell)
       if len(path) < len(best_path) or best_path == []:
         best_path = path
-  self.move_by_cell.pathfinding.set_point_solid(from, was_point_solid)
-  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, false)
+  if building_from == null:
+    self.move_by_cell.pathfinding.set_point_solid(from, were_points_solid)
+  else:
+    self.set_building_cells_passable(building_from, self.move_by_cell.pathfinding, false)
+  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, were_points_solid)
   return best_path
 
 ## Returns the best possible job at the moment
@@ -269,14 +295,6 @@ func unload_resources(job: Job) -> void:
   await building.unload_resource(job.resource, self.storage.get_storage_item_amount(job.resource))
   self.storage.set_storage_item_amount(job.resource, 0)
 
-## sets all cells of a building in pathfinding: pathfinding to the value: passable
-func set_building_cells_passable(building: Building2D, pathfinding: PathFindingManagement2D, passable: bool) -> void:
-  var building_map_position: Vector2i = self.built_tilemap.local_to_map(building.global_position)
-  var building_oriented_cells: Array[Array] = building.get_oriented_cells()
-  for row in building_oriented_cells:
-    for dv: Vector2i in row:
-      var building_cell: Vector2i = building_map_position + dv
-      pathfinding.set_point_solid(building_cell, not passable)
 
 
 ## returns all possible jobs for a building collector
