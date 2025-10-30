@@ -163,6 +163,42 @@ func get_oriented_size() -> Vector2i:
       size_y = self.size.x
   return Vector2i(size_x, size_y)
 
+## Returns an array of array of Vector2i (cell offsets) based on current orientation from _045 orientation
+func get_oriented_cells() -> Array[Array]:
+  # initialize oriented_cells
+  var oriented_cells: Array[Array] = []
+  for dy in range(self.size.y):
+    var row: Array = []
+    row.resize(self.size.x)
+    oriented_cells.append(row)
+  # get action set
+  var actionset := self.get_first_node_of_type(BuildingActionSet) as BuildingActionSet
+  if actionset == null:
+    push_error("Building %s has no BuildingActionSet to get orientation from" % self.name)
+    return []
+
+  for dy in range(self.size.y):
+    for dx in range(self.size.x):
+      var cell := Vector2i(dx, dy)
+      
+      # Rotate the cell according to orientation (around origin), minus for map transform
+      match actionset.orientation:
+        BuildingActionSet.Orientations._045:
+          cell = -Vector2i(dy, dx) # axis switched
+        BuildingActionSet.Orientations._135:
+          # 90° from original, axis stays same, dy inverted(from end)
+          cell = -Vector2i(dx , size.y - 1 - dy)
+        BuildingActionSet.Orientations._225:
+          # 180° from original, dx and dy inverted, axis switched
+          cell = -Vector2i(self.size.y - dy - 1, self.size.x - dx - 1)
+        BuildingActionSet.Orientations._315:
+          # 270° from original, axis stay same, dx inverted(from end)
+          cell = -Vector2i(size.x - 1 - dx, dy)
+      
+      oriented_cells[dy][dx] = cell
+
+  return oriented_cells
+
 func _notification(what):
   if what == NOTIFICATION_TRANSFORM_CHANGED:
     if Engine.is_editor_hint():

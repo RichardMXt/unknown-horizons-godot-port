@@ -20,6 +20,10 @@ func _ready():
   land.append_array(terrain_points["Beach"].keys().duplicate())
   road_building_pathfindng.set_points_passable(land, true)
 
+func context_exited():
+  self.highlighter.clear()
+  self.is_road_building_started = false
+
 func _unhandled_input(event):
   if event.is_action_pressed("toggle_build_road"):
     self.game_context_manager.current_context = self

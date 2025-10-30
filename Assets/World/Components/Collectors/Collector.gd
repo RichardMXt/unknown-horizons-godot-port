@@ -169,17 +169,22 @@ func get_cells_in_radius(radius: int) -> Array[Vector2i]:
 
 ## Returns the shortest path [code]from[/code] to home including all tiles.
 func get_path_home(from: Vector2i) -> Array[Vector2i]:
+  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, true)
+  var was_point_solid: bool = self.move_by_cell.pathfinding.is_point_solid(from)
+  self.move_by_cell.pathfinding.set_point_solid(from, false)
   var building_cell_position: Vector2i = self.built_tilemap.local_to_map(self.parent_building.global_position)
-  var building_oriented_size: Vector2i = self.parent_building.get_oriented_size()
+  var building_oriented_cells: Array[Array] = self.parent_building.get_oriented_cells()
   var best_path: Array[Vector2i] = []
-  for dy in range(building_oriented_size.y):
-    for dx in range(building_oriented_size.x):
-      var building_cell: Vector2i = building_cell_position - Vector2i(dx, dy)
+  for row in building_oriented_cells:
+    for dv: Vector2i in row:
+      var building_cell: Vector2i = building_cell_position + dv
       if building_cell == from:
         return []
       var path: Array[Vector2i] = self.get_cell_path(from, building_cell)
       if len(path) < len(best_path) or best_path == []:
         best_path = path
+  self.move_by_cell.pathfinding.set_point_solid(from, was_point_solid)
+  self.set_building_cells_passable(self.parent_building, self.move_by_cell.pathfinding, false)
   return best_path
 
 ## Returns the best possible job at the moment
@@ -267,10 +272,10 @@ func unload_resources(job: Job) -> void:
 ## sets all cells of a building in pathfinding: pathfinding to the value: passable
 func set_building_cells_passable(building: Building2D, pathfinding: PathFindingManagement2D, passable: bool) -> void:
   var building_map_position: Vector2i = self.built_tilemap.local_to_map(building.global_position)
-  var building_oriented_size: Vector2i = building.get_oriented_size()
-  for dy in range(building_oriented_size.y):
-    for dx in range(building_oriented_size.x):
-      var building_cell: Vector2i = building_map_position - Vector2i(dx, dy)
+  var building_oriented_cells: Array[Array] = building.get_oriented_cells()
+  for row in building_oriented_cells:
+    for dv: Vector2i in row:
+      var building_cell: Vector2i = building_map_position + dv
       pathfinding.set_point_solid(building_cell, not passable)
 
 
