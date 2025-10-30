@@ -30,6 +30,8 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 @export var baseclass: String  # TODO: not used yet
 @export var radius: int = 10
 @export var velocity: float    # TODO: not used yet
+## whether to show while loading
+@export var show_while_loading: bool = false
 
 @onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap") if not Engine.is_editor_hint() else null
 @onready var parent_building: Building2D = self.get_parent() if not Engine.is_editor_hint() else null
@@ -41,8 +43,6 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 # var amount: int = 0
 
 var load_or_unload_time: float = 2
-## whether to show while loading
-var show_loading: bool = false
 
 var building_storage: SlotStorageComponent
 var production_line_components: Array[ProductionLineComponent]
@@ -76,14 +76,6 @@ func _get_property_list() -> Array:
       # "hint": PROPERTY_HINT_FLOAT,
       "usage": PROPERTY_USAGE_DEFAULT
     }) # add unload time if lumberjack
-  if self.collector_type in [self.CollectorTypes.BUILDING_COLLECTOR, self.CollectorTypes.FIELD_COLLECTOR, self.CollectorTypes.FISH_COLLECTOR]:
-    ret.append({
-      "name": "Show Loading",
-      "default": false,
-      "type": TYPE_BOOL,
-      # "hint": PROPERTY_HINT_FLOAT,
-      "usage": PROPERTY_USAGE_DEFAULT
-    })
   return ret
 
 func _get(property_name):
@@ -92,8 +84,6 @@ func _get(property_name):
       return self.collector_type
     "Load or Unload Time":
       return self.load_or_unload_time
-    "Show Loading":
-      return self.show_loading
 
 
 func _set(property_name, val):
@@ -102,8 +92,6 @@ func _set(property_name, val):
       self.collector_type = val
     "Load or Unload Time":
       self.load_or_unload_time = val
-    "Show Loading":
-      self.show_loading = val
 #endregion
 
 
@@ -224,11 +212,7 @@ func get_best_job() -> Job:
   match self.collector_type:
     self.CollectorTypes.LUMBERJACK_COLLECTOR:
       jobs = self.get_jobs_for_lumberjack_collector()
-    self.CollectorTypes.BUILDING_COLLECTOR:
-      jobs = self.get_jobs_for_building_collector()
-    self.CollectorTypes.FIELD_COLLECTOR:
-      jobs = self.get_jobs_for_building_collector()
-    self.CollectorTypes.FISH_COLLECTOR:
+    self.CollectorTypes.BUILDING_COLLECTOR, self.CollectorTypes.FIELD_COLLECTOR, self.CollectorTypes.FISH_COLLECTOR:
       jobs = self.get_jobs_for_building_collector()
 
   for job in jobs:
@@ -274,11 +258,7 @@ func load_resources(job: Job) -> void:
   match self.collector_type:
     self.CollectorTypes.LUMBERJACK_COLLECTOR:
       await self.chop_tree(job)
-    self.CollectorTypes.BUILDING_COLLECTOR:
-      await self.load_resources_for_building_collector(job)
-    self.CollectorTypes.FIELD_COLLECTOR:
-      await self.load_resources_for_building_collector(job)
-    self.CollectorTypes.FISH_COLLECTOR:
+    self.CollectorTypes.BUILDING_COLLECTOR, self.CollectorTypes.FIELD_COLLECTOR, self.CollectorTypes.FISH_COLLECTOR:
       await self.load_resources_for_building_collector(job)
 
 ## Unloads resources, one for all types right now
@@ -390,7 +370,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
 
 ## loads resources for a building collector
 func load_resources_for_building_collector(job: Job) -> void:
-  self.visible = self.show_loading
+  self.visible = self.show_while_loading
   var building: Building2D = self.built_tilemap.building_position_to_building.get(job.path_from_start_to_end[0])
   if building == null:
     return

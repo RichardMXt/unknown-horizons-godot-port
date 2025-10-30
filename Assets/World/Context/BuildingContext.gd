@@ -47,7 +47,7 @@ var last_highlighted_building_position: Vector2i
 # clear the highlights
 func context_exited() -> void:
   super()
-  self.building_to_build = BuildingConfig.Buildings.NONE
+  self.cancel_build()
   # highlighter.clear()
 
 static func pascal_to_upper_snake_case(text: String) -> String:
@@ -95,9 +95,7 @@ func _unhandled_input(event: InputEvent) -> void:
             self.game_context_manager.current_context = object_selected_context
             object_selected_context.set_selected_objects([selectable])
             return
-        self.building_instance.queue_free() # delete the building from the scene
-        self.building_instance = null
-        self.building_to_build = BuildingConfig.Buildings.NONE
+        self.cancel_build()
         self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
 
     var rotation_angle = 0
@@ -146,6 +144,7 @@ func can_build_building(building_cell_starting_coords: Vector2i, oriented_cells:
       # get the bitmask for the buildable cell of a building, inverse because stored left to right, top to bottom
       var buildable_cell_bitmask: int = 0b0000001 # by default the building can only be built on grass
       if len(building_instance.buildable_on) > 0:
+        # in tscn, the array is top to bottom, but we build bottom to top, hence inverse y
         buildable_cell_bitmask = building_instance.buildable_on[len(oriented_cells) - 1 - y][x]
       # check if the cell is buildable using allowed by terrain and required by building
       var buildable_on_cell: bool = ((buildable_cell_bitmask & 0b00001111) & terrain_bitmask) != 0 # allowed by terrain(one match)
@@ -167,6 +166,9 @@ func build(building_to_build: StringName, building_instance: Building2D) -> void
       self.building_to_build = self.building_to_build
       # self.building_to_build = BuildingConfig.Buildings.NONE # then clear the building to be built
       # self.game_context_manager.current_context = null # release the context
+
+func cancel_build() -> void:
+  self.building_to_build = BuildingConfig.Buildings.NONE
 
 func has_resources_for_building(building_name: StringName) -> bool:
   var cost: Dictionary = BuildingConfig.building_to_cost[building_name] as Dictionary[StringName, int]
