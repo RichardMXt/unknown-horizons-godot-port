@@ -99,3 +99,7 @@ func spend_happiness(happiness_to_spend: int):
     var happiness_to_take_or_give := mini(happiness_to_spend, happiness_in_storage)
     storage.set_storage_item_amount(ResourceConfig.Resources.HAPPINESS, happiness_in_storage - happiness_to_take_or_give)
     happiness_to_spend -= happiness_to_take_or_give
+
+func calculate_tax_revenue():
+  var tax_revenue = self.residents_count * GameStats.treasury.tax_rate_per_tier[self.current_tier_val] * GameStats.treasury.gold_per_person_per_second
+  return tax_revenue

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://caaq1eo2tha3s"]
+[gd_scene load_steps=27 format=4 uid="uid://caaq1eo2tha3s"]
 
 [ext_resource type="Script" uid="uid://cd8ykokfidoiu" path="res://Assets/World/Context/GameContextManager.gd" id="1_4ru01"]
 [ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/Pathfinding.gd" id="1_fhei5"]

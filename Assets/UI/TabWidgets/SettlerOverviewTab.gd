@@ -13,6 +13,7 @@ func refresh_tab(): # called by AllTabs.gd
   # print("SettlerOverviewTab.refresh_tab (%s)" % [self.name])
   var residential: Residential = self.selected_node as Residential
   if residential != null:
+    self.taxes_control.paid_taxes = residential.calculate_tax_revenue()
     self.taxes_control.tax_rate = GameStats.treasury.tax_rate_per_tier.get(residential.current_tier_val, 1.0)
     self.taxes_control.tax_rate_changed.connect(func (tax_rate: float): GameStats.treasury.tax_rate_per_tier[residential.current_tier_val] = tax_rate)
 
