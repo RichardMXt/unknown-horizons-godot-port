@@ -122,7 +122,7 @@ func set_components(new_components: Array[BaseComponent]) -> void:
   for component in new_components:
     var storage_component = component as StorageComponent
     var production_line_component = component as ProductionLineComponent
-    if storage_component != null:
+    if storage_component != null and self.building_storage == null:
       self.building_storage = storage_component
     if production_line_component != null:
       self.production_line_components.append(production_line_component)

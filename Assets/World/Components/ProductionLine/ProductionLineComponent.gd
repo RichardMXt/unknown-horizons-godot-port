@@ -1,4 +1,8 @@
 extends BaseComponent
+## Simulates production of resources
+##
+## The production line is a component that produces resources from consumed resources.[br]
+## It collects resources from sibling storages and puts the produced resource into the first one in the tree order.
 
 class_name ProductionLineComponent
 
@@ -61,7 +65,7 @@ var production_stage: ProductionStages = ProductionStages.IDLE:
 
 var production_time_end: float = 0
 
-var storage_component: StorageComponent
+var storage_components: Array[StorageComponent]
 
 var action_set: BuildingActionSet = null
 
@@ -70,9 +74,9 @@ signal action_state_changed(action_state: ActionStates)
 func set_components(components: Array[BaseComponent]):
   for component in components:
     var storage_component = component as StorageComponent
-    var action_set = component as BuildingActionSet
+    var action_set = component as BuildingActionSet 
     if storage_component != null:
-      self.storage_component = storage_component
+      self.storage_components.append(storage_component)
     if action_set != null:
       self.action_set = action_set
   if self.paused:
@@ -110,30 +114,33 @@ func notify_resource_produced():
 
 func has_output_space():
   for produces in self.produces.keys():
-    var current_amount := self.storage_component.get_storage_item_amount(produces)
-    var max_amount: int = self.storage_component.get_max_capacity(produces  )
-    if current_amount < max_amount:
-      return true
+    for storage_component in self.storage_components:
+      var current_amount := storage_component.get_storage_item_amount(produces)
+      var max_amount: int = storage_component.get_max_capacity(produces)
+      if current_amount < max_amount:
+        return true
   return false
 
 func has_enough_resources() -> bool:
-  if self.storage_component == null: # if there is no storage then no resources
+  if self.storage_components == []: # if there is no storage then no resources
     return false
   for resource in self.consumes:
-    var available_resource_amount: int = self.storage_component.get_storage_item_amount(resource)
+    var available_resource_amount: int = 0
     var needed_resource_amount: int = consumes[resource] * self.consumes_multiplier
-    if available_resource_amount == null or available_resource_amount < needed_resource_amount:
+    for storage_component in self.storage_components:
+      available_resource_amount += storage_component.get_storage_item_amount(resource)
+    if available_resource_amount < needed_resource_amount:
       return false
   return true
 
 func spend_resources():
-  if self.storage_component == null: # if there is no storage then no resources
+  if self.storage_components == []: # if there is no storage then no resources
     return
   for resource in consumes:
-    var available_resource_amount: int = self.storage_component.get_storage_item_amount(resource)
+    var available_resource_amount: int = self.storage_components[0].get_storage_item_amount(resource)
     var needed_resource_amount: int = consumes[resource]
     if available_resource_amount >= needed_resource_amount: # for the case that the resources were not checked before (from unusual function, e.t.c.)
-      self.storage_component.set_storage_item_amount(resource, available_resource_amount - needed_resource_amount * self.consumes_multiplier)
+      self.storage_components[0].set_storage_item_amount(resource, available_resource_amount - needed_resource_amount * self.consumes_multiplier)
     # else:
     #   push_error("not enough resources at spending stage.")
 
@@ -141,7 +148,7 @@ func spend_resources():
 func production_loop():
   if self.is_node_ready() == false:
     await self.ready
-  while production_stage != ProductionStages.IDLE and self.storage_component != null:
+  while production_stage != ProductionStages.IDLE and self.storage_components != []:
     await wait_for_resources()
     await produce()
 
@@ -155,6 +162,8 @@ func wait_for_resources():
 func produce():
   # if len(produces.keys()) <= 0:
   #   return
+  if self.storage_components == []:
+    push_error("no storage components")
   production_stage = ProductionStages.PRODUCING
   # simulate production, TODO: switch to Timer for game speed awareness and pauseability
   self.production_time_end = Time.get_unix_time_from_system() + production_time
@@ -163,9 +172,9 @@ func produce():
     await self.unpaused
   spend_resources()
   for produced_resource_name in self.produces:
-    var current_amount := self.storage_component.get_storage_item_amount(produced_resource_name)
+    var current_amount := self.storage_components[0].get_storage_item_amount(produced_resource_name)
     var produced_amount = self.produces[produced_resource_name]
-    self.storage_component.set_storage_item_amount(produced_resource_name, current_amount + produced_amount * self.produces_multiplier)
+    self.storage_components[0].set_storage_item_amount(produced_resource_name, current_amount + produced_amount * self.produces_multiplier)
   notify_resource_produced()
 
 

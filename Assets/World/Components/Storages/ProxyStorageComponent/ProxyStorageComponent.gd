@@ -9,6 +9,11 @@ class_name ProxyStorageComponent
 var proxied_storage: StorageComponent
 
 func _ready() -> void:
+  self.setup_proxy_storage() # fire and forget
+
+func setup_proxy_storage():
+  if self.paused:
+    await self.unpaused
   for sibling in self.get_parent().get_children():
     var building: Building2D = sibling as Building2D
     if building != null:
