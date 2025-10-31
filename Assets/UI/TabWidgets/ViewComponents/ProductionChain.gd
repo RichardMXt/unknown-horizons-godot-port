@@ -37,7 +37,7 @@ class_name ProductionChain
 @onready var progress_bar: ColorRect = self.get_node("MarginContainer/VBoxContainer/MiddleSection/Control/ProgressBar/ProgressBar/ProgressBar")
 @onready var progress_bar_spacer: Control = self.get_node("MarginContainer/VBoxContainer/MiddleSection/Control/ProgressBar/ProgressBar/Spacer")
 
-var storage: StorageComponent = null
+var storages: Array[StorageComponent] = []
 var production_line: ProductionLineComponent = null
 
 func _ready():
@@ -52,20 +52,26 @@ func _process(_delta):
     update_resource_amount()
 
 func update_resource_amount():
-  if self.storage == null:
-    return  
+  var resources_in_storages: Dictionary[StringName, int] = {}
+  for storage in self.storages:
+    for resource in storage.get_storage_items():
+      if (resource in self.production_line.consumes.keys()) == false and (resource in self.production_line.produces.keys()) == false:
+        continue # dont store unused resources
+      resources_in_storages[resource] = resources_in_storages.get(resource, 0) + storage.get_storage_item_amount(resource)
 
   # get the amount of the input resources
-  self.input_one.resource_amount = self.storage.get_storage_item_amount(self.input_one.resource_type)
-  self.input_two.resource_amount = self.storage.get_storage_item_amount(self.input_two.resource_type)
-  self.input_three.resource_amount = self.storage.get_storage_item_amount(self.input_three.resource_type)
-  # set the input limits 
-  self.input_one.limit = self.storage.get_max_capacity(self.input_one.resource_type)
-  self.input_two.limit = self.storage.get_max_capacity(self.input_two.resource_type)
-  self.input_three.limit = self.storage.get_max_capacity(self.input_three.resource_type)
+  self.input_one.resource_amount = resources_in_storages.get(self.input_one.resource_type, 0)
+  self.input_two.resource_amount = resources_in_storages.get(self.input_two.resource_type, 0)
+  self.input_three.resource_amount = resources_in_storages.get(self.input_three.resource_type, 0)
+  # set the input limits
+  if self.production_line.storage_components != []:
+    self.input_one.limit = self.production_line.storage_components[0].get_max_capacity(self.input_one.resource_type)
+    self.input_two.limit = self.production_line.storage_components[0].get_max_capacity(self.input_two.resource_type)
+    self.input_three.limit = self.production_line.storage_components[0].get_max_capacity(self.input_three.resource_type)
   # set the output value and limit
-  self.output.resource_amount = self.storage.get_storage_item_amount(self.output.resource_type)
-  self.output.limit = self.storage.get_max_capacity(self.output.resource_type)
+  self.output.resource_amount = resources_in_storages.get(self.output.resource_type, 0)
+  if self.production_line.storage_components != []:
+    self.output.limit = self.production_line.storage_components[0].get_max_capacity(self.output.resource_type)
 
 func update_progress_bar():
   var progress: float = 0
@@ -77,10 +83,11 @@ func update_progress_bar():
   self.progress_bar_spacer.size_flags_stretch_ratio = 1 - progress
 
 ## Updates the production chain inputs and outputs
-func set_production_line(production_line: ProductionLineComponent, storage: StorageComponent):
-  self.storage = storage
+func set_production_line(production_line: ProductionLineComponent, building: Building2D):
+  for storage: StorageComponent in building.get_all_nodes_of_type(StorageComponent):
+    self.storages.append(storage)
   self.production_line = production_line
-  if production_line == null or storage == null:
+  if production_line == null or self.storages == null:
     return
   # update the inputs
   self.input_one.resource_type = ResourceConfig.Resources.NONE
@@ -93,19 +100,13 @@ func set_production_line(production_line: ProductionLineComponent, storage: Stor
   match len(consume_keys):
     1:
       self.input_two.resource_type = consume_keys[0]
-      self.input_two.resource_amount = storage.get_storage_item_amount(consume_keys[0])
     2:
       self.input_one.resource_type = consume_keys[0]
-      self.input_one.resource_amount = storage.get_storage_item_amount(consume_keys[0])
       self.input_three.resource_type = consume_keys[1]
-      self.input_three.resource_amount = storage.get_storage_item_amount(consume_keys[1])
     3:
       self.input_one.resource_type = consume_keys[0]
-      self.input_one.resource_amount = storage.get_storage_item_amount(consume_keys[0])
       self.input_two.resource_type = consume_keys[1]
-      self.input_two.resource_amount = storage.get_storage_item_amount(consume_keys[1])
       self.input_three.resource_type = consume_keys[2]
-      self.input_three.resource_amount = storage.get_storage_item_amount(consume_keys[2])
 
   # update the output
   var produces_keys: Array[StringName] = production_line.produces.keys()

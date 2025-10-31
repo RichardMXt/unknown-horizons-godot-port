@@ -34,9 +34,4 @@ func on_new_selected_node(node: WorldThing2D) -> void:
         production_chain = production_chains.get_child(production_chain_index)
         production_chain_index += 1
       production_chain.visible = true
-      var storage: StorageComponent = building_selected.get_first_node_of_type(StorageComponent) as StorageComponent
-      if storage == null:
-        if self.visible:
-          push_warning("No slot storages found for: %s" % building_selected.name)
-        continue
-      production_chain.set_production_line(production_line, storage)
+      production_chain.set_production_line(production_line, building_selected)
