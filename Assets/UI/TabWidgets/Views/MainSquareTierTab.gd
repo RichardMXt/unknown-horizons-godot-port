@@ -48,7 +48,7 @@ func refresh_tab(): # called by AllTabs.gd
       continue
       
     houses_count += 1
-    residents_count += residence.residence
+    residents_count += residence.residents_count
     var happiness = 0
     for storage in residence.get_all_nodes_of_type(StorageComponent):
       happiness += storage.get_storage_item_amount(ResourceConfig.Resources.HAPPINESS)

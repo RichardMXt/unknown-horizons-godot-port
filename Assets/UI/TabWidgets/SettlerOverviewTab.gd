@@ -18,7 +18,7 @@ func refresh_tab(): # called by AllTabs.gd
 
     self.happiness_slider.value = residential.get_happiness()
 
-    self.residents_count_label.text = str(residential.residence) + " / " + str(residential.max_residents_for_current_tier)
+    self.residents_count_label.text = str(residential.residents_count) + " / " + str(residential.max_residents_for_current_tier)
 
   for child in self.get_children():
     if "selected_node" in child:
