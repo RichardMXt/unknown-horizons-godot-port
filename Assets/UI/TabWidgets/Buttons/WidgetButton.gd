@@ -54,6 +54,10 @@ func _ready() -> void:
     self.mouse_exited.connect(_on_mouse_exited)
     self.material = self.material.duplicate()
 
+  if not self.tooltip_text:
+    # self.tooltip_text = self.name.to_snake_case().replace("_", " ").trim_suffix(" button")
+    self.tooltip_text = self.name.capitalize().trim_suffix(" Button")
+
   if texture_normal:
     if texture_click_mask:
       if Vector2i(texture_normal.get_size()) != texture_click_mask.get_size():

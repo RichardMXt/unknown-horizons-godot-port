@@ -19,6 +19,10 @@ func _ready() -> void:
   
   self.material = self.material.duplicate()
 
+  if not self.tooltip_text:
+    # self.tooltip_text = self.name.to_snake_case().replace("_", " ").trim_suffix(" button")
+    self.tooltip_text = self.name.capitalize().trim_suffix(" Button")
+
   self.tab_container = get_node("../../../ScrollContainer/TabContainer") as TabContainer
   if self.tab_container == null:
     push_error("../../../ScrollContainer/TabContainer is not found or not of type TabContainer for ", self)
