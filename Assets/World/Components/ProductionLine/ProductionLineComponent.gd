@@ -137,10 +137,17 @@ func spend_resources():
   if self.storage_components == []: # if there is no storage then no resources
     return
   for resource in consumes:
-    var available_resource_amount: int = self.storage_components[0].get_storage_item_amount(resource)
     var needed_resource_amount: int = consumes[resource]
-    if available_resource_amount >= needed_resource_amount: # for the case that the resources were not checked before (from unusual function, e.t.c.)
-      self.storage_components[0].set_storage_item_amount(resource, available_resource_amount - needed_resource_amount * self.consumes_multiplier)
+    var storage_index: int = 0
+    while needed_resource_amount > 0:
+      if storage_index >= len(self.storage_components):
+        push_error("not enough resources at spending stage.")
+        return
+      var current_resource_amount: int = self.storage_components[storage_index].get_storage_item_amount(resource)
+      var resource_amount_used: int = min(needed_resource_amount, current_resource_amount)
+      self.storage_components[storage_index].set_storage_item_amount(resource, current_resource_amount - resource_amount_used)
+      needed_resource_amount -= resource_amount_used
+      storage_index += 1
     # else:
     #   push_error("not enough resources at spending stage.")
 
