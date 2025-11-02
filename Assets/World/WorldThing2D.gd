@@ -68,4 +68,6 @@ func selected(_is_now_selected: bool) -> void:
 
 ## ends after a given amount of time
 func sleep(time: float) -> void:
+  if self.is_inside_tree() == false:
+    return
   await self.get_tree().create_timer(time).timeout
