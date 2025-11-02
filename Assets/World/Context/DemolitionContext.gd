@@ -34,9 +34,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
     if event is InputEventMouseMotion:
       if mouse_cell != self.previous_mouse_cell:
+        self.previous_mouse_cell = mouse_cell
         if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
           self.demolish(mouse_cell)
-          self.previous_mouse_cell = mouse_cell
 
 func demolish(cell_clicked: Vector2i) -> void:
   var building: Building2D = self.built_tilemap.building_position_to_building.get(cell_clicked, null)
