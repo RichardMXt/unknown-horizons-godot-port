@@ -73,4 +73,5 @@ func sleep(time: float) -> bool:
   var timer := self.get_tree().create_timer(time)
   self.cancel.connect(timer.timeout.emit)
   await timer.timeout
+  self.cancel.disconnect(timer.timeout.emit)
   return timer.time_left == 0
