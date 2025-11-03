@@ -111,7 +111,7 @@ func demolish(cell: Vector2i) -> void:
       building_built_on.visible = true
       self.register_building(building_built_on, true)
     building.paused = true # stop all action
-    building.cancel.emit() # notify the building to stop(timers)
+    building.cancel_sleep.emit() # notify the building to stop(timers)
     building.queue_free()
   
   self.set_cell(cell, -1) # delete cell
