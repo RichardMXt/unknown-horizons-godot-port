@@ -3,14 +3,14 @@ extends BaseContext
 
 class_name DemolitionContext
 
-@export var Demolition_cursor: Texture2D = preload("res://Assets/UI/Images/Cursors/cursor_tear.png")
+@export var demolition_cursor: Texture2D = preload("res://Assets/UI/Images/Cursors/cursor_tear.png")
 
 @onready var built_tilemap: BuiltTileMap = %BuiltTileMap
 
 var previous_mouse_cell: Vector2i
 
 func context_entered() -> void:
-  Input.set_custom_mouse_cursor(self.Demolition_cursor)
+  Input.set_custom_mouse_cursor(self.demolition_cursor)
   # set default mouse cell
   var mouse_cell := self.built_tilemap.local_to_map(self.built_tilemap.get_global_mouse_position())
   self.previous_mouse_cell = mouse_cell

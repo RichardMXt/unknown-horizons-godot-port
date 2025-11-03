@@ -74,3 +74,4 @@ func context_exited():
   for object in selected_objects:
     object.is_selected = false
   selected_objects = []
+  set_tab_widget()

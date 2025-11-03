@@ -59,9 +59,6 @@ var game_name: String:
     if self.paused == false:
       unpaused.emit()
 
-## all timers in the array will be fired when the building is deleted
-var timers: Array[SceneTreeTimer] = []
-
 signal unpaused
 
 ## setter for current_tier
@@ -130,9 +127,9 @@ func unload_resource(resource: StringName, amount: int) -> void:
   if storage_component == null or self.is_inside_tree() == false:
     return
   
-  var unload_timer = self.get_tree().create_timer(storage_component.load_or_unload_time)
-  self.timers.append(unload_timer) # to remuse when exited tree.
-  await unload_timer.timeout
+  var successful := await self.sleep(storage_component.load_or_unload_time)
+  if successful == false:
+    return
   var amount_in_storage: int = storage_component.get_storage_item_amount(resource)
   storage_component.set_storage_item_amount(resource, amount_in_storage + amount)
 
@@ -143,9 +140,9 @@ func load_resource(resource: StringName, amount: int) -> int:
   if storage_component == null:
     return 0
 
-  var load_timer = self.get_tree().create_timer(storage_component.load_or_unload_time)
-  self.timers.append(load_timer) # to remuse when exited tree.
-  await load_timer.timeout
+  var successful := await self.sleep(storage_component.load_or_unload_time)
+  if successful == false:
+    return 0
   var available_amount: int = storage_component.get_storage_item_amount(resource)
   var amount_to_load: int = min(amount, available_amount)
   storage_component.set_storage_item_amount(resource, available_amount - amount_to_load)
@@ -209,7 +206,3 @@ func _notification(what):
       var built_tilemap := self.get_parent() as BuiltTileMap
       if built_tilemap != null:
         self.position = built_tilemap.map_to_local(built_tilemap.local_to_map(self.position)) # snap position to cells in editor mode
-
-func _exit_tree() -> void:
-  for timer in self.timers:
-    timer.timeout.emit() # remuse requsted timers
