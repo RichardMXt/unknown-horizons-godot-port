@@ -23,7 +23,9 @@ class_name ProductionLineComponent
 @export var produces_multiplier: int = 1: set = set_produces_multiplier
 @export_group("")
 
-@export var show_tooltip: bool = true
+@export var show_resource_produced_tooltip: bool = true
+@export var show_resource_deficit_tooltip: bool = true
+@export var show_inventory_full_tooltip: bool = true
 
 ## The tooltip that shows that there are not enough resources to produce
 @onready var resource_deficit_tooltip: AnimatedSprite2D = %ResourceDeficitTooltip
@@ -104,7 +106,7 @@ func update_action_set():
         self.action_state_changed.emit(ActionStates.WORK)
 
 func notify_resource_produced():
-  if self.show_tooltip == false or self.is_inside_tree() == false:
+  if self.show_resource_produced_tooltip == false or self.is_inside_tree() == false:
     return
   if len(produces.keys()) <= 0: # check that there is an output product
     return
@@ -125,24 +127,23 @@ func notify_resource_produced():
 ## [member ProductionLineComponent.resource_deficit_tooltip] depending on the has_enough_resources
 ## and [member ProductionLineComponent.inventory_full_tooltip] depending on the has_output_space
 func update_resource_storage_tooltips(has_enough_resources: bool, has_output_space: bool):
-  if self.show_tooltip == false:
-    return
+  if self.show_inventory_full_tooltip:
+    if has_output_space == false: # show full output
+      if self.inventory_full_tooltip.is_playing() == false:
+        self.inventory_full_tooltip.visible = true
+        self.inventory_full_tooltip.play("inventory_full")
+    elif self.inventory_full_tooltip.is_playing() == true:
+      self.inventory_full_tooltip.visible = false
+      self.inventory_full_tooltip.stop()
 
-  if has_output_space == false: # show full output
-    if self.inventory_full_tooltip.is_playing() == false:
-      self.inventory_full_tooltip.visible = true
-      self.inventory_full_tooltip.play("inventory_full")
-  elif self.inventory_full_tooltip.is_playing() == true:
-    self.inventory_full_tooltip.visible = false
-    self.inventory_full_tooltip.stop()
-
-  if has_enough_resources == false and has_output_space == true: # show resource deficit
-    if self.resource_deficit_tooltip.is_playing() == false:
-      self.resource_deficit_tooltip.visible = true
-      self.resource_deficit_tooltip.play("resource_deficit")
-  elif self.resource_deficit_tooltip.is_playing() == true:
-    self.resource_deficit_tooltip.visible = false
-    self.resource_deficit_tooltip.stop()
+  if self.show_resource_deficit_tooltip:
+    if has_enough_resources == false and has_output_space == true: # show resource deficit
+      if self.resource_deficit_tooltip.is_playing() == false:
+        self.resource_deficit_tooltip.visible = true
+        self.resource_deficit_tooltip.play("resource_deficit")
+    elif self.resource_deficit_tooltip.is_playing() == true:
+      self.resource_deficit_tooltip.visible = false
+      self.resource_deficit_tooltip.stop()
 
 ## returns the local top position of the building
 func get_local_building_height() -> Vector2:
