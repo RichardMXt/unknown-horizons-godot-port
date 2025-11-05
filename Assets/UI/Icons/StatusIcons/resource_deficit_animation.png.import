@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfo1xos1irdt3"
-path="res://.godot/imported/resurce_deficit_animation.png-b54362c32cdc267e9e2745a35fdde360.ctex"
+path="res://.godot/imported/resource_deficit_animation.png-d53f6b926b872df0b7c0805a6bc7d0c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Icons/StatusIcons/resurce_deficit_animation.png"
-dest_files=["res://.godot/imported/resurce_deficit_animation.png-b54362c32cdc267e9e2745a35fdde360.ctex"]
+source_file="res://Assets/UI/Icons/StatusIcons/resource_deficit_animation.png"
+dest_files=["res://.godot/imported/resource_deficit_animation.png-d53f6b926b872df0b7c0805a6bc7d0c5.ctex"]
 
 [params]
 

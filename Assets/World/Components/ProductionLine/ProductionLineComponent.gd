@@ -129,19 +129,19 @@ func notify_resource_produced():
 func update_resource_storage_tooltips(has_enough_resources: bool, has_output_space: bool):
   if self.show_inventory_full_tooltip:
     if has_output_space == false: # show full output
-      if self.inventory_full_tooltip.is_playing() == false:
+      if self.inventory_full_tooltip.visible == false:
         self.inventory_full_tooltip.visible = true
         self.inventory_full_tooltip.play("inventory_full")
-    elif self.inventory_full_tooltip.is_playing() == true:
+    elif self.inventory_full_tooltip.visible == true:
       self.inventory_full_tooltip.visible = false
       self.inventory_full_tooltip.stop()
 
   if self.show_resource_deficit_tooltip:
     if has_enough_resources == false and has_output_space == true: # show resource deficit
-      if self.resource_deficit_tooltip.is_playing() == false:
+      if self.resource_deficit_tooltip.visible == false:
         self.resource_deficit_tooltip.visible = true
         self.resource_deficit_tooltip.play("resource_deficit")
-    elif self.resource_deficit_tooltip.is_playing() == true:
+    elif self.resource_deficit_tooltip.visible == true:
       self.resource_deficit_tooltip.visible = false
       self.resource_deficit_tooltip.stop()
 
