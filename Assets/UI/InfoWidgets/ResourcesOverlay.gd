@@ -4,7 +4,9 @@ extends Control
 
 class_name ResourceOverlay
 
-@onready var resource_slots: HBoxContainer = self.get_node("HBoxContainer")
+@onready var overlays_tab_container: TabContainer = %Overlays
+@onready var resource_slots: HBoxContainer = %ResourcesOverlayCustom
+@onready var build_overlay: BuildResourcesOverlay = %ResourcesOverlayBuild
 @onready var resource_selection: ResourceSelection = self.get_node("ResourceSelection")
 
 const res_display_slot: PackedScene = preload("res://Assets/UI/BasicControls/ResourceDisplaySlot.tscn")
@@ -17,6 +19,28 @@ func _ready():
     else:
       slot.pressed.connect(pin_resource_to_slot.bind(slot))
   add_empty_resource_slot()
+
+func _input(event: InputEvent) -> void:
+  var building_str: StringName = &""
+  if event.is_action_pressed("toggle_build_road"):
+    building_str = &"Trail"
+  if event.is_action_pressed("toggle_build_building"):
+    var building_name: StringName = event.get_meta("button_name").trim_prefix("Build").trim_suffix("Button")
+    building_str = BuildingConfig.Buildings.get(building_name.to_snake_case().to_upper(), &"")
+  if building_str != &"":
+    # show the build overlay
+    self.overlays_tab_container.current_tab = self.overlays_tab_container.get_tab_idx_from_control(build_overlay)
+    # get cost of the building as typed dictionary
+    var cost: Dictionary[StringName, int] = {}
+    for resource: StringName in BuildingConfig.building_to_cost.get(building_str, {}).keys():
+      cost[resource] = BuildingConfig.building_to_cost.get(building_str, {}).get(resource, 0) as int
+    # set the overlay
+    self.build_overlay.set_building_cost(cost)
+    self.build_overlay.visible = true
+  
+  if event.is_action_pressed("cancel_build"):
+    self.overlays_tab_container.current_tab = 0 # set default overlay(customly pinned resources)
+    self.build_overlay.set_building_cost({})
 
 func add_empty_resource_slot() -> void:
   var empty_display_slot: ResourceDisplaySlot = res_display_slot.instantiate()
@@ -35,6 +59,7 @@ func pin_resource_to_slot(slot: ResourceDisplaySlot) -> void:
   var was_slot_empty: bool = slot.resource_type == ResourceConfig.Resources.NONE
   resource_selection.visible = true
   resource_selection.position.x = slot.position.x
+  resource_selection.position.y = slot.position.y + slot.size.y
   var resource_type = await resource_selection.resource_selected
   resource_selection.visible = false
   
