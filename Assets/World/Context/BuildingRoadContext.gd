@@ -44,12 +44,16 @@ func _unhandled_input(event):
         if event.button_index == MOUSE_BUTTON_LEFT:
           respond_to_left_click()
         
-        if event.button_index == MOUSE_BUTTON_RIGHT:
-          if not is_road_building_started:
-            self.game_context_manager.current_context = null
-          else:
-            self.is_road_building_started = false
-            highlighter.clear()
+    if event.is_action_pressed("cancel"):
+      if not is_road_building_started:
+        var cancel_build_event := InputEventAction.new()
+        cancel_build_event.action = "cancel_build"
+        cancel_build_event.pressed = true
+        Input.parse_input_event(cancel_build_event)
+        self.game_context_manager.current_context = null
+      else:
+        self.is_road_building_started = false
+        highlighter.clear()
   
     if event is InputEventMouseMotion and is_road_building_started:
       highlight_road()

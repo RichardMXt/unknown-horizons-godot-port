@@ -89,15 +89,15 @@ func _unhandled_input(event: InputEvent) -> void:
         self.build(self.building_to_build, self.building_instance)
         return
 
-      if mouseButtonEvent.button_index == MOUSE_BUTTON_RIGHT: # cancel the build
-        if reference_object != null: # if reference_object was used, select it on build cancel
-          var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
-          if selectable != null: # if a selectable was found then set it as selected
-            self.game_context_manager.current_context = object_selected_context
-            object_selected_context.set_selected_objects([selectable])
-            return
-        self.cancel_build()
-        self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
+    if event.is_action_pressed("cancel"): # cancel the build
+      if reference_object != null: # if reference_object was used, select it on build cancel
+        var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
+        if selectable != null: # if a selectable was found then set it as selected
+          self.game_context_manager.current_context = object_selected_context
+          object_selected_context.set_selected_objects([selectable])
+          return
+      self.cancel_build()
+      self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
 
     var rotation_angle = 0
     if event.is_action_pressed("rotate_building_left"):
@@ -171,6 +171,10 @@ func build(building_to_build: StringName, building_instance: Building2D) -> void
 
 func cancel_build() -> void:
   self.building_to_build = BuildingConfig.Buildings.NONE
+  var cancel_build_event := InputEventAction.new()
+  cancel_build_event.action = "cancel_build"
+  cancel_build_event.pressed = true
+  Input.parse_input_event(cancel_build_event)
 
 func has_resources_for_building(building_name: StringName) -> bool:
   var cost: Dictionary = BuildingConfig.building_to_cost[building_name] as Dictionary[StringName, int]
