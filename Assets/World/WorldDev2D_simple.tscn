@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cmjommteas4c6"]
+[gd_scene load_steps=22 format=4 uid="uid://cmjommteas4c6"]
 
 [ext_resource type="Script" uid="uid://bhlps7h4ktt4r" path="res://Assets/World/Main.gd" id="1_tc8s8"]
 [ext_resource type="Script" uid="uid://cd8ykokfidoiu" path="res://Assets/World/Context/GameContextManager.gd" id="1_xnban"]
@@ -8,14 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://cm6yol3av2mwf" path="res://Assets/World/Context/SelectionBox.tscn" id="5_ea62f"]
 [ext_resource type="Script" uid="uid://t7mhuwh0jtpl" path="res://Assets/World/Context/ObjectSelectedContext.gd" id="6_q7svf"]
 [ext_resource type="Script" uid="uid://dc78c1kk0g54y" path="res://Assets/World/Context/DemolitionContext.gd" id="7_tc8s8"]
-[ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/Pathfinding.gd" id="7_ul0qd"]
+[ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/PathfindingManager.gd" id="7_ul0qd"]
 [ext_resource type="TileSet" uid="uid://bqskejujqsgde" path="res://Assets/World/Tilemaps/Terrain/TerrainTileSet.tres" id="8_ltrrt"]
 [ext_resource type="Script" uid="uid://bpjptkikp1330" path="res://Assets/World/Tilemaps/Terrain/TerrainTileMap.gd" id="9_6s6ok"]
 [ext_resource type="TileSet" uid="uid://g0x5fr7nbdbv" path="res://Assets/World/Tilemaps/BuiltTileMap/BuiltTileSet.tres" id="11_op3n3"]
 [ext_resource type="Script" uid="uid://bfb7rha8tel6v" path="res://Assets/World/Tilemaps/BuiltTileMap/BuiltTileMap.gd" id="12_f5ujg"]
 [ext_resource type="Material" uid="uid://cltmqu62mbu3g" path="res://Assets/World/Tilemaps/Highlight/RoadHighlighter.tres" id="13_r0icm"]
+[ext_resource type="PackedScene" uid="uid://cbfarmtscn000" path="res://Assets/World/Buildings2/farm/farm.tscn" id="16_xnban"]
+[ext_resource type="PackedScene" uid="uid://cbcornfieldts" path="res://Assets/World/Buildings2/corn_field/corn_field.tscn" id="17_agjt6"]
 [ext_resource type="PackedScene" uid="uid://cbstoragetscn" path="res://Assets/World/Buildings2/storage/storage.tscn" id="17_haa5x"]
 [ext_resource type="Script" uid="uid://2jwdai8tqa12" path="res://Assets/World/MainCamera.gd" id="18_nvd3d"]
+[ext_resource type="PackedScene" uid="uid://cbwindmilltsc" path="res://Assets/World/Buildings2/windmill/windmill.tscn" id="18_wk4sb"]
 [ext_resource type="PackedScene" uid="uid://cbbakerytscn0" path="res://Assets/World/Buildings2/bakery/bakery.tscn" id="18_xnban"]
 [ext_resource type="PackedScene" uid="uid://bka87rk8lk7kb" path="res://Assets/Player/PlayerHUD2.tscn" id="19_qvtmx"]
 
@@ -50,7 +53,7 @@ script = ExtResource("7_tc8s8")
 unique_name_in_owner = true
 autostart = true
 
-[node name="Pathfinding" type="Node" parent="."]
+[node name="PathfindingManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("7_ul0qd")
 
@@ -70,8 +73,20 @@ script = ExtResource("12_f5ujg")
 [node name="storage" parent="BuiltTileMap" instance=ExtResource("17_haa5x")]
 position = Vector2(32, 80)
 
+[node name="storage2" parent="BuiltTileMap" instance=ExtResource("17_haa5x")]
+position = Vector2(-288, -176)
+
+[node name="farm" parent="BuiltTileMap" instance=ExtResource("16_xnban")]
+position = Vector2(224, 80)
+
+[node name="corn_field" parent="BuiltTileMap" instance=ExtResource("17_agjt6")]
+position = Vector2(320, 128)
+
 [node name="bakery" parent="BuiltTileMap" instance=ExtResource("18_xnban")]
-position = Vector2(32, -16)
+position = Vector2(-160, -112)
+
+[node name="windmill" parent="BuiltTileMap" instance=ExtResource("18_wk4sb")]
+position = Vector2(-32, -48)
 
 [node name="BuildRoadHighlighter" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

@@ -2,6 +2,8 @@ extends TileMapLayer
 
 class_name BuiltTileMap
 
+@onready var pathfinding_manager: PathfindingManager = %PathfindingManager
+
 const is_tree: String = "is_tree"
 const is_road: String = "is_road"
 
@@ -50,7 +52,6 @@ func get_trees() -> Array[Vector2i]:
 func build(building_instance: Building2D) -> void:
   self.register_building(building_instance, true)
 
-
 func register_building(building: Building2D, clear_origin: bool) -> void:
   print("BuiltTileMap.register_building(%s[%s], %s)" % [building.id, building, clear_origin])
   # register building to building poses
@@ -59,7 +60,7 @@ func register_building(building: Building2D, clear_origin: bool) -> void:
   var new_building_cells: Array[Vector2i] = []
 
   var road_building_context = %GameContextManager.get_node("BuildingRoadContext")
-  var road_pathfinding = %Pathfinding.road_pathfinding
+  var road_pathfinding = %PathfindingManager.road_pathfinding
 
   var buildings_built_on: Array[Building2D] = []
   var cells: Array[Array] = building.get_oriented_cells()
@@ -88,14 +89,22 @@ func register_building(building: Building2D, clear_origin: bool) -> void:
     building_built_on.reparent(building, true)
 
   building.paused = false
+
+  self.invalidate_buildings_caches(new_building_cells)
   # handle notifications
   buildings_built.emit(building, new_building_cells)
+
+func invalidate_buildings_caches(cells: Array[Vector2i]) -> void:
+  for node in self.get_children():
+    var building: Building2D = node as Building2D
+    if building != null:
+      building.invalidate_cache(cells)
 
 func demolish(cell: Vector2i) -> void:
   # demolish building if any
   var building: Building2D = self.building_position_to_building.get(cell, null)
   if building != null:
-    var road_building_pathfindng: PathFindingManagement2D = %GameContextManager.get_node("BuildingRoadContext").road_building_pathfindng
+    var road_building_pathfindng: Pathfinder = %GameContextManager.get_node("BuildingRoadContext").road_building_pathfindng
     var building_oriented_cells = building.get_oriented_cells()
     var building_starting_cell: Vector2i = self.local_to_map(building.position)
     for row in building_oriented_cells:
@@ -196,3 +205,91 @@ func get_buildings_in_radius(pos: Vector2i, radius: int) -> Array[Building2D]:
       buildings_in_radius[building] = true
 
   return buildings_in_radius.keys()
+
+func find_path_to_buildings(src_building: Building2D, partner_buildings: Array[Building2D], pathfinding: Pathfinder) -> Dictionary[Building2D, NavPath]: # Dictionary[Building2D, Array[Vector2i]]:
+  var src_rect: Rect2i = src_building.oriented_rect
+  pathfinding.fill_solid_region(src_rect, false) # the unit should be able to walk on src building
+
+  var paths: Dictionary[Building2D, NavPath] = {}
+  
+  for building in partner_buildings:
+    var dst_rect: Rect2i = building.oriented_rect
+    pathfinding.fill_solid_region(dst_rect, false) # the unit should be able to walk on partner building
+
+    # var merged = src_rect.merge(dst_rect)
+    # var pt_data = pathfinding.get_point_data_in_region(merged)
+    # var cnt_x = 0
+    # var s := ""
+    # print(merged)
+    # for pt in pt_data:
+    #   s += "x" if pt["solid"] else "o"
+    #   cnt_x += 1
+    #   if cnt_x % merged.size.x == 0:
+    #     print(s)
+    #     s = ""
+    var shortest_path: Array[Vector2i] = []
+    for src_y in range(src_rect.position.y, src_rect.end.y):
+      for src_x in range(src_rect.position.x, src_rect.end.x):
+        var src_cell = Vector2i(src_x, src_y)
+        for dst_y in range(dst_rect.position.y, dst_rect.end.y):
+          for dst_x in range(dst_rect.position.x, dst_rect.end.x):
+            var dst_cell = Vector2i(dst_x, dst_y)
+            var path = pathfinding.get_id_path(src_cell, dst_cell)
+            if path.size() > 0:
+              if shortest_path.size() == 0 or path.size() < shortest_path.size():
+                shortest_path = path
+    paths[building] = NavPath.new(shortest_path)
+    pathfinding.fill_solid_region(dst_rect, true) # make partner building non-passible
+
+  pathfinding.fill_solid_region(src_rect, true) # make it non-passible
+  # return self.get_cell_path(self.built_tilemap.local_to_map(self.global_position), self.built_tilemap.local_to_map(partner_buildings[0].global_position))
+  return paths
+
+class NavPath:
+  var path: Array[Vector2i]
+  func _init(path: Array[Vector2i]) -> void:
+    self.path = path
+
+class SurroundingBuildingsInfo:
+  var buildings: Dictionary[Building2D, NavPath]
+  func _init(buildings: Dictionary[Building2D, NavPath]) -> void:
+    self.buildings = buildings
+
+var building_to_building_path_cache: Dictionary[Building2D, SurroundingBuildingsInfo] = {} # Dictionary[Building2D, Dictionary[Building2D, Array[Vector2i]]]
+
+# func get_buildings_accessible_from_building(building: Building2D) -> Dictionary[Building2D, NavPath]: # Dictionary[Building2D, Array[Vector2i]]:
+#   var surrounding_building_info: SurroundingBuildingsInfo = self.building_to_building_path_cache.get(building, null)
+#   var buildings_paths_missing
+#   if surrounding_building_info != null and surrounding_building_info.complete:
+#     return surrounding_building_info.buildings
+
+#   var building_to_path_dict: Dictionary[Building2D, NavPath]
+
+#   var buildings_in_radius := self.get_buildings_in_radius(building.cell_position, building.radius)
+#   building_to_path_dict = self.find_path_to_buildings(building, buildings_in_radius, self.pathfinding_manager.road_pathfinding)
+#   if surrounding_building_info == null:
+#     self.building_to_building_path_cache[building] = SurroundingBuildingsInfo.new(building_to_path_dict, true)
+#   else: # merge the buildings and mark as complete so that we know that all buildings are enumerated:
+#     for dst_building in building_to_path_dict.keys():
+#       var old_path: NavPath = surrounding_building_info.buildings.get(dst_building, null)
+#       var new_path: NavPath = building_to_path_dict[dst_building]
+#       if old_path == null: # if no path exists to the building - add it
+#         surrounding_building_info.buildings[dst_building] = new_path
+#       elif old_path.size() != new_path.size():
+#         surrounding_building_info.buildings[building] = building_to_path_dict[building]
+#     surrounding_building_info.complete = true
+
+#   return building_to_path_dict
+
+
+func get_building_to_building_path(building_src: Building2D, building_dst: Building2D) -> NavPath:
+  var src_to_dst_paths := self.find_path_to_buildings(building_src, [building_dst], self.pathfinding_manager.road_pathfinding)
+  var path: NavPath = src_to_dst_paths[building_dst]
+  return path
+
+# func get_path_to_building(src: Vector2i, building: Building2D) -> Array[Vector2i]:
+#   var building_at_src: Building2D = self.building_position_to_building.get(src, null)
+#   if building_at_src != null:
+#     var path = self.get_building_to_building_path(building_at_src, building)
+
+  # return self.get_cell_path(self.built_tilemap.local_to_map(self.global_position), self.built_tilemap.local_to_map(building.global_position))

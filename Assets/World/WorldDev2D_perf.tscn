@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cm6yol3av2mwf" path="res://Assets/World/Context/SelectionBox.tscn" id="6_cd1f1"]
 [ext_resource type="Script" uid="uid://t7mhuwh0jtpl" path="res://Assets/World/Context/ObjectSelectedContext.gd" id="7_a5n20"]
 [ext_resource type="Script" uid="uid://dc78c1kk0g54y" path="res://Assets/World/Context/DemolitionContext.gd" id="8_dnhuj"]
-[ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/Pathfinding.gd" id="9_7kikd"]
+[ext_resource type="Script" uid="uid://c46addh5upage" path="res://Assets/World/Tilemaps/PathfindingManager.gd" id="9_7kikd"]
 [ext_resource type="TileSet" uid="uid://bqskejujqsgde" path="res://Assets/World/Tilemaps/Terrain/TerrainTileSet.tres" id="10_tr4w7"]
 [ext_resource type="Script" uid="uid://bpjptkikp1330" path="res://Assets/World/Tilemaps/Terrain/TerrainTileMap.gd" id="11_i2ceg"]
 [ext_resource type="TileSet" uid="uid://g0x5fr7nbdbv" path="res://Assets/World/Tilemaps/BuiltTileMap/BuiltTileSet.tres" id="12_rheg2"]
@@ -58,7 +58,7 @@ script = ExtResource("8_dnhuj")
 unique_name_in_owner = true
 autostart = true
 
-[node name="Pathfinding" type="Node" parent="."]
+[node name="PathfindingManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("9_7kikd")
 

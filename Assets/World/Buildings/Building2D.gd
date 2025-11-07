@@ -247,3 +247,27 @@ func _notification(what):
       var built_tilemap := self.get_parent() as BuiltTileMap
       if built_tilemap != null:
         self.position = built_tilemap.map_to_local(built_tilemap.local_to_map(self.position)) # snap position to cells in editor mode
+
+var buildings_in_radius_cache: Array[Building2D] = [null] # not a valid cache
+var buildings_paths_cache: Dictionary[Building2D, BuiltTileMap.NavPath] = {}
+
+func get_buildings_in_radius() -> Array[Building2D]:
+  if self.buildings_in_radius_cache == [null]:
+    self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.cell_position, self.radius)
+    self.buildings_in_radius_cache.erase(self) # remove self from the list
+
+  return buildings_in_radius_cache
+
+func get_path_to_building(building: Building2D) -> BuiltTileMap.NavPath:
+  var path: BuiltTileMap.NavPath = self.buildings_paths_cache.get(building, null)
+
+  if path == null:
+    path = self.built_tilemap.get_building_to_building_path(self, building)
+    self.buildings_paths_cache[building] = path
+
+  return path
+
+func invalidate_cache(_cells: Array[Vector2i]):
+  # TODO: use cells to limit the invalidate region
+  self.buildings_in_radius_cache = [null]
+  self.buildings_paths_cache = {}

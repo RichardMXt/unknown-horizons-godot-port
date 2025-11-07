@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbfarmtscn000"]
+[gd_scene load_steps=10 format=3 uid="uid://cbfarmtscn000"]
 
 [ext_resource type="Script" uid="uid://4liotsbcpcls" path="res://Assets/World/Buildings/Building2D.gd" id="1_script_gd"]
 [ext_resource type="PackedScene" uid="uid://x1upwhg1f71a" path="res://Assets/World/Components/Selectable/Selectable.tscn" id="2_selectable_component"]
@@ -27,7 +27,7 @@ tier = "TIER.PIONEERS"
 
 [node name="Selectable" parent="." instance=ExtResource("2_selectable_component")]
 type = "building"
-tabs = Array[String](["SmallProductionOverviewTab"])
+tabs = Array[String](["ProductionOverviewTab"])
 enemy_tabs = Array[String](["EnemyBuildingOverviewTab"])
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_health_component")]
@@ -185,5 +185,6 @@ max_capacity = Dictionary[StringName, int]({
 [node name="field_collector_1" parent="." instance=ExtResource("7_field_collector")]
 
 [node name="BuildingCollector" parent="." instance=ExtResource("9_building_collector_component")]
+
 [node name="BuildingActionSet" parent="." instance=ExtResource("3_building_action_set_component")]
 sprite_frames = ExtResource("4_sprite_frames")
