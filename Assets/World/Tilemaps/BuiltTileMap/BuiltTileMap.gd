@@ -102,10 +102,12 @@ func invalidate_buildings_caches(cells: Array[Vector2i]) -> void:
 
 func demolish(cell: Vector2i) -> void:
   # demolish building if any
+  var affected_cells: Array[Vector2i] = []
   var building: Building2D = self.building_position_to_building.get(cell, null)
   if building != null:
     var road_building_pathfindng: Pathfinder = %GameContextManager.get_node("BuildingRoadContext").road_building_pathfindng
     var building_oriented_cells = building.get_oriented_cells()
+    affected_cells.append_array(building_oriented_cells)
     var building_starting_cell: Vector2i = self.local_to_map(building.position)
     for row in building_oriented_cells:
       for dv: Vector2i in row:
@@ -123,6 +125,7 @@ func demolish(cell: Vector2i) -> void:
     building.cancel_sleep.emit() # notify the building to stop(timers)
     building.queue_free()
   
+  affected_cells.append(cell)
   self.set_cell(cell, -1) # delete cell
   # upadate road
   for neighbor in self.get_surrounding_cells(cell):
@@ -135,6 +138,8 @@ func demolish(cell: Vector2i) -> void:
       if self.tile_set.get_terrain_name(terrain_set, terrain) == "DirtRoad":
         self.set_cell(neighbor, -1)
         self.set_cells_terrain_connect([neighbor], terrain_set, terrain, false)
+  
+  self.invalidate_buildings_caches(affected_cells)
 
 # debug layer:
 @onready var tooltip_label: Label = self.get_node("/root/Main/DebugCanvasLayer/Control/BuiltTileMapLayerInfo") if not Engine.is_editor_hint() else null
