@@ -76,17 +76,17 @@ position = Vector2(32, 80)
 [node name="storage2" parent="BuiltTileMap" instance=ExtResource("17_haa5x")]
 position = Vector2(-288, -176)
 
+[node name="windmill" parent="BuiltTileMap" instance=ExtResource("18_wk4sb")]
+position = Vector2(-32, -48)
+
+[node name="bakery" parent="BuiltTileMap" instance=ExtResource("18_xnban")]
+position = Vector2(-160, -112)
+
 [node name="farm" parent="BuiltTileMap" instance=ExtResource("16_xnban")]
 position = Vector2(224, 80)
 
 [node name="corn_field" parent="BuiltTileMap" instance=ExtResource("17_agjt6")]
 position = Vector2(320, 128)
-
-[node name="bakery" parent="BuiltTileMap" instance=ExtResource("18_xnban")]
-position = Vector2(-160, -112)
-
-[node name="windmill" parent="BuiltTileMap" instance=ExtResource("18_wk4sb")]
-position = Vector2(-32, -48)
 
 [node name="BuildRoadHighlighter" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
