@@ -4,6 +4,9 @@ extends WorldThing2D
 
 class_name Building2D
 
+var __repr__: String:
+  get():
+    return "Building2D(%s, %s)<%s>" % [id, self.get_name(), self.get_instance_id()]
 #@export var production_chain: ProductionChain
 
 @export var id: StringName = &"Building"
@@ -61,6 +64,9 @@ var game_name: String:
 
 signal unpaused
 
+var resources_produced: Dictionary[StringName, bool]
+var resources_consumed: Dictionary[StringName, bool]
+
 ## setter for current_tier
 func _on_tier_changed() -> void:
   var enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
@@ -73,6 +79,8 @@ func _on_tier_changed() -> void:
   var world_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(GameStats.game_stats_resource.world_tier, WorldTiers.TierEnum.SAILORS)
   if world_enum_tier < enum_tier:
     GameStats.game_stats_resource.world_tier = self.current_tier
+
+  self.refresh_resources_produced_consumed()
 
 ## Changes current_tier if needed
 func update_tier() -> void:
@@ -104,6 +112,28 @@ func setup_components() -> void:
   # give all the components the list of all their neighboring components
   for component in components:
     component.set_components(components)
+
+func refresh_resources_produced_consumed():
+  var resources_produced: Dictionary[StringName, bool] = {}
+  var resources_consumed: Dictionary[StringName, bool] = {}
+  for node: Node in self.get_children():
+    var production_line_component := node as ProductionLineComponent
+    if production_line_component != null:
+      for resource in production_line_component.produces:
+        resources_produced[resource] = true
+      for resource in production_line_component.consumes:
+        resources_consumed[resource] = true
+  self.resources_produced = resources_produced
+  self.resources_consumed = resources_consumed
+
+func get_resources_produced_amounts() -> Dictionary[StringName, int]:
+  var resources_produced_amounts: Dictionary[StringName, int] = {}
+  for storage_component: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
+    for resource in resources_produced.keys():
+      var storage_amount := storage_component.get_storage_item_amount(resource)
+      resources_produced_amounts[resource] = resources_produced_amounts.get(resource, 0) + storage_amount
+  return resources_produced_amounts
+
 
 func is_resource_available(resource: StringName) -> bool:
   for component in self.get_children():
@@ -167,6 +197,17 @@ func get_oriented_size() -> Vector2i:
       size_x = self.size.y
       size_y = self.size.x
   return Vector2i(size_x, size_y)
+
+@onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap") if not Engine.is_editor_hint() else null
+
+var cell_position: Vector2i:
+  get():
+    return self.built_tilemap.local_to_map(self.global_position) if self.built_tilemap != null else Vector2i.ZERO
+
+var oriented_rect: Rect2i:
+  get():
+    var rect = Rect2i(self.cell_position+Vector2i(1,1), -self.get_oriented_size()).abs()
+    return rect
 
 ## Returns an array of array of Vector2i (cell offsets) based on current orientation from _045 orientation
 func get_oriented_cells() -> Array[Array]:

@@ -167,3 +167,32 @@ func get_cell_building_bitmask(cell: Vector2i) -> int:
     cell_bitmask |= int(building_on_tile_string_name == BuildingConfig.Buildings.MOUNTAIN)      << 6
 
   return cell_bitmask
+
+# static var cells_cache: Dictionary[Vector2i, Array[Vector2i]] = {} # Vector2i -> Array[Vector2i]
+static var cells_cache: Dictionary = {} # Vector2i -> Array[Vector2i]
+## Returns a list of (dx, dy) that are within the radius sorted by cell distance
+## Do not modify returned array, since it is shared (cached)
+static func get_cells_in_radius(radius: int) -> Array[Vector2i]:
+  #var default: Array[Vector2i] = []
+  var cells_in_radius: Array[Vector2i] = cells_cache.get(radius, [] as Array[Vector2i])
+  if cells_in_radius == []:
+    for dx in range(-radius, radius + 1):
+      for dy in range(-radius, radius + 1):
+        if dx + dy <= radius:
+          cells_in_radius.append(Vector2i(dx, dy))
+
+    cells_in_radius.sort_custom(func(a, b): return abs(a.x) + abs(a.y) < abs(b.x) + abs(b.y))
+    cells_cache[radius] = cells_in_radius
+
+  return cells_in_radius
+
+func get_buildings_in_radius(pos: Vector2i, radius: int) -> Array[Building2D]:
+  var cells_in_radius: Array[Vector2i] = self.get_cells_in_radius(radius)
+  # var buildings_in_radius: Array[Building2D] = [] 
+  var buildings_in_radius: Dictionary[Building2D, bool] = {} 
+  for cell in cells_in_radius:
+    var building: Building2D = self.building_position_to_building.get(pos + cell, null)
+    if building != null:
+      buildings_in_radius[building] = true
+
+  return buildings_in_radius.keys()

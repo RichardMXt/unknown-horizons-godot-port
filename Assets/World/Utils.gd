@@ -23,3 +23,10 @@ static func ensure_disconnected(_signal: Signal, callable: Callable):
 	assert(callable.is_valid())
 	if _signal.is_connected(callable):
 		_signal.disconnect(callable)
+
+static func intersect_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Dictionary:
+	var result: Dictionary = {}
+	for key in dict_a:
+		if key in dict_b:
+			result[key] = true
+	return result

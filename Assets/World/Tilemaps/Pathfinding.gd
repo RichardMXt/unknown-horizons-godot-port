@@ -14,10 +14,10 @@ class_name Pathfinding
   AStarGrid2D.CELL_SHAPE_ISOMETRIC_DOWN)
 
 ## pathfinding for Carriers
-@onready var road_pathfinding = PathFindingManagement2D.new(%BuiltTileMap)
+@onready var road_pathfinding = PathFindingManagement2D.new(%BuiltTileMap, false)
 
 ## pathfinding for going on all land
-@onready var land_pathfinding = PathFindingManagement2D.new(%TerrainTileMap, true, AStarGrid2D.DIAGONAL_MODE_ALWAYS, AStarGrid2D.HEURISTIC_EUCLIDEAN)
+@onready var land_pathfinding = PathFindingManagement2D.new(%TerrainTileMap, false, AStarGrid2D.DIAGONAL_MODE_ALWAYS, AStarGrid2D.HEURISTIC_EUCLIDEAN)
 
 func _ready():
   var terrain_points = terrain_tilemap.get_terrain_points()
