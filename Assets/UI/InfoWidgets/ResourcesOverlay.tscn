@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4e812pijkjhi"]
 
 [ext_resource type="Script" uid="uid://bxehmtu263yma" path="res://Assets/UI/InfoWidgets/ResourcesOverlay.gd" id="1_24h02"]
-[ext_resource type="PackedScene" uid="uid://cc448s5pvpnnh" path="res://Assets/UI/InfoWidgets/ResourcesOverlayBuild.tscn" id="2_bgvoy"]
+[ext_resource type="PackedScene" uid="uid://cc448s5pvpnnh" path="res://Assets/UI/InfoWidgets/BuildingCostResourcesOverlay.tscn" id="2_bgvoy"]
 [ext_resource type="PackedScene" uid="uid://brf8ay66sla7p" path="res://Assets/UI/BasicControls/ResourceSelection.tscn" id="3_77sbr"]
 
 [node name="ResourcesOverlay" type="Control"]
@@ -28,7 +28,7 @@ unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="ResourcesOverlayBuild" parent="Overlays" instance=ExtResource("2_bgvoy")]
+[node name="BuildingCostResourcesOverlay" parent="Overlays" instance=ExtResource("2_bgvoy")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

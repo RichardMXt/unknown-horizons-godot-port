@@ -4,7 +4,7 @@ extends HBoxContainer
 ## Displays the resources needed to build a building, sets only the labels under the path "*child*/PanelContainer/BuildCostDisplay" 
 ## to the resource [code]child.name.trim_suffix("Display").to_snake_case().to_upper()"[/code]
 
-class_name BuildResourcesOverlay
+class_name BuildingCostResourcesOverlay
 
 func set_building_cost(cost: Dictionary[StringName, int]) -> void:
   for child in self.get_children():

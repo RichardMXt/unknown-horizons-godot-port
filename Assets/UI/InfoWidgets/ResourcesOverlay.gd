@@ -6,7 +6,7 @@ class_name ResourceOverlay
 
 @onready var overlays_tab_container: TabContainer = %Overlays
 @onready var resource_slots: HBoxContainer = %ResourcesOverlayCustom
-@onready var build_overlay: BuildResourcesOverlay = %ResourcesOverlayBuild
+@onready var build_overlay: BuildingCostResourcesOverlay = %BuildingCostResourcesOverlay
 @onready var resource_selection: ResourceSelection = self.get_node("ResourceSelection")
 
 const res_display_slot: PackedScene = preload("res://Assets/UI/BasicControls/ResourceDisplaySlot.tscn")

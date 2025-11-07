@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://cc448s5pvpnnh"]
 
-[ext_resource type="Script" uid="uid://lqgqyes03ntv" path="res://Assets/UI/InfoWidgets/ResourcesOverlayBuild.gd" id="1_xp6md"]
+[ext_resource type="Script" uid="uid://lqgqyes03ntv" path="res://Assets/UI/InfoWidgets/BuildingCostResourcesOverlay.gd" id="1_xp6md"]
 [ext_resource type="PackedScene" uid="uid://dlhf2ogaavw55" path="res://Assets/UI/BasicControls/ResourceDisplaySlot.tscn" id="2_0cevj"]
 [ext_resource type="StyleBox" uid="uid://s1axb1i3uxdu" path="res://Assets/UI/Images/Background/Widgets/resbar_stats_bottom.tres" id="3_q5n0o"]
 [ext_resource type="Script" uid="uid://cmbn4aho13rme" path="res://Assets/UI/BasicControls/LabelEx.gd" id="4_mu42e"]
 
-[node name="ResourcesOverlayBuild" type="HBoxContainer"]
+[node name="BuildingCostResourcesOverlay" type="HBoxContainer"]
 script = ExtResource("1_xp6md")
 metadata/_tab_index = 1
 
