@@ -21,19 +21,19 @@ func _ready():
   add_empty_resource_slot()
 
 func _input(event: InputEvent) -> void:
-  var building_str: StringName = &""
+  var building: StringName = &""
   if event.is_action_pressed("toggle_build_road"):
-    building_str = &"Trail"
+    building = &"Trail" # trail toggled, set name as trail
   if event.is_action_pressed("toggle_build_building"):
-    var building_name: StringName = event.get_meta("button_name").trim_prefix("Build").trim_suffix("Button")
-    building_str = BuildingConfig.Buildings.get(building_name.to_snake_case().to_upper(), &"")
-  if building_str != &"":
+    var building_str: StringName = event.get_meta("button_name").trim_prefix("Build").trim_suffix("Button")
+    building = BuildingConfig.Buildings.get(building_str.to_snake_case().to_upper(), &"")
+  if building != &"":
     # show the build overlay
     self.overlays_tab_container.current_tab = self.overlays_tab_container.get_tab_idx_from_control(build_overlay)
     # get cost of the building as typed dictionary
     var cost: Dictionary[StringName, int] = {}
-    for resource: StringName in BuildingConfig.building_to_cost.get(building_str, {}).keys():
-      cost[resource] = BuildingConfig.building_to_cost.get(building_str, {}).get(resource, 0) as int
+    for resource: StringName in BuildingConfig.building_to_cost.get(building, {}).keys():
+      cost[resource] = BuildingConfig.building_to_cost.get(building, {}).get(resource, 0) as int
     # set the overlay
     self.build_overlay.set_building_cost(cost)
     self.build_overlay.visible = true
