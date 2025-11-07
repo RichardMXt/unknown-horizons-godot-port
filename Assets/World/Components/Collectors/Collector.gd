@@ -12,6 +12,8 @@ class Job:
 
   func _init(path_to_start: Array[Vector2i], path_from_start_to_end: Array[Vector2i], resource: StringName, amount: int) -> void: #, building_from: Building2D, building_to: Building2D):
     self.path_to_start = path_to_start
+    if path_from_start_to_end.size() == 0:
+      push_error("Job has no path_from_start_to_end: %s" % self) #path_from_start_to_end
     self.path_from_start_to_end = path_from_start_to_end
     self.resource = resource
     self.amount = amount
@@ -53,10 +55,15 @@ var storage: SizedStorageComponent
 var move_by_cell: MoveByCellComponent
 var action_set: BuildingActionSet
 
-
 var collector_type: String = self.CollectorTypes.BUILDING_COLLECTOR:
   set(value):
     collector_type = value
+
+var cell_position: Vector2i:
+  get():
+    return self.built_tilemap.local_to_map(self.global_position) if self.built_tilemap != null else Vector2i.ZERO
+  set(value):
+    self.global_position = self.built_tilemap.map_to_local(value)
 
 
 #region Editor: dynamic values for dropdown for `collector_type`
@@ -142,7 +149,7 @@ func get_cell_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 func get_best_job() -> Job:
   if self.building_storage == null:
     return null
-  var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
+  var collector_map_position: Vector2i = self.cell_position
   var best_job: Job = null
   var best_job_score: float = -1
   var jobs: Array[Job] = []
@@ -164,11 +171,19 @@ func get_best_job() -> Job:
       # var path_home: Array[Vector2i] = self.get_path_home(collector_map_position)
     var collector_building_at = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
     if collector_building_at != self.home_building:
-      var path_home: BuiltTileMap.NavPath = collector_building_at.get_path_to_building(self.home_building)
+      var path_home: NavPath = collector_building_at.get_path_to_building(self.home_building)
       if path_home != null:
         best_job = Job.new([collector_map_position], path_home.path, ResourceConfig.Resources.NONE, 0)
+
   return best_job
 
+static func adjust_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
+  if path.size() == 0:
+    return position
+  var starting_point := path[0]
+  if (position.distance_to(starting_point) > 3):
+    push_error("Unexpected start position: collector.cell_position: %s, job.path_to_start[0]: %s" % [position, starting_point])
+  return starting_point
 
 ## the loop for the collecting logic, called at start
 func collecting_loop() -> void:
@@ -178,9 +193,15 @@ func collecting_loop() -> void:
     var job: Job = await self.wait_for_job()
     if self.collector_type == self.CollectorTypes.LUMBERJACK_COLLECTOR:
       self.built_tilemap.trees_getting_choped[job.path_from_start_to_end[0]] = null
+
+    self.cell_position = Collector.adjust_position_for_start(self.cell_position, job.path_to_start) # collector is on one of the building's tile, move it to startnig position to start the journey
     await self.move_by_cell.move(job.path_to_start)
+
     await self.load_resources(job)
+
+    self.cell_position = Collector.adjust_position_for_start(self.cell_position, job.path_from_start_to_end) # adjust collector position within building before heading out
     await self.move_by_cell.move(job.path_from_start_to_end)
+
     await self.unload_resources(job)
 
 static var last_frame = 0
@@ -259,7 +280,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
   var jobs: Array[Job] = []
   # var path_to_home: Array[Vector2i] = []
   for other_building in partner_buildings:
-    var navpath_to_building_from_home: BuiltTileMap.NavPath = self.home_building.get_path_to_building(other_building)
+    var navpath_to_building_from_home: NavPath = self.home_building.get_path_to_building(other_building)
     if navpath_to_building_from_home == null:
       continue
     var path_to_building_from_home := navpath_to_building_from_home.path
@@ -270,7 +291,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
       for resource in resources_produced_amounts.keys():
         var resource_amount = resources_produced_amounts[resource]
         if resource_amount > 0:
-          var path_to_loading_site: BuiltTileMap.NavPath = BuiltTileMap.NavPath.new([])
+          var path_to_loading_site: NavPath = NavPath.new([])
           var take_out_job: Job = Job.new(path_to_loading_site.path, path_to_building_from_home, resource, resource_amount) # resource take out to storage job
           print("  Potential job: take out %s from %s to %s" % [resource, self.home_building.__repr__, other_building.__repr__])
           jobs.append(take_out_job)
@@ -283,17 +304,19 @@ func get_jobs_for_building_collector() -> Array[Job]:
       for storage_component: StorageComponent in other_building.get_all_nodes_of_type(StorageComponent):
         resource_amount += storage_component.get_storage_item_amount(resource)
       if resource_amount > 0:
-        var path_to_loading_site: Array[Vector2i] = []
-        var collector_building_at = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
-        if collector_building_at == self.home_building:
-          path_to_loading_site = path_to_building_from_home
-        elif collector_building_at != other_building:
-          push_error("Collector is at unexpected building")
-          
-        var path_to_home_from_building = path_to_building_from_home.duplicate(); path_to_home_from_building.reverse()
-        var bring_in_job: Job = Job.new(path_to_loading_site, path_to_home_from_building, resource, resource_amount)
-        print("  Potential job: bring in %s from %s to %s" % [resource, other_building.__repr__, self.home_building.__repr__])
-        jobs.append(bring_in_job)
+        var collector_building_at: Building2D = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
+        if collector_building_at == null:
+          push_error("Collector is not in any buildings: %s" % collector_map_position)
+          continue
+        var path_to_loading_site := collector_building_at.get_path_to_building(other_building)
+        # note: path_to_loading_site is looked up through building. This is by design to save on pathfinding costs
+        if path_to_loading_site == null:
+          push_warning("Cannot reach loading site (%s) from current location (%s)" % [collector_building_at.__repr__, other_building.__repr__])
+        else:
+          var path_to_home_from_building := path_to_building_from_home.duplicate(); path_to_home_from_building.reverse()
+          var bring_in_job: Job = Job.new(path_to_loading_site.path, path_to_home_from_building, resource, resource_amount)
+          print("  Potential job: bring in %s from %s to %s" % [resource, other_building.__repr__, self.home_building.__repr__])
+          jobs.append(bring_in_job)
 
 
   # var new_job: Job = Job.new(path_to_start, path_home_from_other_building, resource)

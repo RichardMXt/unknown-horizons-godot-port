@@ -221,8 +221,9 @@ func get_oriented_cells() -> Array[Array]:
   var oriented_cells: Array[Array] = []
   oriented_cells.resize(self.size.y)
   for dy in range(self.size.y):
-    var row := oriented_cells[dy]
+    var row: Array[Vector2i] = []
     row.resize(self.size.x)
+    oriented_cells[dy] = row
     for dx in range(self.size.x):
       var cell: Vector2i
       match orientation: # Calculate the cell position acording to orientation
@@ -249,7 +250,7 @@ func _notification(what):
         self.position = built_tilemap.map_to_local(built_tilemap.local_to_map(self.position)) # snap position to cells in editor mode
 
 var buildings_in_radius_cache: Array[Building2D] = [null] # not a valid cache
-var buildings_paths_cache: Dictionary[Building2D, BuiltTileMap.NavPath] = {}
+var buildings_paths_cache: Dictionary[Building2D, NavPath] = {}
 
 func get_buildings_in_radius() -> Array[Building2D]:
   if self.buildings_in_radius_cache == [null]:
@@ -258,8 +259,8 @@ func get_buildings_in_radius() -> Array[Building2D]:
 
   return buildings_in_radius_cache
 
-func get_path_to_building(building: Building2D) -> BuiltTileMap.NavPath:
-  var path: BuiltTileMap.NavPath = self.buildings_paths_cache.get(building, null)
+func get_path_to_building(building: Building2D) -> NavPath:
+  var path: NavPath = self.buildings_paths_cache.get(building, null)
 
   if path == null:
     path = self.built_tilemap.get_building_to_building_path(self, building)

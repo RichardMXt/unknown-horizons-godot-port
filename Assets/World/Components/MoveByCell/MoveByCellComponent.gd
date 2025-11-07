@@ -100,7 +100,8 @@ func move(path: Array[Vector2i]) -> void:
   if path != []:
     var direction: int = 90
     self.object_to_be_moved.visible = true
-    if self.pathfinding.tile_map_layer.local_to_map(object_to_be_moved.global_position) != path[0]: # remove the starting position because the object is already there
+
+    if object_to_be_moved.cell_position != path[0]: # remove the starting position because the object is already there
       push_error("The path does not start from the current position")
     self.cancel_move_requested = false
     if self.paused:
@@ -115,7 +116,6 @@ func move(path: Array[Vector2i]) -> void:
       direction = posmod(direction, 360) # make in range of 0-359
       self.update_action_set(direction, BuildingActionSet.ActionStates.MOVE)
 
-      
       var move_tween: Tween = self.get_tree().create_tween().bind_node(self)
       move_tween.tween_property(object_to_be_moved, "global_position", new_local_position, 1/tile_per_sec)
       await move_tween.finished
