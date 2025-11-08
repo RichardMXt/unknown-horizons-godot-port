@@ -13,11 +13,11 @@ func on_context_changed(context: BaseContext) -> void:
     building = &"TRAIL" # trail toggled, set name as trail
   elif building_context != null:
     building = building_context.building_to_build
-  else: # turn of building cost overlay if not building or road building contexts
-    balance_info_button.show_normal_overlay()
-    resources_overlay.show_normal_overlay()
-    return
 
   if building != &"":
     balance_info_button.show_building_cost_overlay(building)
     resources_overlay.show_building_cost_overlay(building)
+  else: # if there is no building(other context was set) toggle default overlays
+    balance_info_button.show_normal_overlay()
+    resources_overlay.show_normal_overlay()
+    return
