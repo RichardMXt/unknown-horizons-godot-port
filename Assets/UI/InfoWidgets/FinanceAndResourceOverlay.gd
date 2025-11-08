@@ -11,7 +11,7 @@ func on_context_changed(context: BaseContext) -> void:
   var building_context: BuildingContext = context as BuildingContext
   if road_building_context != null:
     building = &"TRAIL" # trail toggled, set name as trail
-  elif building_context != null:
+  if building_context != null:
     building = building_context.building_to_build
 
   if building != &"":
