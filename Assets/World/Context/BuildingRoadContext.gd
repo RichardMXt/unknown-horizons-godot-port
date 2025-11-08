@@ -46,10 +46,6 @@ func _unhandled_input(event):
         
     if event.is_action_pressed("cancel"):
       if not is_road_building_started:
-        var cancel_build_event := InputEventAction.new()
-        cancel_build_event.action = "cancel_build"
-        cancel_build_event.pressed = true
-        Input.parse_input_event(cancel_build_event)
         self.game_context_manager.current_context = null
       else:
         self.is_road_building_started = false

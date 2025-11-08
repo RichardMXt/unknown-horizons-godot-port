@@ -171,10 +171,6 @@ func build(building_to_build: StringName, building_instance: Building2D) -> void
 
 func cancel_build() -> void:
   self.building_to_build = BuildingConfig.Buildings.NONE
-  var cancel_build_event := InputEventAction.new()
-  cancel_build_event.action = "cancel_build"
-  cancel_build_event.pressed = true
-  Input.parse_input_event(cancel_build_event)
 
 func has_resources_for_building(building_name: StringName) -> bool:
   var cost: Dictionary = BuildingConfig.building_to_cost[building_name] as Dictionary[StringName, int]

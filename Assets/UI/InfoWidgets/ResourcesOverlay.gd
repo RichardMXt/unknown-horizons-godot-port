@@ -20,27 +20,20 @@ func _ready():
       slot.pressed.connect(pin_resource_to_slot.bind(slot))
   add_empty_resource_slot()
 
-func _input(event: InputEvent) -> void:
-  var building: StringName = &""
-  if event.is_action_pressed("toggle_build_road"):
-    building = &"Trail" # trail toggled, set name as trail
-  if event.is_action_pressed("toggle_build_building"):
-    var building_str: StringName = event.get_meta("button_name").trim_prefix("Build").trim_suffix("Button")
-    building = BuildingConfig.Buildings.get(building_str.to_snake_case().to_upper(), &"")
-  if building != &"":
-    # show the build overlay
-    self.overlays_tab_container.current_tab = self.overlays_tab_container.get_tab_idx_from_control(build_overlay)
-    # get cost of the building as typed dictionary
-    var cost: Dictionary[StringName, int] = {}
-    for resource: StringName in BuildingConfig.building_to_cost.get(building, {}).keys():
-      cost[resource] = BuildingConfig.building_to_cost.get(building, {}).get(resource, 0) as int
-    # set the overlay
-    self.build_overlay.set_building_cost(cost)
-    self.build_overlay.visible = true
-  
-  if event.is_action_pressed("cancel_build"):
-    self.overlays_tab_container.current_tab = 0 # set default overlay(customly pinned resources)
-    self.build_overlay.set_building_cost({})
+func show_building_cost_overlay(building: StringName) -> void:
+  # show the build overlay
+  self.overlays_tab_container.current_tab = self.overlays_tab_container.get_tab_idx_from_control(build_overlay)
+  # get cost of the building as typed dictionary
+  var cost: Dictionary[StringName, int] = {}
+  for resource: StringName in BuildingConfig.building_to_cost.get(building, {}).keys():
+    cost[resource] = BuildingConfig.building_to_cost.get(building, {}).get(resource, 0) as int
+  # set the overlay
+  self.build_overlay.set_building_cost(cost)
+  self.build_overlay.visible = true
+
+func show_normal_overlay() -> void:
+  self.overlays_tab_container.current_tab = 0 # set default overlay(customly pinned resources)
+  self.build_overlay.set_building_cost({})
 
 func add_empty_resource_slot() -> void:
   var empty_display_slot: ResourceDisplaySlot = res_display_slot.instantiate()
