@@ -250,21 +250,31 @@ func _notification(what):
         self.position = built_tilemap.map_to_local(built_tilemap.local_to_map(self.position)) # snap position to cells in editor mode
 
 var buildings_in_radius_cache: Array[Building2D] = [null] # not a valid cache
-var buildings_paths_cache: Dictionary[Building2D, NavPath] = {}
+# var buildings_paths_cache: Dictionary[Building2D, NavPath] = {}
+var buildings_paths_cache: Dictionary[Building2D, Dictionary] = {} # Dictionary[Building2D, Dictionary[Pathfinder, NavPath]] = {}
 
 func get_buildings_in_radius() -> Array[Building2D]:
   if self.buildings_in_radius_cache == [null]:
-    self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.cell_position, self.radius)
+    self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.oriented_rect, self.radius)
     self.buildings_in_radius_cache.erase(self) # remove self from the list
 
   return buildings_in_radius_cache
 
-func get_path_to_building(building: Building2D) -> NavPath:
-  var path: NavPath = self.buildings_paths_cache.get(building, null)
+func get_path_to_building(building: Building2D, pathfinding: Pathfinder) -> NavPath:
+  var pathfinder_to_path_cache: Dictionary[Pathfinder, NavPath]
+  if not self.buildings_paths_cache.has(building):
+    pathfinder_to_path_cache = {}
+    self.buildings_paths_cache[building] = pathfinder_to_path_cache
+  else:
+    pathfinder_to_path_cache = self.buildings_paths_cache[building]
+  # var path: NavPath = pathfinder_to_path_cache.get(pathfinding, null) if pathfinder_to_path_cache != null else null
 
-  if path == null:
-    path = self.built_tilemap.get_building_to_building_path(self, building)
-    self.buildings_paths_cache[building] = path
+  var path: NavPath
+  if pathfinder_to_path_cache.has(pathfinding):
+    path = pathfinder_to_path_cache[pathfinding]
+  else:
+    path = self.built_tilemap.get_building_to_building_path(self, building, pathfinding)
+    pathfinder_to_path_cache[pathfinding] = path
 
   return path
 

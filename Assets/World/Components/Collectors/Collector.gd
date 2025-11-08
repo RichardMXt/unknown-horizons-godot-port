@@ -171,7 +171,7 @@ func get_best_job() -> Job:
       # var path_home: Array[Vector2i] = self.get_path_home(collector_map_position)
     var collector_building_at = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
     if collector_building_at != self.home_building:
-      var path_home: NavPath = collector_building_at.get_path_to_building(self.home_building)
+      var path_home: NavPath = collector_building_at.get_path_to_building(self.home_building, self.move_by_cell.pathfinding)
       if path_home != null:
         best_job = Job.new([collector_map_position], path_home.path, ResourceConfig.Resources.NONE, 0)
 
@@ -280,7 +280,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
   var jobs: Array[Job] = []
   # var path_to_home: Array[Vector2i] = []
   for other_building in partner_buildings:
-    var navpath_to_building_from_home: NavPath = self.home_building.get_path_to_building(other_building)
+    var navpath_to_building_from_home: NavPath = self.home_building.get_path_to_building(other_building, self.move_by_cell.pathfinding)
     if navpath_to_building_from_home == null:
       continue
     var path_to_building_from_home := navpath_to_building_from_home.path
@@ -308,7 +308,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
         if collector_building_at == null:
           push_error("Collector is not in any buildings: %s" % collector_map_position)
           continue
-        var path_to_loading_site := collector_building_at.get_path_to_building(other_building)
+        var path_to_loading_site := collector_building_at.get_path_to_building(other_building, self.move_by_cell.pathfinding)
         # note: path_to_loading_site is looked up through building. This is by design to save on pathfinding costs
         if path_to_loading_site == null:
           push_warning("Cannot reach loading site (%s) from current location (%s)" % [collector_building_at.__repr__, other_building.__repr__])
@@ -341,7 +341,6 @@ func load_resources_for_building_collector(job: Job) -> void:
   self.storage.set_storage_item_amount(job.resource, resource_amount)
 
 
-
 ## returns all possible jobs for a lumberjack collector
 func get_jobs_for_lumberjack_collector() -> Array[Job]:
   if self.collector_type != self.CollectorTypes.LUMBERJACK_COLLECTOR:
@@ -351,25 +350,28 @@ func get_jobs_for_lumberjack_collector() -> Array[Job]:
     push_error("Mising nodes in get_jobs_for_lumberjack_collector, Collector.gd")
   if self.building_storage.get_storage_item_amount(ResourceConfig.Resources.TREES) >= self.building_storage.get_max_capacity(ResourceConfig.Resources.TREES):
     return []
-  var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
-  var cells_in_radius: Array[Vector2i] = BuiltTileMap.get_cells_in_radius(self.radius)
+  var collector_map_position: Vector2i = self.cell_position
+  var cells_in_radius_rect: Rect2i = self.home_building.oriented_rect.grow(self.home_building.radius)
   var jobs: Array[Job] = []
   # find all trees and create a job for each
-  for delta in cells_in_radius:
-    var cell := self.home_building.cell_position + delta
-    var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
-    if cell_data == null:
-      continue
-    if cell_data.get_custom_data(self.built_tilemap.is_tree) == true:
-      if cell in self.built_tilemap.trees_getting_choped:
+  for y in range(cells_in_radius_rect.position.y, cells_in_radius_rect.end.y):
+    for x in range(cells_in_radius_rect.position.x, cells_in_radius_rect.end.x):
+      var cell := Vector2i(x, y)
+      if Utils.distance_to_rect_L1(cell, cells_in_radius_rect) > radius:
         continue
-      var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
-      var path_from_start_to_end: Array[Vector2i] = self.get_cell_path(cell, self.home_building.cell_position) # from cell to building
-      if path_to_start == [] or path_from_start_to_end == []:
+      var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
+      if cell_data == null:
+        continue
+      if cell_data.get_custom_data(self.built_tilemap.is_tree) == true:
+        if cell in self.built_tilemap.trees_getting_choped:
           continue
-      var new_job: Job = Job.new(path_to_start, path_from_start_to_end, ResourceConfig.Resources.TREES, 1)
-      jobs.append(new_job)
-      break # terminate if tree found, get closest tree by distance not path
+        var path_to_start: Array[Vector2i] = self.get_cell_path(collector_map_position, cell) # to cell
+        var path_from_start_to_end: Array[Vector2i] = self.get_cell_path(cell, self.home_building.cell_position) # from cell to building
+        if path_to_start == [] or path_from_start_to_end == []:
+            continue
+        var new_job: Job = Job.new(path_to_start, path_from_start_to_end, ResourceConfig.Resources.TREES, 1)
+        jobs.append(new_job)
+        break # terminate if tree found, get closest tree by distance not path
 
   return jobs
 

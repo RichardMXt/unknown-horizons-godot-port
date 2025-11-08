@@ -182,44 +182,35 @@ func get_cell_building_bitmask(cell: Vector2i) -> int:
 
   return cell_bitmask
 
-# static var cells_cache: Dictionary[Vector2i, Array[Vector2i]] = {} # Vector2i -> Array[Vector2i]
-static var cells_cache: Dictionary = {} # Vector2i -> Array[Vector2i]
-## Returns a list of (dx, dy) that are within the radius sorted by cell distance
-## Do not modify returned array, since it is shared (cached)
-static func get_cells_in_radius(radius: int) -> Array[Vector2i]:
-  #var default: Array[Vector2i] = []
-  var cells_in_radius: Array[Vector2i] = cells_cache.get(radius, [] as Array[Vector2i])
-  if cells_in_radius == []:
-    for dx in range(-radius, radius + 1):
-      for dy in range(-radius, radius + 1):
-        if dx + dy <= radius:
-          cells_in_radius.append(Vector2i(dx, dy))
+func get_buildings_in_radius(rect: Rect2i, radius: int) -> Array[Building2D]:
+  var buildings_in_radius: Dictionary[Building2D, bool] = {}
 
-    cells_in_radius.sort_custom(func(a, b): return abs(a.x) + abs(a.y) < abs(b.x) + abs(b.y))
-    cells_cache[radius] = cells_in_radius
-
-  return cells_in_radius
-
-func get_buildings_in_radius(pos: Vector2i, radius: int) -> Array[Building2D]:
-  var cells_in_radius: Array[Vector2i] = self.get_cells_in_radius(radius)
-  # var buildings_in_radius: Array[Building2D] = [] 
-  var buildings_in_radius: Dictionary[Building2D, bool] = {} 
-  for cell in cells_in_radius:
-    var building: Building2D = self.building_position_to_building.get(pos + cell, null)
-    if building != null:
-      buildings_in_radius[building] = true
+  var affected_rect := rect.grow(radius) 
+  for y in range(affected_rect.position.y, affected_rect.end.y):
+    for x in range(affected_rect.position.x, affected_rect.end.x):
+      var cell := Vector2i(x, y)
+      if Utils.distance_to_rect_L1(cell, affected_rect) > radius:
+        continue
+      var building: Building2D = self.building_position_to_building.get(cell, null)
+      if building != null:
+        buildings_in_radius[building] = true
 
   return buildings_in_radius.keys()
 
 func find_path_to_buildings(src_building: Building2D, partner_buildings: Array[Building2D], pathfinding: Pathfinder) -> Dictionary[Building2D, NavPath]: # Dictionary[Building2D, Array[Vector2i]]:
   var src_rect: Rect2i = src_building.oriented_rect
-  pathfinding.fill_solid_region(src_rect, false) # the unit should be able to walk on src building
+  var was_impassable_src := pathfinding.is_point_solid(src_rect.position) # We use only first point to remember if it was solid
+  if was_impassable_src:
+    pathfinding.fill_solid_region(src_rect, false) # the unit should be able to walk on src building
 
   var paths: Dictionary[Building2D, NavPath] = {}
   
   for building in partner_buildings:
     var dst_rect: Rect2i = building.oriented_rect
-    pathfinding.fill_solid_region(dst_rect, false) # the unit should be able to walk on partner building
+    # memorize if the building cells were passable
+    var was_impassable_dst := pathfinding.is_point_solid(dst_rect.position) # We use only first point to remember if it was solid
+    if was_impassable_dst:
+      pathfinding.fill_solid_region(dst_rect, false) # the unit should be able to walk on partner building
 
     # var merged = src_rect.merge(dst_rect)
     # var pt_data = pathfinding.get_point_data_in_region(merged)
@@ -243,15 +234,18 @@ func find_path_to_buildings(src_building: Building2D, partner_buildings: Array[B
             if path.size() > 0:
               if shortest_path.size() == 0 or path.size() < shortest_path.size():
                 shortest_path = path
+    print("  Path from %s to %s: %s" % [src_building.__repr__, building.__repr__, shortest_path])
     paths[building] = NavPath.new(shortest_path) if shortest_path.size() > 0 else null
-    pathfinding.fill_solid_region(dst_rect, true) # make partner building non-passible
+    if was_impassable_dst:
+      pathfinding.fill_solid_region(dst_rect, true) # make partner building non-passible
 
-  pathfinding.fill_solid_region(src_rect, true) # make it non-passible
+  if was_impassable_src:
+    pathfinding.fill_solid_region(src_rect, true) # make it non-passible
   # return self.get_cell_path(self.built_tilemap.local_to_map(self.global_position), self.built_tilemap.local_to_map(partner_buildings[0].global_position))
   return paths
 
-func get_building_to_building_path(building_src: Building2D, building_dst: Building2D) -> NavPath:
-  var src_to_dst_paths := self.find_path_to_buildings(building_src, [building_dst], self.pathfinding_manager.road_pathfinding)
+func get_building_to_building_path(building_src: Building2D, building_dst: Building2D, pathfinding: Pathfinder) -> NavPath:
+  var src_to_dst_paths := self.find_path_to_buildings(building_src, [building_dst], pathfinding)
   var path: NavPath = src_to_dst_paths[building_dst]
   return path
 
