@@ -5,24 +5,25 @@ class_name FinanceAndResourceOverlay
 @onready var balance_info_button: BalanceInfoButton = %BalanceInfoButton
 @onready var resources_overlay: ResourceOverlay = %ResourcesOverlay
 
-var building_context: BuildingContext = null
+var current_context: BaseContext = null
 
 func on_context_changed(context: BaseContext) -> void:
   var building := &""
   var road_building_context := context as BuildingRoadContext
-  var new_context_as_building_context := context as BuildingContext
-  if self.building_context == null: # remember the building context
-    self.building_context = new_context_as_building_context
+  var building_context := context as BuildingContext
+  self.current_context = context
 
   if road_building_context != null:
     building = &"TRAIL" # trail toggled, set name as trail
 
-  if new_context_as_building_context != null:
-    if self.building_context.building_changed.is_connected(self.on_building_changed) == false:
-      self.building_context.building_changed.connect(self.on_building_changed)
-    building = self.building_context.building_to_build
-  elif self.building_context != null: # if the context is not the building context disconnect the update signal
-    self.building_context.building_changed.disconnect(self.on_building_changed)
+  if building_context != null:
+    if building_context.building_changed.is_connected(self.on_building_changed) == false:
+      building_context.building_changed.connect(self.on_building_changed)
+    building = building_context.building_to_build
+  else: # if the context is not the building context disconnect the update signal
+    var remembered_building_context := self.current_context as BuildingContext
+    if remembered_building_context != null:
+      remembered_building_context.building_changed.disconnect(self.on_building_changed)
 
   if building != &"":
     balance_info_button.show_building_cost_overlay(building)
