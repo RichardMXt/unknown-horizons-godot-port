@@ -17,7 +17,7 @@ var total_revenue_per_second: float = 0.
 var total_balance_per_second: float = 0.0
 
 ## The taxes payed per resident for each tier on default
-@export var default_tax_rate_per_tier_per_resident: Dictionary[StringName, float] = {
+@export var gold_per_resident_per_tier_per_second: Dictionary[StringName, float] = {
   WorldTiers.Tiers.SAILORS    : 2.0,
   WorldTiers.Tiers.PIONEERS   : 2.5,
   WorldTiers.Tiers.SETTLERS   : 3.0,
