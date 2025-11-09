@@ -35,6 +35,7 @@ var building_to_build: StringName = BuildingConfig.Buildings.NONE:
 
     if not self.is_active:
       self.game_context_manager.current_context = self
+    self.building_changed.emit(self.building_to_build)
 
 var building_instance: Building2D = null
 
@@ -45,6 +46,8 @@ var building_oriented_size: Vector2i
 var reference_object: WorldThing2D = null
 
 var last_highlighted_building_position: Vector2i
+
+signal building_changed(building: StringName)
 
 func context_entered() -> void:
   Input.set_custom_mouse_cursor(self.default_cursor)
@@ -89,15 +92,15 @@ func _unhandled_input(event: InputEvent) -> void:
         self.build(self.building_to_build, self.building_instance)
         return
 
-      if mouseButtonEvent.button_index == MOUSE_BUTTON_RIGHT: # cancel the build
-        if reference_object != null: # if reference_object was used, select it on build cancel
-          var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
-          if selectable != null: # if a selectable was found then set it as selected
-            self.game_context_manager.current_context = object_selected_context
-            object_selected_context.set_selected_objects([selectable])
-            return
-        self.cancel_build()
-        self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
+    if event.is_action_pressed("cancel"): # cancel the build
+      if reference_object != null: # if reference_object was used, select it on build cancel
+        var selectable := reference_object.find_first_node_of_type(Selectable) as Selectable
+        if selectable != null: # if a selectable was found then set it as selected
+          self.game_context_manager.current_context = object_selected_context
+          object_selected_context.set_selected_objects([selectable])
+          return
+      self.cancel_build()
+      self.game_context_manager.current_context = null # if cannot get the selectable of the reference object then set the context to null
 
     var rotation_angle = 0
     if event.is_action_pressed("rotate_building_left"):
