@@ -13,13 +13,13 @@ var __repr__: String:
 @export var baseclass: String       # TODO: not used yet
 
 @export var game_name_per_tier: Dictionary[StringName, String]
-@export var radius: int             # TODO: not used yet
-@export var cost: int               # TODO: not used yet
+@export var radius: int             # radius collector uses if collector doesn't have overridden radius
+@export var cost: int               # cost per game_second
 @export var cost_inactive: int      # TODO: not used yet
-@export var size: Vector2i = Vector2i(1, 1)
+@export var size: Vector2i = Vector2i(1, 1) # building footpring in cells
 @export var inhabitants: int        # TODO: not used yet
 @export var tooltip_text: String    # TODO: not used yet
-@export var tier: String            # TODO: not used yet
+@export var tier: String            # TODO: not used yet. Supposed to be a tier when the building unlocks
 
 ## The terrain the building can be built on per tile: [code]Array[Array[int]][/code],
 ## Ex: [code][[0, 0],[0, 0]][/code],[br]
@@ -126,29 +126,6 @@ func refresh_resources_produced_consumed():
   self.resources_produced = resources_produced
   self.resources_consumed = resources_consumed
 
-func get_resources_produced_amounts() -> Dictionary[StringName, int]:
-  var resources_produced_amounts: Dictionary[StringName, int] = {}
-  for storage_component: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
-    for resource in resources_produced.keys():
-      var storage_amount := storage_component.get_storage_item_amount(resource)
-      resources_produced_amounts[resource] = resources_produced_amounts.get(resource, 0) + storage_amount
-  return resources_produced_amounts
-
-
-func is_resource_available(resource: StringName) -> bool:
-  for component in self.get_children():
-    var production_line := component as ProductionLineComponent
-    if production_line != null:
-      if production_line.consumes.has(resource) == true:
-        return false # if the building consumes the resource, do not take that resource from the building
-  for component in self.get_children():
-    var storage_component := component as StorageComponent
-    if storage_component != null:
-      # prints("      Looking for %s in %s" % [resource, self.name])
-      if storage_component.get_storage_item_amount(resource) > 0:
-        return true # found in at least one of the storages
-
-  return false
 
 func unload_resource(resource: StringName, amount: int) -> void:
   if resource == ResourceConfig.Resources.NONE:
@@ -249,13 +226,14 @@ func _notification(what):
       if built_tilemap != null:
         self.position = built_tilemap.map_to_local(built_tilemap.local_to_map(self.position)) # snap position to cells in editor mode
 
-var buildings_in_radius_cache: Array[Building2D] = [null] # not a valid cache
+var buildings_in_radius_cache: Array[Building2D]
+var buildings_in_radius_cache_radius: int = -1
 # var buildings_paths_cache: Dictionary[Building2D, NavPath] = {}
 var buildings_paths_cache: Dictionary[Building2D, Dictionary] = {} # Dictionary[Building2D, Dictionary[Pathfinder, NavPath]] = {}
 
-func get_buildings_in_radius() -> Array[Building2D]:
-  if self.buildings_in_radius_cache == [null]:
-    self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.oriented_rect, self.radius)
+func get_buildings_in_radius(radius: int) -> Array[Building2D]:
+  if buildings_in_radius_cache_radius < radius:
+    self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.oriented_rect, radius)
     self.buildings_in_radius_cache.erase(self) # remove self from the list
 
   return buildings_in_radius_cache
@@ -280,5 +258,43 @@ func get_path_to_building(building: Building2D, pathfinding: Pathfinder) -> NavP
 
 func invalidate_cache(_cells: Array[Vector2i]):
   # TODO: use cells to limit the invalidate region
-  self.buildings_in_radius_cache = [null]
+  self.buildings_in_radius_cache = []
+  self.buildings_in_radius_cache_radius = -1
   self.buildings_paths_cache = {}
+  print("Building %s cache invalidated" % self.__repr__)
+
+func get_resources_produced_amounts() -> Dictionary[StringName, int]:
+  var resources_produced_amounts: Dictionary[StringName, int] = {}
+  for storage_component: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
+    for resource in resources_produced.keys():
+      var storage_amount := storage_component.get_storage_item_amount(resource)
+      resources_produced_amounts[resource] = resources_produced_amounts.get(resource, 0) + storage_amount
+  return resources_produced_amounts
+
+
+func is_resource_available(resource: StringName) -> bool:
+  for component in self.get_children():
+    var production_line := component as ProductionLineComponent
+    if production_line != null:
+      if production_line.consumes.has(resource) == true:
+        return false # if the building consumes the resource, do not take that resource from the building
+  for component in self.get_children():
+    var storage_component := component as StorageComponent
+    if storage_component != null:
+      # prints("      Looking for %s in %s" % [resource, self.name])
+      if storage_component.get_storage_item_amount(resource) > 0:
+        return true # found in at least one of the storages
+
+  return false
+
+func get_resource_amount(resource: StringName) -> int:
+  var resource_amount := 0
+  for storage_component: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
+    resource_amount += storage_component.get_storage_item_amount(resource)
+  return resource_amount
+
+func get_max_resource_amount(resource: StringName) -> int:
+  var max_resource_amount := 0
+  for storage_component: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
+    max_resource_amount = max(max_resource_amount, storage_component.get_max_capacity(resource))
+  return max_resource_amount

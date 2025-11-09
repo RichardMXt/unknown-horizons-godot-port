@@ -101,6 +101,7 @@ func invalidate_buildings_caches(cells: Array[Vector2i]) -> void:
       building.invalidate_cache(cells)
 
 func demolish(cell: Vector2i) -> void:
+  print("BuiltTileMap.demolish(%s)" % cell)
   # demolish building if any
   var affected_cells: Array[Vector2i] = []
   var building: Building2D = self.building_position_to_building.get(cell, null)
@@ -122,12 +123,10 @@ func demolish(cell: Vector2i) -> void:
       building_built_on.visible = true
       self.register_building(building_built_on, true)
     building.paused = true # stop all action
-    building.cancel_sleep.emit() # notify the building to stop(timers)
-    building.queue_free()
-  
+
   affected_cells.append(cell)
   self.set_cell(cell, -1) # delete cell
-  # upadate road
+  # update road
   for neighbor in self.get_surrounding_cells(cell):
     var tile_data: TileData = self.get_cell_tile_data(neighbor)
     if tile_data != null:
@@ -139,7 +138,14 @@ func demolish(cell: Vector2i) -> void:
         self.set_cell(neighbor, -1)
         self.set_cells_terrain_connect([neighbor], terrain_set, terrain, false)
   
+  # invalidate buildings caches before resuming the building to be deleted
+  # this avoid the race condition when the other async loops (get_best_job) are resumed, but their caches still contain this building
   self.invalidate_buildings_caches(affected_cells)
+
+  if building != null:
+    # other async loops (get_best_job) are resumed on `building.cancel_sleep`. That's ok, since current building are no longer registered in built_tilemap
+    building.cancel_sleep.emit() # notify the building to stop(timers)
+    building.queue_free()
 
 # debug layer:
 @onready var tooltip_label: Label = self.get_node("/root/Main/DebugCanvasLayer/Control/BuiltTileMapLayerInfo") if not Engine.is_editor_hint() else null
@@ -197,61 +203,53 @@ func get_buildings_in_radius(rect: Rect2i, radius: int) -> Array[Building2D]:
 
   return buildings_in_radius.keys()
 
-func find_path_to_buildings(src_building: Building2D, partner_buildings: Array[Building2D], pathfinding: Pathfinder) -> Dictionary[Building2D, NavPath]: # Dictionary[Building2D, Array[Vector2i]]:
-  var src_rect: Rect2i = src_building.oriented_rect
+func get_building_to_building_path(src_building: Building2D, dst_building: Building2D, pathfinding: Pathfinder) -> NavPath:
+  var path := self.get_rect_to_rect_path(src_building.oriented_rect, dst_building.oriented_rect, pathfinding)
+  print("  Path from %s to %s: %s" % [src_building.__repr__, dst_building.__repr__, path])
+  return path
+
+func get_rect_to_rect_path(src_rect: Rect2i, dst_rect: Rect2i, pathfinding: Pathfinder) -> NavPath:
   var was_impassable_src := pathfinding.is_point_solid(src_rect.position) # We use only first point to remember if it was solid
   if was_impassable_src:
     pathfinding.fill_solid_region(src_rect, false) # the unit should be able to walk on src building
 
-  var paths: Dictionary[Building2D, NavPath] = {}
-  
-  for building in partner_buildings:
-    var dst_rect: Rect2i = building.oriented_rect
-    # memorize if the building cells were passable
-    var was_impassable_dst := pathfinding.is_point_solid(dst_rect.position) # We use only first point to remember if it was solid
-    if was_impassable_dst:
-      pathfinding.fill_solid_region(dst_rect, false) # the unit should be able to walk on partner building
+  var was_impassable_dst := pathfinding.is_point_solid(dst_rect.position) # We use only first point to remember if it was solid
+  if was_impassable_dst:
+    pathfinding.fill_solid_region(dst_rect, false) # the unit should be able to walk on partner dst_building
 
-    # var merged = src_rect.merge(dst_rect)
-    # var pt_data = pathfinding.get_point_data_in_region(merged)
-    # var cnt_x = 0
-    # var s := ""
-    # print(merged)
-    # for pt in pt_data:
-    #   s += "x" if pt["solid"] else "o"
-    #   cnt_x += 1
-    #   if cnt_x % merged.size.x == 0:
-    #     print(s)
-    #     s = ""
-    var shortest_path: Array[Vector2i] = []
-    for src_y in range(src_rect.position.y, src_rect.end.y):
-      for src_x in range(src_rect.position.x, src_rect.end.x):
-        var src_cell = Vector2i(src_x, src_y)
-        for dst_y in range(dst_rect.position.y, dst_rect.end.y):
-          for dst_x in range(dst_rect.position.x, dst_rect.end.x):
-            var dst_cell = Vector2i(dst_x, dst_y)
-            var path = pathfinding.get_id_path(src_cell, dst_cell)
-            if path.size() > 0:
-              if shortest_path.size() == 0 or path.size() < shortest_path.size():
-                shortest_path = path
-    print("  Path from %s to %s: %s" % [src_building.__repr__, building.__repr__, shortest_path])
-    paths[building] = NavPath.new(shortest_path) if shortest_path.size() > 0 else null
-    if was_impassable_dst:
-      pathfinding.fill_solid_region(dst_rect, true) # make partner building non-passible
+  # var merged = src_rect.merge(dst_rect)
+  # var pt_data = pathfinding.get_point_data_in_region(merged)
+  # var cnt_x = 0
+  # var s := ""
+  # print(merged)
+  # for pt in pt_data:
+  #   s += "x" if pt["solid"] else "o"
+  #   cnt_x += 1
+  #   if cnt_x % merged.size.x == 0:
+  #     print(s)
+  #     s = ""
+  var shortest_path: Array[Vector2i] = []
+  for src_y in range(src_rect.position.y, src_rect.end.y):
+    for src_x in range(src_rect.position.x, src_rect.end.x):
+      var src_cell = Vector2i(src_x, src_y)
+      for dst_y in range(dst_rect.position.y, dst_rect.end.y):
+        for dst_x in range(dst_rect.position.x, dst_rect.end.x):
+          var dst_cell = Vector2i(dst_x, dst_y)
+          var cur_path = pathfinding.get_id_path(src_cell, dst_cell)
+          if cur_path.size() > 0:
+            if shortest_path.size() == 0 or cur_path.size() < shortest_path.size():
+              shortest_path = cur_path
+  var res_path: NavPath = NavPath.new(shortest_path) if shortest_path.size() > 0 else null
+ 
+  if was_impassable_dst:
+    pathfinding.fill_solid_region(dst_rect, true) # make partner dst_building non-passible
 
   if was_impassable_src:
     pathfinding.fill_solid_region(src_rect, true) # make it non-passible
-  # return self.get_cell_path(self.built_tilemap.local_to_map(self.global_position), self.built_tilemap.local_to_map(partner_buildings[0].global_position))
-  return paths
+ 
+  return res_path
 
-func get_building_to_building_path(building_src: Building2D, building_dst: Building2D, pathfinding: Pathfinder) -> NavPath:
-  var src_to_dst_paths := self.find_path_to_buildings(building_src, [building_dst], pathfinding)
-  var path: NavPath = src_to_dst_paths[building_dst]
+func get_cell_position_to_building_path(cell_position: Vector2i, dst_building: Building2D, pathfinding: Pathfinder) -> NavPath:
+  var path := self.get_rect_to_rect_path(Rect2i(cell_position, Vector2i.ONE), dst_building.oriented_rect, pathfinding)
+  print("  Path from %s to %s: %s" % [cell_position, dst_building.__repr__, path])
   return path
-
-# func get_path_to_building(src: Vector2i, building: Building2D) -> Array[Vector2i]:
-#   var building_at_src: Building2D = self.building_position_to_building.get(src, null)
-#   if building_at_src != null:
-#     var path = self.get_building_to_building_path(building_at_src, building)
-
-  # return self.get_cell_path(self.built_tilemap.local_to_map(self.global_position), self.built_tilemap.local_to_map(building.global_position))

@@ -9,6 +9,7 @@ var resources: Dictionary[StringName, int] = {
   ResourceConfig.Resources.TOOLS: 1000,
   ResourceConfig.Resources.BOARDS: 100,
   ResourceConfig.Resources.FLOUR: 10,
+  ResourceConfig.Resources.BRICKS: 100,
 } # resource_name to count
 
 var world_tier: StringName = WorldTiers.Tiers.SAILORS: 

@@ -32,7 +32,7 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 
 
 @export var baseclass: String  # TODO: not used yet
-@export var radius: int = 10
+@export var radius: int = -1   # radius how far can the collector walk. If -1 - use the home building radius
 @export var velocity: float    # TODO: not used yet
 ## whether to show while loading
 @export var show_while_loading: bool = false
@@ -65,6 +65,9 @@ var cell_position: Vector2i:
   set(value):
     self.global_position = self.built_tilemap.map_to_local(value)
 
+var effective_radius: int: 
+  get():
+    return self.radius if self.radius != -1 or self.home_building == null else self.home_building.radius
 
 #region Editor: dynamic values for dropdown for `collector_type`
 func _get_property_list() -> Array:
@@ -162,20 +165,26 @@ func get_best_job() -> Job:
   for job in jobs:
     if job == null:
       continue
-    var score: float = clampf(1 - (len(job.path_to_start) + len(job.path_from_start_to_end)) / float(self.radius) / 2, 0, 1) # 0-1
+    var score: float = clampf(1 - (len(job.path_to_start) + len(job.path_from_start_to_end)) / float(self.effective_radius) / 2, 0, 1) # 0-1
     if score >= best_job_score:
       best_job = job
       best_job_score = score
 
-  if best_job == null and collector_map_position != self.home_building.cell_position: # if there is no job, go home if not home
-      # var path_home: Array[Vector2i] = self.get_path_home(collector_map_position)
-    var collector_building_at = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
-    if collector_building_at != self.home_building:
-      var path_home: NavPath = collector_building_at.get_path_to_building(self.home_building, self.move_by_cell.pathfinding)
-      if path_home != null:
-        best_job = Job.new([collector_map_position], path_home.path, ResourceConfig.Resources.NONE, 0)
+  var collector_building_at = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
+  if best_job == null and collector_building_at != self.home_building: # if there is no job, go home if not home
+    var path_home: NavPath = null
+    if collector_building_at != null: # use path cached in current building if can
+      path_home = collector_building_at.get_path_to_building(self.home_building, self.move_by_cell.pathfinding)
+    else:
+      path_home = self.built_tilemap.get_cell_position_to_building_path(collector_map_position, self.home_building, self.move_by_cell.pathfinding)
+
+    if path_home != null:
+      best_job = Job.new([collector_map_position], path_home.path, ResourceConfig.Resources.NONE, 0)
+    else:
+      push_error("No path from %s to %s" % [collector_map_position, self.home_building])
 
   return best_job
+
 
 static func adjust_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
   if path.size() == 0:
@@ -252,7 +261,7 @@ func get_jobs_for_building_collector() -> Array[Job]:
 
   var collector_map_position: Vector2i = self.built_tilemap.local_to_map(self.global_position)
 
-  var buildings_in_radius := self.home_building.get_buildings_in_radius()
+  var buildings_in_radius := self.home_building.get_buildings_in_radius(self.effective_radius)
 
   var partner_buildings: Array[Building2D] = [] # select potential partner buildings
   for other_building: Building2D in buildings_in_radius:
@@ -284,6 +293,8 @@ func get_jobs_for_building_collector() -> Array[Job]:
     if navpath_to_building_from_home == null:
       continue
     var path_to_building_from_home := navpath_to_building_from_home.path
+    if path_to_building_from_home.size() - 1 > self.effective_radius: # the max path length excluding starting cell (on buildings) 
+      continue
 
     if other_building.id in ["BUILDINGS." + BuildingConfig.Buildings.WAREHOUSE, "BUILDINGS." + BuildingConfig.Buildings.STORAGE]:
       # the partner_building is a storage - create jobs for taking out the resources produced at home_building
@@ -297,12 +308,12 @@ func get_jobs_for_building_collector() -> Array[Job]:
           jobs.append(take_out_job)
 
     for resource in self.home_building.resources_consumed.keys():
+      if self.home_building.get_resource_amount(resource) >=  self.home_building.get_max_resource_amount(resource):
+        continue # incoming storage is full - don't bring in more
       # for all partner buildings (including storages) create jobs to bring in resources for consumption
       if other_building.resources_consumed.has(resource):
         continue # do not take resource from other building if it consumes it
-      var resource_amount := 0
-      for storage_component: StorageComponent in other_building.get_all_nodes_of_type(StorageComponent):
-        resource_amount += storage_component.get_storage_item_amount(resource)
+      var resource_amount := other_building.get_resource_amount(resource)
       if resource_amount > 0:
         var collector_building_at: Building2D = self.built_tilemap.building_position_to_building.get(collector_map_position, null)
         if collector_building_at == null:
@@ -351,13 +362,13 @@ func get_jobs_for_lumberjack_collector() -> Array[Job]:
   if self.building_storage.get_storage_item_amount(ResourceConfig.Resources.TREES) >= self.building_storage.get_max_capacity(ResourceConfig.Resources.TREES):
     return []
   var collector_map_position: Vector2i = self.cell_position
-  var cells_in_radius_rect: Rect2i = self.home_building.oriented_rect.grow(self.home_building.radius)
+  var cells_in_radius_rect: Rect2i = self.home_building.oriented_rect.grow(self.effective_radius)
   var jobs: Array[Job] = []
   # find all trees and create a job for each
   for y in range(cells_in_radius_rect.position.y, cells_in_radius_rect.end.y):
     for x in range(cells_in_radius_rect.position.x, cells_in_radius_rect.end.x):
       var cell := Vector2i(x, y)
-      if Utils.distance_to_rect_L1(cell, cells_in_radius_rect) > radius:
+      if Utils.distance_to_rect_L1(cell, cells_in_radius_rect) > self.effective_radius:
         continue
       var cell_data: TileData = self.built_tilemap.get_cell_tile_data(cell)
       if cell_data == null:
