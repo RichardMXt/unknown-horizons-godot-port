@@ -186,7 +186,7 @@ func get_best_job() -> Job:
   return best_job
 
 
-static func adjust_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
+static func get_adjusted_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
   if path.size() == 0:
     return position
   var starting_point := path[0]
@@ -203,12 +203,12 @@ func collecting_loop() -> void:
     if self.collector_type == self.CollectorTypes.LUMBERJACK_COLLECTOR:
       self.built_tilemap.trees_getting_choped[job.path_from_start_to_end[0]] = null
 
-    self.cell_position = Collector.adjust_position_for_start(self.cell_position, job.path_to_start) # collector is on one of the building's tile, move it to startnig position to start the journey
+    self.cell_position = Collector.get_adjusted_position_for_start(self.cell_position, job.path_to_start) # collector is on one of the building's tile, move it to startnig position to start the journey
     await self.move_by_cell.move(job.path_to_start)
 
     await self.load_resources(job)
 
-    self.cell_position = Collector.adjust_position_for_start(self.cell_position, job.path_from_start_to_end) # adjust collector position within building before heading out
+    self.cell_position = Collector.get_adjusted_position_for_start(self.cell_position, job.path_from_start_to_end) # adjust collector position within building before heading out
     await self.move_by_cell.move(job.path_from_start_to_end)
 
     await self.unload_resources(job)

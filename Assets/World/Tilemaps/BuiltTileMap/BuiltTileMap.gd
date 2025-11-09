@@ -2,8 +2,6 @@ extends TileMapLayer
 
 class_name BuiltTileMap
 
-@onready var pathfinding_manager: PathfindingManager = %PathfindingManager
-
 const is_tree: String = "is_tree"
 const is_road: String = "is_road"
 

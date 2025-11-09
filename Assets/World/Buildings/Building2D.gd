@@ -236,7 +236,7 @@ func get_buildings_in_radius(radius: int) -> Array[Building2D]:
     self.buildings_in_radius_cache = self.built_tilemap.get_buildings_in_radius(self.oriented_rect, radius)
     self.buildings_in_radius_cache.erase(self) # remove self from the list
 
-  return buildings_in_radius_cache
+  return self.buildings_in_radius_cache
 
 func get_path_to_building(building: Building2D, pathfinding: Pathfinder) -> NavPath:
   var pathfinder_to_path_cache: Dictionary[Pathfinder, NavPath]
@@ -271,21 +271,6 @@ func get_resources_produced_amounts() -> Dictionary[StringName, int]:
       resources_produced_amounts[resource] = resources_produced_amounts.get(resource, 0) + storage_amount
   return resources_produced_amounts
 
-
-func is_resource_available(resource: StringName) -> bool:
-  for component in self.get_children():
-    var production_line := component as ProductionLineComponent
-    if production_line != null:
-      if production_line.consumes.has(resource) == true:
-        return false # if the building consumes the resource, do not take that resource from the building
-  for component in self.get_children():
-    var storage_component := component as StorageComponent
-    if storage_component != null:
-      # prints("      Looking for %s in %s" % [resource, self.name])
-      if storage_component.get_storage_item_amount(resource) > 0:
-        return true # found in at least one of the storages
-
-  return false
 
 func get_resource_amount(resource: StringName) -> int:
   var resource_amount := 0
