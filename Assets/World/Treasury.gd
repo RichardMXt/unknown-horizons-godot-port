@@ -36,7 +36,7 @@ func _on_treasury_timer_timeout(timer: Timer):
     var residence := building as Residential
     if residence != null:
       if not building.paused:
-        var residence_revenue := residence.collect_taxes()
+        var residence_revenue := residence.collect_taxes(timer.wait_time)
         total_revenue += residence_revenue
         revenue_per_tier[residence.current_tier_val] = revenue_per_tier.get(residence.current_tier_val, 0.0) + residence_revenue
     total_cost += building.cost if not building.paused else building.cost_inactive
