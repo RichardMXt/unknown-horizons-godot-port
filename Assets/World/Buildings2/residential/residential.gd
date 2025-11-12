@@ -16,6 +16,8 @@ var max_residents_for_current_tier: int:
 @export var happiness_usage_per_inhabitant: int = 20
 @export var happiness_usage_per_tier: int = 40
 
+@export var happiness_usage_per_second: float = 0.5
+
 ## emitted when the number of residents_count of this building changes
 signal residents_count_changed(residents_count: int)
 
@@ -31,8 +33,11 @@ var residents_count: int = 1:
     
     self.residents_count_changed.emit(self.residents_count)
 
-func _on_tier_changed() -> void:
+var last_time_happiness_payed: float = Time.get_unix_time_from_system()
+
+func set_current_tier(new_tier: StringName) -> void:
   var previous_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
+  current_tier = new_tier
   var current_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
   # notify children
   for node: Node in self.get_children():
@@ -41,7 +46,6 @@ func _on_tier_changed() -> void:
         node.current_tier = self.current_tier
       elif node.current_tier is WorldTiers.TierEnum: # if uses enum
         node.current_tier = current_enum_tier
-  self.refresh_resources_produced_consumed()
   
   # spend/gain happiness from upgarde/downgrade
   self.spend_happiness((current_enum_tier - previous_enum_tier) * self.happiness_usage_per_tier)
@@ -50,10 +54,28 @@ func _on_tier_changed() -> void:
   if world_enum_tier < current_enum_tier:
     GameStats.game_stats_resource.world_tier = self.current_tier
 
+  self.refresh_resources_produced_consumed()
+
 func connect_set_tier() -> void:
   # listen to storage changes and do not listen to world tier
   for storage: StorageComponent in self.get_all_nodes_of_type(StorageComponent):
     storage.storage_changed.connect(self.update_tier.unbind(1))
+
+func refresh_resources_produced_consumed():
+  var resources_produced: Dictionary[StringName, bool] = {}
+  var resources_consumed: Dictionary[StringName, bool] = {ResourceConfig.Resources.HAPPINESS: true}
+  for node: Node in self.get_children():
+    var production_line_component := node as ProductionLineComponent
+    if production_line_component != null and production_line_component.paused == false:
+      for resource in production_line_component.consumes:
+        resources_consumed[resource] = true
+        resources_produced.erase(resource) # delete from resources_produced if it is consumed
+      for resource in production_line_component.produces:
+        if resources_consumed.has(resource):
+          continue # do not set resource as produced if it is consumed too
+        resources_produced[resource] = true
+  self.resources_produced = resources_produced
+  self.resources_consumed = resources_consumed
 
 func get_happiness() -> int:
   var happiness := 0
@@ -81,7 +103,8 @@ func update_tier() -> void:
   var enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
   var new_enum_tier := clampi(enum_tier + tier_change, WorldTiers.TierEnum.SAILORS, WorldTiers.TierEnum.MERCHANTS)
   var new_tier: StringName = WorldTiers.TierEnum.find_key(new_enum_tier)
-  self.current_tier = new_tier
+  if new_tier != self.current_tier:
+    self.current_tier = new_tier
   
   # # log default
   # print("New residents_count: %s | New tier: %s | New happiness: %s" % [self.residents_count, self.current_tier, 
@@ -100,8 +123,17 @@ func spend_happiness(happiness_to_spend: int):
     var happiness_to_take_or_give := mini(happiness_to_spend, happiness_in_storage)
     storage.set_storage_item_amount(ResourceConfig.Resources.HAPPINESS, happiness_in_storage - happiness_to_take_or_give)
     happiness_to_spend -= happiness_to_take_or_give
+    i += 1
 
-func calculate_tax_revenue():
+func collect_taxes() -> float:
+  var unix_time := Time.get_unix_time_from_system() # TODO: use game time
+  var time_since_last_happiness_payed := unix_time - self.last_time_happiness_payed
+  var tax_rate := GameStats.treasury.tax_rate_per_tier[self.current_tier_val]
+  var happiness_to_pay := int(self.happiness_usage_per_second * time_since_last_happiness_payed * tax_rate)
+  if happiness_to_pay >= 1: # pay happiness
+    self.last_time_happiness_payed = unix_time
+    self.spend_happiness(happiness_to_pay)
+  # calculate tax revenue
   var gold_per_resident_per_second := GameStats.treasury.gold_per_resident_per_tier_per_second[self.current_tier]
-  var tax_revenue = self.residents_count * GameStats.treasury.tax_rate_per_tier[self.current_tier_val] * gold_per_resident_per_second
+  var tax_revenue := self.residents_count * tax_rate * gold_per_resident_per_second
   return tax_revenue

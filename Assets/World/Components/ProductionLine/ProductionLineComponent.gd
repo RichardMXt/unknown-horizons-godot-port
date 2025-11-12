@@ -23,6 +23,8 @@ class_name ProductionLineComponent
 @export var produces_multiplier: int = 1: set = set_produces_multiplier
 @export_group("")
 
+@export var levels: Array[StringName] = []
+
 @export var show_resource_produced_tooltip: bool = true
 @export var show_resource_deficit_tooltip: bool = true
 @export var show_inventory_full_tooltip: bool = true
@@ -76,7 +78,24 @@ var storage_components: Array[StorageComponent]
 
 var action_set: BuildingActionSet = null
 
+var current_tier := WorldTiers.Tiers.SAILORS:
+  set(value):
+    current_tier = value
+    var parent_building: Building2D = self.get_parent() as Building2D
+    # update the paused state with the new tier
+    if parent_building != null:
+      self.paused = parent_building.paused
+    else:
+      self.paused = false
+
 signal action_state_changed(action_state: ActionStates)
+
+func set_pause(value: bool) -> void:
+  paused = value
+  if self.levels != []: # produce only if unpaused and tier is in the levels of production
+    paused = (self.current_tier in self.levels) == false or self.paused
+  if self.paused == false:
+    self.unpaused.emit()
 
 func set_components(components: Array[BaseComponent]):
   for component in components:
@@ -93,7 +112,6 @@ func set_components(components: Array[BaseComponent]):
   self.resource_deficit_tooltip.position = building_local_top
   self.inventory_full_tooltip.position = building_local_top
   production_stage = ProductionStages.START
-
 
 func update_action_set():
   if action_set != null:
@@ -158,6 +176,8 @@ func get_local_building_height() -> Vector2:
   return building_height
 
 func has_output_space() -> bool:
+  if self.produces == {}:
+    return true
   for produces in self.produces.keys():
     for storage_component in self.storage_components:
       var current_amount := storage_component.get_storage_item_amount(produces)
