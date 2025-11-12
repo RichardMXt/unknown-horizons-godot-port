@@ -134,11 +134,11 @@ func collect_taxes(delta_time: float) -> float:
     self.spend_happiness(happiness_can_be_paid)
     self.happiness_to_pay -= happiness_can_be_paid
   # calculate tax revenue
-  var tax_revenue := self.calculate_tax_revenue() * delta_time
+  var tax_revenue := self.calculate_tax_revenue_per_second() * delta_time
   return tax_revenue
 
 ## Returns the tax revenue(use to calculate revenue, not a real pay tax with happiness reduction)
-func calculate_tax_revenue() -> float:
+func calculate_tax_revenue_per_second() -> float:
   var gold_per_resident_per_second := GameStats.treasury.gold_per_resident_per_tier_per_second[self.current_tier]
   var tax_revenue = self.residents_count * GameStats.treasury.tax_rate_per_tier[self.current_tier_val] * gold_per_resident_per_second
   return tax_revenue

@@ -24,8 +24,6 @@ func on_new_selected_node(node: WorldThing2D) -> void:
     # turn on the needed ones
     var production_chain_index: int = 0
     for production_line: ProductionLineComponent in building_selected.get_all_nodes_of_type(ProductionLineComponent):
-      if production_line.paused:
-        continue # do not show paused production lines
       # get the next production chain
       var production_chain: ProductionChain = production_chains.get_child(production_chain_index) as ProductionChain
       production_chain_index += 1
