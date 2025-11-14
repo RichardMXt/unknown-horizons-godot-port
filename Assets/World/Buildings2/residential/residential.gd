@@ -16,7 +16,7 @@ var max_residents_for_current_tier: int:
 @export var happiness_usage_per_inhabitant: int = 20
 @export var happiness_usage_per_tier: int = 40
 
-@export var happiness_usage_per_second: float = 0.5
+@export var happiness_usage_per_second: float = 1.0
 
 ## emitted when the number of residents_count of this building changes
 signal residents_count_changed(residents_count: int)
@@ -32,8 +32,6 @@ var residents_count: int = 1:
     self.spend_happiness((residents_count - previous_residents_count) * self.happiness_usage_per_inhabitant)
     
     self.residents_count_changed.emit(self.residents_count)
-
-var happiness_to_pay: float = 0
 
 func set_current_tier(new_tier: StringName) -> void:
   var previous_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
@@ -62,20 +60,10 @@ func connect_set_tier() -> void:
     storage.storage_changed.connect(self.update_tier.unbind(1))
 
 func refresh_resources_produced_consumed():
-  var resources_produced: Dictionary[StringName, bool] = {}
-  var resources_consumed: Dictionary[StringName, bool] = {ResourceConfig.Resources.HAPPINESS: true}
-  for node: Node in self.get_children():
-    var production_line_component := node as ProductionLineComponent
-    if production_line_component != null and production_line_component.paused == false:
-      for resource in production_line_component.consumes:
-        resources_consumed[resource] = true
-        resources_produced.erase(resource) # delete from resources_produced if it is consumed
-      for resource in production_line_component.produces:
-        if resources_consumed.has(resource):
-          continue # do not set resource as produced if it is consumed too
-        resources_produced[resource] = true
-  self.resources_produced = resources_produced
-  self.resources_consumed = resources_consumed
+  # an override to consume happiness always
+  super()
+  self.resources_produced.erase(ResourceConfig.Resources.HAPPINESS)
+  self.resources_consumed[ResourceConfig.Resources.HAPPINESS] = true
 
 func get_happiness() -> int:
   var happiness := 0
@@ -125,8 +113,11 @@ func spend_happiness(happiness_to_spend: int):
     happiness_to_spend -= happiness_to_take_or_give
     i += 1
 
+## The happiness left to pay from previous tax collections
+var happiness_to_pay: float = 0
+
 ## Collects taxes and returns the tax revenue, reduces happiness
-func collect_taxes(delta_time: float) -> float:
+func collect_taxes_and_pay_hapinness(delta_time: float) -> float:
   var tax_rate := GameStats.treasury.tax_rate_per_tier[self.current_tier_val]
   self.happiness_to_pay += self.happiness_usage_per_second * delta_time * tax_rate
   var happiness_can_be_paid := int(self.happiness_to_pay)

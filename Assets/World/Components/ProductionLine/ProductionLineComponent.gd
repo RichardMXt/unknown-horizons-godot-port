@@ -84,18 +84,19 @@ var current_tier := WorldTiers.Tiers.SAILORS:
     var parent_building: Building2D = self.get_parent() as Building2D
     # update the paused state with the new tier
     if parent_building != null:
-      self.paused = parent_building.paused
+      if parent_building.paused == false:
+        self.unpause_if_can()
     else:
+      push_error("parent is not a building for production line")
       self.paused = false
 
 signal action_state_changed(action_state: ActionStates)
 
-func set_pause(value: bool) -> void:
-  paused = value
-  if self.levels != []: # produce only if unpaused and tier is in the levels of production
-    paused = (self.current_tier in self.levels) == false or self.paused
-  if self.paused == false:
-    self.unpaused.emit()
+func unpause_if_can():
+  if self.levels == []:
+    self.paused = false
+    return
+  self.paused = (self.current_tier in self.levels) == false
 
 func set_components(components: Array[BaseComponent]):
   for component in components:

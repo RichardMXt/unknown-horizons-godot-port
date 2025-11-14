@@ -55,7 +55,10 @@ var game_name: String:
     for node: Node in self.get_children():
       var component := node as BaseComponent
       if component != null:
-        component.paused = self.paused
+        if self.paused == false:
+          component.unpause_if_can()
+        else:
+          component.paused = self.paused
     if self.paused == false:
       unpaused.emit()
 
@@ -113,6 +116,8 @@ func setup_components() -> void:
   for component in components:
     component.set_components(components)
 
+
+## Can be overriden
 func refresh_resources_produced_consumed():
   var resources_produced: Dictionary[StringName, bool] = {}
   var resources_consumed: Dictionary[StringName, bool] = {}
@@ -121,11 +126,12 @@ func refresh_resources_produced_consumed():
     if production_line_component != null and production_line_component.paused == false:
       for resource in production_line_component.consumes:
         resources_consumed[resource] = true
-        resources_produced.erase(resource) # delete from resources_produced if it is consumed
       for resource in production_line_component.produces:
-        if resources_consumed.has(resource):
-          continue # do not set resource as produced if it is consumed too
         resources_produced[resource] = true
+  # remove all resources that are consumed from produced, they should never be set as produced if consumed
+  for resource_consumed in resources_consumed.keys():
+    resources_produced.erase(resource_consumed)
+  # set the values
   self.resources_produced = resources_produced
   self.resources_consumed = resources_consumed
 
