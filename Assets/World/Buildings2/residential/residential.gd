@@ -105,7 +105,6 @@ func spend_happiness(happiness_to_spend: int):
   var i := 0
   while abs(happiness_to_spend) > 0:
     if i >= len(storages):
-      push_error("trying to increase residents_count but not enough happiness in storages")
       break
     var storage: StorageComponent = storages[i]
     var happiness_in_storage: int = storage.get_storage_item_amount(ResourceConfig.Resources.HAPPINESS)
