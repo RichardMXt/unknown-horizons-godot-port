@@ -34,7 +34,7 @@ var residents_count: int = 1:
     self.residents_count_changed.emit(self.residents_count)
 
 func set_current_tier(new_tier: StringName) -> void:
-  var previous_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
+  var previous_tier := self.current_tier
   current_tier = new_tier
   var current_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(self.current_tier, WorldTiers.TierEnum.SAILORS)
   # notify children
@@ -46,6 +46,7 @@ func set_current_tier(new_tier: StringName) -> void:
         node.current_tier = current_enum_tier
   
   # spend/gain happiness from upgarde/downgrade
+  var previous_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(previous_tier, WorldTiers.TierEnum.SAILORS)
   self.spend_happiness((current_enum_tier - previous_enum_tier) * self.happiness_usage_per_tier)
   # update world tier
   var world_enum_tier: WorldTiers.TierEnum = WorldTiers.TierEnum.get(GameStats.game_stats_resource.world_tier, WorldTiers.TierEnum.SAILORS)
