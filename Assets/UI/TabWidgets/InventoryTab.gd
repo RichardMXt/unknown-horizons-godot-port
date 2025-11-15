@@ -32,6 +32,6 @@ func update_inventory_slots():
 
 func clear_inventory_slots():
   var resource_slots: Array[Node] = self.inventory_slots.get_children()
-  for resource_slot in resource_slots:
+  for resource_slot: InventorySlot in resource_slots:
     resource_slot.resource_type = ResourceConfig.Resources.NONE
     resource_slot.resource_amount = 0
