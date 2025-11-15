@@ -4,8 +4,6 @@ extends BaseComponent
 
 class_name Collector
 
-var tree_spawn_timer: Timer = Timer.new()
-
 func plant_tree() -> void:
   var building: Building2D = self.home_building
   var rect = building.oriented_rect
