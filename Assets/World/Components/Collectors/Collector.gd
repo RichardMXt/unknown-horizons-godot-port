@@ -4,26 +4,6 @@ extends BaseComponent
 
 class_name Collector
 
-func plant_tree() -> void:
-  var rect := self.home_building.oriented_rect
-  var affected_rect := rect.grow(radius)
-  var free_cells := []
-
-   # get all free cells inside affected_rect
-  for y in range(affected_rect.position.y, affected_rect.end.y):
-    for x in range(affected_rect.position.x, affected_rect.end.x):
-      var cell = Vector2i(x, y)
-      if built_tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1) and not built_tilemap.building_position_to_building.has(cell):
-        free_cells.append(cell)
-
-  # pick a random cell if there is any
-  if free_cells.size() > 0:
-    var random_index := randi() % free_cells.size()
-    var cell_to_plant : Vector2i = free_cells[random_index]
-
-    built_tilemap.set_cell(cell_to_plant, 1, Vector2i(0, 0))
-    print("tree planted at: ", cell_to_plant)
-
 
 class Job:
   var path_to_start: Array[Vector2i]
@@ -214,6 +194,25 @@ func get_best_job() -> Job:
 
   return best_job
 
+func plant_tree() -> void:
+  var rect := self.home_building.oriented_rect
+  var affected_rect := rect.grow(radius)
+  var free_cells := []
+
+   # get all free cells inside affected_rect
+  for y in range(affected_rect.position.y, affected_rect.end.y):
+    for x in range(affected_rect.position.x, affected_rect.end.x):
+      var cell := Vector2i(x, y)
+      if built_tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1) and not built_tilemap.building_position_to_building.has(cell):
+        free_cells.append(cell)
+
+  # pick a random cell if there is any
+  if free_cells.size() > 0:
+    var random_index := randi() % free_cells.size()
+    var cell_to_plant : Vector2i = free_cells[random_index]
+
+    built_tilemap.set_cell(cell_to_plant, 1, Vector2i(0, 0))
+    print("tree planted at: ", cell_to_plant)
 
 static func get_adjusted_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
   if path.size() == 0:
