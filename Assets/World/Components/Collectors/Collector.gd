@@ -6,9 +6,9 @@ class_name Collector
 
 func plant_tree() -> void:
   var building: Building2D = self.home_building
-  var rect = building.oriented_rect
+  var rect := building.oriented_rect
   var affected_rect := rect.grow(radius)
-  var free_cells = []
+  var free_cells := []
 
    # get all free cells inside affected_rect
   for y in range(affected_rect.position.y, affected_rect.end.y):
@@ -19,8 +19,8 @@ func plant_tree() -> void:
 
   # pick a random cell if there is any
   if free_cells.size() > 0:
-    var random_index = randi() % free_cells.size()
-    var cell_to_plant = free_cells[random_index]
+    var random_index := randi() % free_cells.size()
+    var cell_to_plant : Vector2i = free_cells[random_index]
 
     built_tilemap.set_cell(cell_to_plant, 1, Vector2i(0, 0))
     print("tree planted at: ", cell_to_plant)
