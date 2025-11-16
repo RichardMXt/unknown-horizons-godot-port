@@ -5,8 +5,7 @@ extends BaseComponent
 class_name Collector
 
 func plant_tree() -> void:
-  var building: Building2D = self.home_building
-  var rect := building.oriented_rect
+  var rect := self.home_building.oriented_rect
   var affected_rect := rect.grow(radius)
   var free_cells := []
 
