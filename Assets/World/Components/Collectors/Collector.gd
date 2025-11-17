@@ -40,7 +40,7 @@ const CollectorTypes: Dictionary[StringName, StringName] = {
 
 @onready var built_tilemap: BuiltTileMap = self.get_node("/root/Main/BuiltTileMap") if not Engine.is_editor_hint() else null
 @onready var home_building: Building2D = self.get_parent() if not Engine.is_editor_hint() else null
-
+@onready var terrain_tilemap: TerrainTileMap = self.get_node("/root/Main/TerrainTileMap") if not Engine.is_editor_hint() else null
 # var building_from: Building2D
 # var building_to: Building2D
 
@@ -68,6 +68,13 @@ var cell_position: Vector2i:
 var effective_radius: int:
   get():
     return self.radius if self.radius != -1 or self.home_building == null else self.home_building.radius
+
+var timer: Timer = null
+
+func set_pause(value: bool) -> void:
+  super.set_pause(value)
+  if self.timer != null:
+    self.timer.paused = value
 
 #region Editor: dynamic values for dropdown for `collector_type`
 func _get_property_list() -> Array:
@@ -122,14 +129,17 @@ func _ready() -> void:
       self.action_set = component
     component.set_components(components)
 
+  if Engine.is_editor_hint():
+    return
 
   if self.collector_type == self.CollectorTypes.LUMBERJACK_COLLECTOR:
-    var timer := Timer.new()
-    timer.wait_time = 5
-    timer.one_shot = false  # repeats forever
-    self.add_child(timer)
-    timer.timeout.connect(self.plant_tree)
-    timer.start()
+    self.timer = Timer.new()
+    self.timer.wait_time = 1
+    self.timer.one_shot = false  # repeats forever
+    self.add_child(self.timer)
+    self.timer.timeout.connect(self.plant_tree)
+    self.timer.paused = self.paused
+    self.timer.start()
 
 
 
@@ -197,22 +207,12 @@ func get_best_job() -> Job:
 func plant_tree() -> void:
   var rect := self.home_building.oriented_rect
   var affected_rect := rect.grow(radius)
-  var free_cells := []
 
-   # get all free cells inside affected_rect
-  for y in range(affected_rect.position.y, affected_rect.end.y):
-    for x in range(affected_rect.position.x, affected_rect.end.x):
-      var cell := Vector2i(x, y)
-      if built_tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1) and not built_tilemap.building_position_to_building.has(cell):
-        free_cells.append(cell)
-
-  # pick a random cell if there is any
-  if free_cells.size() > 0:
-    var random_index := randi() % free_cells.size()
-    var cell_to_plant : Vector2i = free_cells[random_index]
-
-    built_tilemap.set_cell(cell_to_plant, 1, Vector2i(0, 0))
-    print("tree planted at: ", cell_to_plant)
+  var x = randi_range(affected_rect.position.x, affected_rect.end.x - 1)
+  var y = randi_range(affected_rect.position.y, affected_rect.end.y - 1)
+  var cell := Vector2i(x, y)
+  if built_tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1) and self.terrain_tilemap.get_cell_atlas_coords(cell) == Vector2i(4,2) and built_tilemap.building_position_to_building.has(cell) == false:
+    built_tilemap.set_cell(cell, 1, Vector2i(0, 0))
 
 static func get_adjusted_position_for_start(position: Vector2i, path: Array[Vector2i]) -> Vector2i:
   if path.size() == 0:
@@ -429,7 +429,8 @@ func chop_tree(job: Job) -> void:
   await self.sleep(self.load_or_unload_time)
   if self.paused:
     await self.unpaused
-  self.built_tilemap.set_cell(cell, -1)
+  if self.built_tilemap.get_cell_atlas_coords(cell) == Vector2i(0, 0):
+    self.built_tilemap.set_cell(cell, -1)
   self.built_tilemap.trees_getting_choped.erase(cell)
   self.action_set.action_state = self.action_set.ActionStates.IDLE
   self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1)
