@@ -430,8 +430,10 @@ func chop_tree(job: Job) -> void:
   await self.sleep(self.load_or_unload_time)
   if self.paused:
     await self.unpaused
-  if self.built_tilemap.get_cell_atlas_coords(cell) == Vector2i(0, 0):
-    self.built_tilemap.set_cell(cell, -1)
+  cell_data = self.built_tilemap.get_cell_tile_data(cell)
+  if cell_data == null or cell_data.get_custom_data(self.built_tilemap.is_tree) == false:
+    return
+  self.built_tilemap.set_cell(cell, -1)
   self.built_tilemap.trees_getting_choped.erase(cell)
   self.action_set.action_state = self.action_set.ActionStates.IDLE
   self.storage.set_storage_item_amount(ResourceConfig.Resources.TREES, 1)
