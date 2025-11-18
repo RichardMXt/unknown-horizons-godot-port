@@ -208,6 +208,7 @@ func plant_tree() -> void:
   var rect := self.home_building.oriented_rect
   var affected_rect := rect.grow(radius)
 
+# randomization part: pick random (x, y) within area and place tree only if this cell is available for planting.
   var x = randi_range(affected_rect.position.x, affected_rect.end.x - 1)
   var y = randi_range(affected_rect.position.y, affected_rect.end.y - 1)
   var cell := Vector2i(x, y)
